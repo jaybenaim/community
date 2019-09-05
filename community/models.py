@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from datetime import date 
 from django import forms 
+from django.contrib.auth.models import User
 
 class Item(models.Model): 
     name_of_item = models.CharField(max_length=255)
@@ -16,9 +17,11 @@ class Item(models.Model):
         return self.name_of_item
 
 class UserProfile(models.Model): 
-    # name = models.CharField(max_length=255) get from request 
+    # get username from auth 
+    name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255) 
     address = models.CharField(max_length=255)
     shed_items = models.ForeignKey(Item, on_delete=models.CASCADE) 
 
-
+    def __str__(self): 
+        return self.name

@@ -9,4 +9,5 @@ urlpatterns = [
     path('accounts/signup', signup, name='signup'), 
     path('accounts/signup_create', signup_create, name='signup_create'), 
     path('accounts/profile/', include('django.contrib.auth.urls')), 
+    path('api', api, name='api'), 
 ]
