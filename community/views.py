@@ -16,7 +16,9 @@ def root(request):
 def home(request): 
     context = {
         'items': Item.objects.all(), 
-        'users': UserProfile.objects.all() 
+        'users': User.objects.all(),
+        'profiles': Profile.objects.all(), 
+        'address': User.profile, 
     }
     return render(request, 'index.html', context)
 def login_view(request):
@@ -61,10 +63,10 @@ def signup_create(request):
 
 def api(request): 
     items = serializers.serialize('json', Item.objects.all())
-    users = serializers.serialize('json', UserProfile.objects.all())
+    users = serializers.serialize('json', Profile.objects.all())
     data = { 
         'item': items,
-        'UserProfile': users
+        'Profile': users
     }
  
     return JsonResponse(data)

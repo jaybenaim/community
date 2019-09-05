@@ -6,6 +6,8 @@ from django.utils.translation import gettext_lazy as _
 from datetime import date 
 from django import forms 
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class Item(models.Model): 
     name_of_item = models.CharField(max_length=255)
@@ -16,12 +18,20 @@ class Item(models.Model):
     def __str__(self): 
         return self.name_of_item
 
-class UserProfile(models.Model): 
-    # get username from auth 
-    name = models.CharField(max_length=255)
+class Profile(models.Model): 
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     email = models.EmailField(max_length=255) 
     address = models.CharField(max_length=255)
     shed_items = models.ForeignKey(Item, on_delete=models.CASCADE) 
 
     def __str__(self): 
-        return self.name
+        return self.user.username
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
