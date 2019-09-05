@@ -1,7 +1,8 @@
 {% extends 'base.html'%} {% block title %} {% endblock %} {% block content %}
-{{ items }}
+<!-- {{ items }} -->
 {% for i in profiles %}
-{{ i.address }}
+{{ i.shed_items }}
+
 {% endfor %}
-{{ address }}
+<!-- {{ address }} -->
 {% endblock%}

@@ -22,7 +22,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     email = models.EmailField(max_length=255) 
     address = models.CharField(max_length=255)
-    shed_items = models.ForeignKey(Item, on_delete=models.CASCADE) 
+    shed_items = models.ManyToManyField(Item) 
 
     def __str__(self): 
         return self.user.username

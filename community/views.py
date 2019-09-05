@@ -21,6 +21,7 @@ def home(request):
         'address': User.profile, 
     }
     return render(request, 'index.html', context)
+
 def login_view(request):
     if request.user.is_authenticated:
         return redirect('/')
@@ -65,8 +66,8 @@ def api(request):
     items = serializers.serialize('json', Item.objects.all())
     users = serializers.serialize('json', Profile.objects.all())
     data = { 
-        'item': items,
-        'Profile': users
+        'items': items,
+        'Profiles': users
     }
- 
+
     return JsonResponse(data)
