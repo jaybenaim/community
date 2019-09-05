@@ -3,16 +3,25 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, reverse, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods
+from django.http import HttpResponse, JsonResponse
+import json 
 # from .forms import *
-# from .models import *
+from .models import *
+from django.core import serializers
 
 
 def root(request): 
     return redirect('home/')
     
 def home(request): 
-        return render(request, 'index.html')
-    
+    context = {
+        'items': Item.objects.all(), 
+        'users': User.objects.all(),
+        'profiles': Profile.objects.all(), 
+        'address': User.profile, 
+    }
+    return render(request, 'index.html', context)
+
 def login_view(request):
     if request.user.is_authenticated:
         return redirect('/')
@@ -52,3 +61,13 @@ def signup_create(request):
         return redirect('/')
     else: 
         return render(request, 'registration/signup.html', {'form': form})
+
+def api(request): 
+    items = serializers.serialize('json', Item.objects.all())
+    users = serializers.serialize('json', Profile.objects.all())
+    data = { 
+        'items': items,
+        'Profiles': users
+    }
+
+    return JsonResponse(data)
