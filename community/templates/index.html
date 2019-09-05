@@ -1,8 +1,12 @@
 {% extends 'base.html'%} {% block title %} {% endblock %} {% block content %}
 <!-- {{ items }} -->
-{% for i in profiles %}
-{{ i.shed_items }}
 
-{% endfor %}
+<ul>
+  <li>Profile id: {{ request.user.profile.id }}</li>
+  <li>Profile Name: {{ request.user.profile }}</li>
+  <li>User Address: {{ request.user.profile.address }}</li>
+  <li>User Email: {{ request.user.profile.email }}</li>
+</ul>
+
 <!-- {{ address }} -->
 {% endblock%}

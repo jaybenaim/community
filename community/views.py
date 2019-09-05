@@ -18,7 +18,6 @@ def home(request):
         'items': Item.objects.all(), 
         'users': User.objects.all(),
         'profiles': Profile.objects.all(), 
-        'address': User.profile, 
     }
     return render(request, 'index.html', context)
 
