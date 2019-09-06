@@ -4,7 +4,6 @@ import axios from "axios";
 import ProfileForm from "../../components/ProfileForm";
 
 class Profile extends Component {
-<<<<<<< HEAD
   state = {
     name: "",
     email: "",
@@ -32,20 +31,19 @@ class Profile extends Component {
       });
   };
 
-  render() {
-    return (
-      <>
-        <div>
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              Person Name:
-              <input type="text" name="name" onChange={this.handleNameChange} />
-            </label>
-            <button type="submit">Add</button>
-          </form>
-        </div>
-=======
-  // state = {
+  //   render() {
+  //     return (
+  //       <>
+  //         <div>
+  //           <form onSubmit={this.handleSubmit}>
+  //             <label>
+  //               Person Name:
+  //               <input type="text" name="name" onChange={this.handleNameChange} />
+  //             </label>
+  //             <button type="submit">Add</button>
+  //           </form>
+  //         </div>
+  //   // state = {
   //   items: []
   // };
   // componentDidMount() {
@@ -76,7 +74,6 @@ class Profile extends Component {
 
           <ProfileForm />
         </ul>
->>>>>>> b5acc31f76442a6f436d5abda7df9ae2f92ca67b
       </>
     );
   }
