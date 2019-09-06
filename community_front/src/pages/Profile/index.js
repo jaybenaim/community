@@ -4,34 +4,44 @@ import axios from "axios";
 
 class Profile extends Component {
   state = {
-    items: []
+    name: "",
+    email: "",
+    address: "",
+    shed_items: ""
   };
   componentDidMount() {
+    console.log("mounted");
+  }
+  handleNameChange = event => {
+    this.setState({ name: event.target.value });
+  };
+
+  handleSubmit = event => {
+    event.preventDefault();
+    const user = {
+      name: this.state.name
+    };
     axios
-      .get("http://localhost:8000/api")
+      .get("/api")
 
       .then(res => {
-        let items = res.data.items;
-
-        items.map(item => {
-          this.setState({
-            items: [{ name: item.name, price: item.price }]
-          });
-        });
+        console.log(res);
+        console.log(res.data);
       });
-  }
+  };
+
   render() {
     return (
       <>
-        <ul>
-          {this.state.items.map((item, index) => {
-            return (
-              <li key={index}>
-                Item: {item.name} || Price: {item.price}
-              </li>
-            );
-          })}
-        </ul>
+        <div>
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              Person Name:
+              <input type="text" name="name" onChange={this.handleNameChange} />
+            </label>
+            <button type="submit">Add</button>
+          </form>
+        </div>
       </>
     );
   }
