@@ -1,17 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 
-class ProfileForm extends React.Component {
-  state = {
-    name:"",
-    email: "",
-    address: "",
-    item: "",
-  };
-  handleProfileFormSubmit = event => {
+const ProfileForm = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [item, setItem] = useState("");
+  const [show, setShow] = useState(false);
+
+  const handleProfileFormSubmit = event => {
     event.preventDefault();
     axios.post("http://localhost:8000/api").then(res => {
       console.log(res);
@@ -19,30 +19,35 @@ class ProfileForm extends React.Component {
     });
   };
 
-  handleEmailChange = event => {
-    this.setState({ email: event.target.value });
+  const handleEmailChange = event => {
+    setEmail(event.target.value);
   };
-  handleAddressChange = event => {
-    this.setState({ address: event.target.value });
+  const handleAddressChange = event => {
+    setAddress(event.target.value);
   };
-  handleItemChange = event => {
-    this.setState({ item: event.target.value });
+  const handleItemChange = event => {
+    setItem(event.target.value);
   };
 
-  render() {
-    return (
-      <Modal.Dialog>
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  return (
+    <>
+      <Button variant="primary" onClick={handleShow}>
+        Create Profile
+      </Button>
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Create a Profile :)</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          <Form onSubmit={this.handleProfileFormSubmit}>
+          <Form onSubmit={() => handleProfileFormSubmit}>
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Email</Form.Label>
               <Form.Control
                 name="email"
-                onChange={this.handleEmailChange}
+                onChange={() => handleEmailChange}
                 type="email"
                 placeholder="Enter Email"
               />
@@ -51,7 +56,7 @@ class ProfileForm extends React.Component {
               <Form.Label>Address</Form.Label>
               <Form.Control
                 name="address"
-                onChange={this.handleAddressChange}
+                onChange={() => handleAddressChange}
                 type="text"
                 placeholder="Enter Address"
               />
@@ -60,7 +65,7 @@ class ProfileForm extends React.Component {
               <Form.Label>Shed Item</Form.Label>
               <Form.Control
                 name="item"
-                onChange={this.handleItemChange}
+                onChange={() => handleItemChange}
                 type="text"
                 placeholder="Enter Item for Community"
               />
@@ -69,14 +74,16 @@ class ProfileForm extends React.Component {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="secondary">Close</Button>
-          <Button onClick={this.handleProfileFormSubmit} variant="primary">
+          <Button onClick={handleClose} variant="secondary">
+            Close
+          </Button>
+          <Button onClick={() => handleProfileFormSubmit} variant="primary">
             Save changes
           </Button>
         </Modal.Footer>
-      </Modal.Dialog>
-    );
-  }
-}
+      </Modal>
+    </>
+  );
+};
 
 export default ProfileForm;
