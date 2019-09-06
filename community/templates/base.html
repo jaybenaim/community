@@ -1,40 +1,53 @@
 {% load static %}
-<!DOCTYPE html> 
-<html lang='en'> 
-<head> 
-    <title>{% block title %} {% endblock %}</title> 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" > <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
-        integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o"
-        crossorigin="anonymous"></script>
-</head> 
-<body> 
-<header> 
-    <div class="container"> 
-    <nav> 
-        
-        <ul>
-            <li> <a class="home-button" href="/">Home</a> </li>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% block title %} {% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+      integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU="
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+      integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"
+    ></script>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <nav class="nav">
+          <ul>
+            <li><a class="home-button" href="/">Home</a></li>
             {% if request.user.is_authenticated %}
-                <li class='login-name'>Logged in as {{ request.user.username }}</li>
-                <li><a class='logout-button' href="{% url 'logout' %}">Log out</a></li>
+            <li class="login-name">Logged in as {{ request.user.username }}</li>
+            <li>
+              <a class="logout-button" href="{% url 'logout' %}">Log out</a>
+            </li>
             {% else %}
-                <li><a class='signup-button' href="{% url 'signup' %}">Sign up!</a></li>
-                <li><a class='login-button' href="{% url 'login' %}">Log in</a></li>
+            <li>
+              <a class="signup-button" href="{% url 'signup' %}">Sign up!</a>
+            </li>
+            <li><a class="login-button" href="{% url 'login' %}">Log in</a></li>
             {% endif %}
-  
-             
-                
-            
-
-        </ul>
-        
-    </nav> 
-</header> 
-{% block content %}
-{% endblock %}
-</div> 
-</body> 
-
+          </ul>
+        </nav>
+      </header>
+      {% block content %} {% endblock %}
+    </div>
+  </body>
 </html>
-
