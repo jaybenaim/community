@@ -31,10 +31,7 @@ class Profile extends Component {
               </li>
             );
           })}
-          {/* <li>{this.state.items.name}</li> */}
         </ul>
-        {/* <h1>Items{JSON.stringify(items)}</h1>
-      <h2>Profiles{JSON.stringify(profiles)}</h2> */}
       </>
     );
   }
