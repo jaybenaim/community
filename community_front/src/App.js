@@ -11,6 +11,8 @@ const App = () => {
       <div className="App">
         <Switch>
           <NavBar />
+        </Switch>
+        <Switch>
           <Route path="/profiles" component={Profile} />
         </Switch>
       </div>

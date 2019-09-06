@@ -62,11 +62,41 @@ def signup_create(request):
         return render(request, 'registration/signup.html', {'form': form})
 
 def api(request): 
-    items = serializers.serialize('json', Item.objects.all())
-    users = serializers.serialize('json', Profile.objects.all())
-    data = { 
-        'items': items,
-        'Profiles': users
-    }
+    # users = User.objects.all() 
+    items = Item.objects.all() 
+    profiles = Profile.objects.all() 
 
-    return JsonResponse(data)
+    itemList = []
+    addressList = []
+
+    for item in items: 
+        itemList.append({'name': item.name_of_item, 'price': item.price})
+
+    for profile in profiles: 
+        addressList.append({
+            'id': profile.user.id, 
+            'username': profile.user.username, 
+            'email': profile.email, 
+            'address': profile.address, 
+        })
+
+
+    data = {
+        'items': itemList,
+        'Profiles': addressList
+    }
+    json.dumps(data)
+    response = JsonResponse(
+        {
+       'items': itemList,
+        'Profiles': addressList
+        } 
+    )
+
+    response["Access-Control-Allow-Origin"] = "*"
+    response["Access-Control-Allow-Methods"] = "GET, OPTIONS"
+    response["Access-Control-Max-Age"] = "1000"
+    response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
+    return response 
+    # return JsonResponse(data, safe=False)
+
