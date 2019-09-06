@@ -1,8 +1,9 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+// import { Helmet } from "react-helmet";
 import NavBar from "./components/Navbar";
+import Profile from "./pages/Profile";
 
 const App = () => {
   return (
@@ -10,10 +11,7 @@ const App = () => {
       <div className="App">
         <Switch>
           <NavBar />
-          {/* <Route
-            path="/procedures"
-            render={props => <Procedures {...props} />} */}
-          />
+          <Route path="/profiles" component={Profile} />
         </Switch>
       </div>
     </Router>
