@@ -8,6 +8,7 @@ import FormControl from "react-bootstrap/FormControl";
 // import { Helmet } from "react-helmet";
 import logo from "../../logo/logo.png";
 import styles from "./index.css";
+
 const NavBar = () => {
   return (
     <Navbar bg="light" expand="lg">

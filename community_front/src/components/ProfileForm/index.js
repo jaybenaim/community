@@ -3,6 +3,10 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
+import DjangoCSRFToken from "django-react-csrftoken";
+
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
 const ProfileForm = () => {
   const [name, setName] = useState("");
@@ -13,10 +17,19 @@ const ProfileForm = () => {
 
   const handleProfileFormSubmit = event => {
     event.preventDefault();
-    axios.post("http://localhost:8000/api").then(res => {
-      console.log(res);
-      console.log(res.data);
+    axios.get("/api").then(res => {
+      console.log("GET Status: " + res.statusText);
     });
+
+    axios
+      .post("/api")
+      .then(res => {
+        console.log(res);
+        console.log("Great fucking success");
+      })
+      .catch(err => {
+        console.log("POST Status: " + err);
+      });
   };
 
   const handleEmailChange = event => {
@@ -33,6 +46,16 @@ const ProfileForm = () => {
   const handleShow = () => setShow(true);
   return (
     <>
+      <form onSubmit={handleProfileFormSubmit}>
+        {/* <meta name="csrf-token" content="{{ csrf_token() }}"></meta> */}
+        <DjangoCSRFToken />
+
+        <label>
+          Name:
+          <input type="text" name="name" />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
       <Button variant="primary" onClick={handleShow}>
         Create Profile
       </Button>
@@ -40,14 +63,14 @@ const ProfileForm = () => {
         <Modal.Header closeButton>
           <Modal.Title>Create a Profile :)</Modal.Title>
         </Modal.Header>
-
         <Modal.Body>
-          <Form onSubmit={() => handleProfileFormSubmit}>
+          <Form onSubmit={handleProfileFormSubmit}>
+            {/* <DjangoCSRFToken /> */}
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Email</Form.Label>
               <Form.Control
                 name="email"
-                onChange={() => handleEmailChange}
+                onChange={handleEmailChange}
                 type="email"
                 placeholder="Enter Email"
               />
@@ -56,7 +79,7 @@ const ProfileForm = () => {
               <Form.Label>Address</Form.Label>
               <Form.Control
                 name="address"
-                onChange={() => handleAddressChange}
+                onChange={handleAddressChange}
                 type="text"
                 placeholder="Enter Address"
               />
@@ -65,7 +88,7 @@ const ProfileForm = () => {
               <Form.Label>Shed Item</Form.Label>
               <Form.Control
                 name="item"
-                onChange={() => handleItemChange}
+                onChange={handleItemChange}
                 type="text"
                 placeholder="Enter Item for Community"
               />
@@ -77,7 +100,7 @@ const ProfileForm = () => {
           <Button onClick={handleClose} variant="secondary">
             Close
           </Button>
-          <Button onClick={() => handleProfileFormSubmit} variant="primary">
+          <Button onClick={handleProfileFormSubmit} variant="primary">
             Save changes
           </Button>
         </Modal.Footer>

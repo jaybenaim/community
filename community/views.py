@@ -12,7 +12,7 @@ import logging
 from django.views.generic import View
 from django.conf import settings
 import os
-
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt, csrf_protect, requires_csrf_token
 
 def root(request): 
     return redirect('home/')
@@ -65,11 +65,13 @@ def signup_create(request):
     else: 
         return render(request, 'registration/signup.html', {'form': form})
 
+# @csrf_exempt
+# @ensure_csrf_cookie
+# @requires_csrf_token
+@csrf_protect
 def api(request): 
-    # users = User.objects.all() 
     items = Item.objects.all() 
     profiles = Profile.objects.all() 
-
     itemList = []
     addressList = []
 
