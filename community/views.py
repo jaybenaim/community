@@ -73,23 +73,23 @@ def incrementingKey(num):
 def api(request): 
     
     newProfile = Profile()  
+    newItem = Item() 
+
     req = request.POST
 
     if request.method == 'POST': 
         body = json.loads(request.body)
-        print(request.user.id)
-        # newProfile.user = request.user
-        # newProfile.username = body["username"]
-        # newProfile.id = request.user.id
-        # newProfile.username = request.user.username
         newProfile.id =request.user.id
         newProfile.email = body["email"]
         newProfile.address = body["address"]
-        newProfile.initial_item = body["shed_item"]
-        # newProfile.shed_items =  {'shed_items': [body["shed_item"]]}
- 
-
+        newProfile.initial_item = body["shedItem"]
+        newItem.name_of_item = body["shedItem"]
+        newItem.price = body['shedItemPrice']
+        # newProfile.shed_items = newItem
+        # newProfile.create(shed_items=body["shed_item"])
+        # newProfile.shed_items.set(  {'name_of_item':body["shed_item"],  'price':"A cup of Tea"} )
         newProfile.save()
+        newItem.save()
 
          
     items = Item.objects.all() 
@@ -115,14 +115,14 @@ def api(request):
         'items': itemList,
         'Profiles': profileList
     }
+
     json.dumps(data)
     response = JsonResponse(
         {
-    'items': itemList,
+        'items': itemList,
         'profiles': profileList
         } 
     )
-
 
     return response 
 

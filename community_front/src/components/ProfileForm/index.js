@@ -12,24 +12,24 @@ const ProfileForm = () => {
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [shedItem, setItem] = useState([]);
+  const [shedItemPrice, setItemPrice] = useState("");
   const [show, setShow] = useState(false);
 
   const handleProfileFormSubmit = event => {
     event.preventDefault();
-
     axios
       .post("/api", {
         username,
         email,
         address,
-        shed_item: shedItem
+        shedItem,
+        shedItemPrice
       })
       .then(res => {
-        console.log(username, email, address, shedItem);
+        console.log(username, email, address, shedItem, shedItemPrice);
         console.log("POST Status: " + res.statusText);
         handleClose();
       })
-
       .catch(err => {
         console.log("POST Status: " + err);
       });
@@ -54,6 +54,9 @@ const ProfileForm = () => {
   };
   const handleItemChange = event => {
     setItem(event.target.value);
+  };
+  const handleItemPriceChange = event => {
+    setItemPrice(event.target.value);
   };
 
   const handleClose = () => setShow(false);
@@ -100,12 +103,21 @@ const ProfileForm = () => {
               />
             </Form.Group>
             <Form.Group controlId="formBasic">
-              <Form.Label>Shed Item</Form.Label>
+              <Form.Label>Item for lend</Form.Label>
               <Form.Control
                 name="item"
                 onChange={handleItemChange}
                 type="text"
-                placeholder="Enter Item for Community"
+                placeholder="Enter Item for lend"
+              />
+            </Form.Group>
+            <Form.Group controlId="formBasic">
+              <Form.Label>Item Price</Form.Label>
+              <Form.Control
+                name="itemPrice"
+                onChange={handleItemPriceChange}
+                type="text"
+                placeholder="Enter Item Price"
               />
             </Form.Group>
           </Form>
