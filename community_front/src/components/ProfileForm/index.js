@@ -8,29 +8,31 @@ axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
 const ProfileForm = () => {
-  const [name, setName] = useState("");
+  const [username, setName] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
-  const [item, setItem] = useState("");
+  const [shedItem, setItem] = useState([]);
   const [show, setShow] = useState(false);
 
   const handleProfileFormSubmit = event => {
     event.preventDefault();
 
     axios
-      .post("/api", { id: 4, username: name, email, address, shed_item: item })
-      .then(res => {
-        let profiles = res.data.profiles;
-        console.log(profiles);
-        console.log("success");
+      .post("/api", {
+        username,
+        email,
+        address,
+        shed_item: shedItem
       })
       .then(res => {
-        getData();
+        console.log(username, email, address, shedItem);
+        console.log("POST Status: " + res.statusText);
+        handleClose();
       })
+
       .catch(err => {
         console.log("POST Status: " + err);
       });
-    handleClose();
   };
 
   async function getData(event) {

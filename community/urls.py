@@ -12,4 +12,5 @@ urlpatterns = [
     path('accounts/profile/', include('django.contrib.auth.urls')), 
     path('api', api, name='api'), 
     url(r'^', FrontendAppView.as_view()),
+
 ]

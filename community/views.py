@@ -12,6 +12,7 @@ import logging
 from django.views.generic import View
 from django.conf import settings
 import os
+import random 
 
 def root(request): 
     return redirect('home/')
@@ -64,7 +65,32 @@ def signup_create(request):
     else: 
         return render(request, 'registration/signup.html', {'form': form})
 
+
+    
+def incrementingKey(num): 
+        return num + 1
+    
 def api(request): 
+    
+    newProfile = Profile()  
+    req = request.POST
+
+    if request.method == 'POST': 
+        body = json.loads(request.body)
+        print(request.user.id)
+        # newProfile.user = request.user
+        # newProfile.username = body["username"]
+        # newProfile.id = request.user.id
+        # newProfile.username = request.user.username
+        newProfile.email = body["email"]
+        newProfile.address = body["address"]
+        newProfile.initial_item = body["shed_item"]
+        # newProfile.shed_items.set( [body["shed_item"]])
+ 
+
+        newProfile.save()
+
+         
     items = Item.objects.all() 
     profiles = Profile.objects.all() 
     itemList = []
@@ -76,8 +102,8 @@ def api(request):
 
     for profile in profiles: 
         profileList.append({
-            'id': profile.user.id, 
-            'username': profile.user.username, 
+            # 'id': profile.user.id, 
+            # 'username': profile.user.username, 
             'email': profile.email, 
             'address': profile.address, 
             'shed_items': shed_items
@@ -91,7 +117,7 @@ def api(request):
     json.dumps(data)
     response = JsonResponse(
         {
-       'items': itemList,
+    'items': itemList,
         'profiles': profileList
         } 
     )
