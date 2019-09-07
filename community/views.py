@@ -86,7 +86,7 @@ def api(request):
         newProfile.email = body["email"]
         newProfile.address = body["address"]
         newProfile.initial_item = body["shed_item"]
-        newProfile.shed_items =  {'shed_items': [body["shed_item"]]}
+        # newProfile.shed_items =  {'shed_items': [body["shed_item"]]}
  
 
         newProfile.save()
