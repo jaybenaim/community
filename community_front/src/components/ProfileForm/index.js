@@ -4,6 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 import DjangoCSRFToken from "django-react-csrftoken";
+import Profile from "../../pages/Profile";
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -17,21 +18,34 @@ const ProfileForm = () => {
 
   const handleProfileFormSubmit = event => {
     event.preventDefault();
-    axios.get("/api").then(res => {
-      console.log("GET Status: " + res.statusText);
-    });
 
     axios
-      .post("/api")
+      .post("/api", { id: 4, username: name, email, address, shed_item: item })
       .then(res => {
-        console.log(res);
-        console.log("Great fucking success");
+        let profiles = res.data.profiles;
+        console.log(profiles);
+        console.log("success");
+      })
+      .then(res => {
+        getData();
       })
       .catch(err => {
         console.log("POST Status: " + err);
       });
+    handleClose();
   };
 
+  async function getData(event) {
+    await axios.get("/api").then(res => {
+      let profiles = res.data.profiles;
+      console.log(profiles);
+      console.log("GET Status: " + res.statusText);
+    });
+  }
+
+  const handleNameChange = event => {
+    setName(event.target.value);
+  };
   const handleEmailChange = event => {
     setEmail(event.target.value);
   };
@@ -46,16 +60,9 @@ const ProfileForm = () => {
   const handleShow = () => setShow(true);
   return (
     <>
-      <form onSubmit={handleProfileFormSubmit}>
-        {/* <meta name="csrf-token" content="{{ csrf_token() }}"></meta> */}
-        <DjangoCSRFToken />
-
-        <label>
-          Name:
-          <input type="text" name="name" />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
+      <Button variant="primary" onClick={getData}>
+        Get request
+      </Button>
       <Button variant="primary" onClick={handleShow}>
         Create Profile
       </Button>
@@ -65,7 +72,15 @@ const ProfileForm = () => {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleProfileFormSubmit}>
-            {/* <DjangoCSRFToken /> */}
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Profile Name</Form.Label>
+              <Form.Control
+                name="name"
+                onChange={handleNameChange}
+                type="name"
+                placeholder="Enter Profile Name"
+              />
+            </Form.Group>
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Email</Form.Label>
               <Form.Control

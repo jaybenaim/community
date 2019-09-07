@@ -73,29 +73,32 @@ def api(request):
     items = Item.objects.all() 
     profiles = Profile.objects.all() 
     itemList = []
-    addressList = []
+    profileList = []
+    shed_items = []
 
     for item in items: 
         itemList.append({'name': item.name_of_item, 'price': item.price})
 
     for profile in profiles: 
-        addressList.append({
+        profileList.append({
             'id': profile.user.id, 
             'username': profile.user.username, 
             'email': profile.email, 
             'address': profile.address, 
-        })
+            'shed_items': shed_items
+            }
+        )
 
 
     data = {
         'items': itemList,
-        'Profiles': addressList
+        'Profiles': profileList
     }
     json.dumps(data)
     response = JsonResponse(
         {
        'items': itemList,
-        'Profiles': addressList
+        'profiles': profileList
         } 
     )
 
