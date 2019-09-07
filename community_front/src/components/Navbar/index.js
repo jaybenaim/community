@@ -7,12 +7,12 @@ import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 // import { Helmet } from "react-helmet";
 import logo from "../../logo/logo.png";
+import styles from "./index.css";
 const NavBar = () => {
   return (
     <Navbar bg="light" expand="lg">
       <Navbar.Brand href="/home">
         <img className="logo" src={logo} alt="logo" />
-        Community
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
