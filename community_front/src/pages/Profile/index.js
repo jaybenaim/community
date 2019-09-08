@@ -22,7 +22,6 @@ const Profile = () => {
       console.log(res);
       for (let i = 0; i < profile.length; i++) {
         if (profile[i].username !== username) {
-          
         }
       }
     });

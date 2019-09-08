@@ -13,8 +13,7 @@ const App = () => {
           <NavBar />
         </Switch>
         <Switch>
-          <Route path="/profiles" component={Profile} />
-          
+          <Route path="/profiles" render={props => <Profile />} />
         </Switch>
       </div>
     </Router>
