@@ -8,7 +8,11 @@ import json
 # from .forms import *
 from .models import *
 from django.core import serializers
-
+import logging
+from django.views.generic import View
+from django.conf import settings
+import os
+import random 
 
 def root(request): 
     return redirect('home/')
@@ -61,42 +65,85 @@ def signup_create(request):
     else: 
         return render(request, 'registration/signup.html', {'form': form})
 
+
+    
+def incrementingKey(num): 
+        return num + 1
+    
 def api(request): 
-    # users = User.objects.all() 
+    
+    newProfile = Profile()  
+    newItem = Item() 
+
+    req = request.POST
+
+    if request.method == 'POST': 
+        body = json.loads(request.body)
+        newProfile.id =request.user.id
+        newProfile.email = body["email"]
+        newProfile.address = body["address"]
+        newProfile.initial_item = body["shedItem"]
+        newItem.name_of_item = body["shedItem"]
+        newItem.price = body['shedItemPrice']
+        # newProfile.shed_items = newItem
+        # newProfile.create(shed_items=body["shed_item"])
+        # newProfile.shed_items.set(  {'name_of_item':body["shed_item"],  'price':"A cup of Tea"} )
+        newProfile.save()
+        newItem.save()
+
+         
     items = Item.objects.all() 
     profiles = Profile.objects.all() 
-
     itemList = []
-    addressList = []
+    profileList = []
+    shed_items = []
 
     for item in items: 
         itemList.append({'name': item.name_of_item, 'price': item.price})
 
     for profile in profiles: 
-        addressList.append({
-            'id': profile.user.id, 
-            'username': profile.user.username, 
+        profileList.append({
+            # 'id': profile.user.id, 
+            # 'username': profile.user.username, 
             'email': profile.email, 
             'address': profile.address, 
-        })
-
+            'shed_items': shed_items
+            }
+        )
 
     data = {
         'items': itemList,
-        'Profiles': addressList
+        'Profiles': profileList
     }
+
     json.dumps(data)
     response = JsonResponse(
         {
-       'items': itemList,
-        'Profiles': addressList
+        'items': itemList,
+        'profiles': profileList
         } 
     )
 
-    response["Access-Control-Allow-Origin"] = "*"
-    response["Access-Control-Allow-Methods"] = "GET, OPTIONS"
-    response["Access-Control-Max-Age"] = "1000"
-    response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
     return response 
-    # return JsonResponse(data, safe=False)
 
+
+class FrontendAppView(View):
+    """
+    Serves the compiled frontend entry point (only works if you have run `yarn
+    run build`).
+    """
+
+    def get(self, request):
+        try:
+            with open(os.path.join(settings.REACT_APP_DIR, 'build', 'index.html')) as f:
+                return HttpResponse(f.read())
+        except FileNotFoundError:
+            logging.exception('Production build of app not found')
+            return HttpResponse(
+                """
+                This URL is only used when you have built the production
+                version of the app. Visit http://localhost:3000/ instead, or
+                run `yarn run build` to test the production version.
+                """,
+                status=501,
+            )

@@ -19,13 +19,15 @@ class Item(models.Model):
         return self.name_of_item
 
 class Profile(models.Model): 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # user = models.OneToOneField(User, on_delete=models.CASCADE)
+    username = models.CharField(max_length=255)
     email = models.EmailField(max_length=255) 
     address = models.CharField(max_length=255)
+    initial_item = models.CharField(max_length=255)
     shed_items = models.ManyToManyField(Item) 
 
     def __str__(self): 
-        return self.user.username
+        return self.username
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

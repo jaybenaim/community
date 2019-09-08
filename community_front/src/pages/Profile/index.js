@@ -1,40 +1,14 @@
 // import React, { useState, useEffect } from "react";
 import React, { Component } from "react";
-import axios from "axios";
+import ProfileForm from "../../components/ProfileForm";
 
 class Profile extends Component {
-  state = {
-    items: []
-  };
-  componentDidMount() {
-    axios
-      .get("http://localhost:8000/api")
-
-      .then(res => {
-        let items = res.data.items;
-
-        items.map(item => {
-          this.setState({
-            items: [{ name: item.name, price: item.price }]
-          });
-        });
-      });
-  }
   render() {
     return (
       <>
         <ul>
-          {this.state.items.map((item, index) => {
-            return (
-              <li key={index}>
-                Item: {item.name} || Price: {item.price}
-              </li>
-            );
-          })}
-          {/* <li>{this.state.items.name}</li> */}
+          <ProfileForm />
         </ul>
-        {/* <h1>Items{JSON.stringify(items)}</h1>
-      <h2>Profiles{JSON.stringify(profiles)}</h2> */}
       </>
     );
   }
