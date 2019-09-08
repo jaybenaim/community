@@ -78,7 +78,7 @@ def api(request):
 
     if request.method == 'POST': 
         body = json.loads(request.body)
-        newProfile.id =request.user.id
+        newProfile.id = request.user.id
         print(body)
         newProfile.profile_name = body["username"]
         newProfile.email = body["email"]
