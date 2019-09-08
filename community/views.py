@@ -65,17 +65,12 @@ def signup_create(request):
     else: 
         return render(request, 'registration/signup.html', {'form': form})
 
-
-    
-def incrementingKey(num): 
-        return num + 1
     
 def api(request): 
     
     newProfile = Profile()  
     newItem = Item() 
-
-
+    
     if request.method == 'POST': 
         body = json.loads(request.body)
         newProfile.id = request.user.id

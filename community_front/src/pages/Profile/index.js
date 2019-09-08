@@ -21,8 +21,7 @@ const Profile = () => {
       let profile = res.data.profiles;
       console.log(res);
       for (let i = 0; i < profile.length; i++) {
-        if (username) {
-          console.log("profile created");
+        if (profile[i].username !== username) {
         }
       }
     });
