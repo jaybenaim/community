@@ -70,8 +70,7 @@ def api(request):
     
     newProfile = Profile()  
     newItem = Item() 
-
-
+    
     if request.method == 'POST': 
         body = json.loads(request.body)
         newProfile.id =request.user.id
