@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import ProfileForm from "../../components/ProfileForm";
 import axios from "axios";
+import UserProfilePage from "../UserProfile";
+import "./index.css";
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";

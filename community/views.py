@@ -65,10 +65,6 @@ def signup_create(request):
     else: 
         return render(request, 'registration/signup.html', {'form': form})
 
-
-    
-def incrementingKey(num): 
-        return num + 1
     
 def api(request): 
     
