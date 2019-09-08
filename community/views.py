@@ -75,11 +75,12 @@ def api(request):
     newProfile = Profile()  
     newItem = Item() 
 
-    req = request.POST
 
     if request.method == 'POST': 
         body = json.loads(request.body)
         newProfile.id =request.user.id
+        print(body)
+        newProfile.profile_name = body["username"]
         newProfile.email = body["email"]
         newProfile.address = body["address"]
         newProfile.initial_item = body["shedItem"]
@@ -91,7 +92,6 @@ def api(request):
         newProfile.save()
         newItem.save()
 
-         
     items = Item.objects.all() 
     profiles = Profile.objects.all() 
     itemList = []
@@ -105,8 +105,10 @@ def api(request):
         profileList.append({
             'user_id': request.user.id, 
             'username': request.user.username, 
+            'profile_name': profile.profile_name,
             'email': profile.email, 
             'address': profile.address, 
+            'initial_item': profile.initial_item,
             'shed_items': shed_items
             }
         )

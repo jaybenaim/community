@@ -21,6 +21,7 @@ class Item(models.Model):
 class Profile(models.Model): 
     # user = models.OneToOneField(User, on_delete=models.CASCADE)
     username = models.CharField(max_length=255)
+    profile_name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255) 
     address = models.CharField(max_length=255)
     initial_item = models.CharField(max_length=255)
