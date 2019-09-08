@@ -98,13 +98,13 @@ def api(request):
     profileList = []
     shed_items = []
 
-    for item in items: 
-        itemList.append({'name': item.name_of_item, 'price': item.price})
+    for i, item in enumerate(items): 
+        itemList.append({'id': i + 1, 'name': item.name_of_item, 'price': item.price})
 
     for profile in profiles: 
         profileList.append({
-            # 'id': profile.user.id, 
-            # 'username': profile.user.username, 
+            'user_id': request.user.id, 
+            'username': request.user.username, 
             'email': profile.email, 
             'address': profile.address, 
             'shed_items': shed_items
