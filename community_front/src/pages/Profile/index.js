@@ -14,19 +14,21 @@ const Profile = () => {
   const [shedItem, setItem] = useState([]);
   const [shedItemPrice, setItemPrice] = useState("");
   const [show, setShow] = useState(false);
-  const [showProfile, setProfile] = useState(false);
+  // const [showProfile, setProfile] = useState(false);
 
-  const checkForProfile = () => {
-    axios.get("/api").then(res => {
-      let profile = res.data.profiles;
-      console.log(res);
-      for (let i = 0; i < profile.length; i++) {
-        if (profile[i].username !== username) {
-        }
-      }
-    });
-  };
-  checkForProfile();
+  // const checkForProfile = () => {
+  //   axios.get("/api").then(res => {
+  //     console.log(username);
+  //     let profile = res.data.profiles;
+  //     console.log(res);
+  //     for (let i = 0; i < profile.length; i++) {
+  //       if (profile[i].username === username) {
+  //         console.log("hello");
+  //       }
+  //     }
+  //   });
+  // };
+
   const handleProfileFormSubmit = event => {
     event.preventDefault();
     axios
@@ -62,9 +64,9 @@ const Profile = () => {
   const handleItemPriceChange = event => {
     setItemPrice(event.target.value);
   };
-  const handleShowProfile = () => {
-    setProfile(true);
-  };
+  // const handleShowProfile = () => {
+  //   setProfile(true);
+  // };
 
   const handleClose = () => {
     setShow(false);
