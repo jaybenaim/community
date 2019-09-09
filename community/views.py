@@ -66,29 +66,56 @@ def signup_create(request):
         return render(request, 'registration/signup.html', {'form': form})
 
     
-def api(request): 
-    
+def api_items(request): 
+    newItem = Item() 
+    if request.method == 'POST': 
+        body = json.loads(request.body)
+        newItem.name_of_item = body["shedItem"]
+        newItem.price = body['shedItemPrice']
+        newItem.save()
+
+    items = Item.objects.all() 
+    itemList = []
+
+    for item in items: 
+        itemList.append({'name': item.name_of_item, 'price': item.price})
+   
+    data = {
+        'items': itemList,
+    }
+
+    json.dumps(data)
+    response = JsonResponse(
+        {
+        'items': itemList,
+        } 
+    )
+
+    return response 
+
+
+def api_profiles(request): 
     newProfile = Profile()  
     newItem = Item() 
     
     if request.method == 'POST': 
         body = json.loads(request.body)
         newProfile.id = request.user.id
-        print(body)
         newProfile.profile_name = body["username"]
         newProfile.email = body["email"]
         newProfile.address = body["address"]
         newProfile.initial_item = body["shedItem"]
         newItem.name_of_item = body["shedItem"]
         newItem.price = body['shedItemPrice']
+        newItem.save()
+
         # newProfile.shed_items = newItem
         # newProfile.create(shed_items=body["shed_item"])
         # newProfile.shed_items.set(  {'name_of_item':body["shed_item"],  'price':"A cup of Tea"} )
         newProfile.save()
-        newItem.save()
-
-    items = Item.objects.all() 
+        
     profiles = Profile.objects.all() 
+    items = Item.objects.all() 
     itemList = []
     profileList = []
     shed_items = []
@@ -107,17 +134,14 @@ def api(request):
             'shed_items': shed_items
             }
         )
-
     data = {
-        'items': itemList,
-        'Profiles': profileList
-    }
+        'Profiles': profileList, 
 
+    }
     json.dumps(data)
     response = JsonResponse(
         {
-        'items': itemList,
-        'profiles': profileList
+        'profiles': profileList, 
         } 
     )
 
