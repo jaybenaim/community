@@ -14,6 +14,7 @@ const NavBar = () => {
     <Navbar className="nav" bg="light" expand="lg">
       <Navbar.Brand href="/home">
         <img className="logo" src={logo} alt="logo" />
+        Community
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
