@@ -14,7 +14,7 @@ const Profile = () => {
   const [shedItem, setItem] = useState([]);
   const [shedItemPrice, setItemPrice] = useState("");
   const [show, setShow] = useState(false);
-  // const [showProfile, setProfile] = useState(false);
+  const [showProfile, setProfile] = useState(false);
 
   // const checkForProfile = () => {
   //   axios.get("/api").then(res => {
@@ -40,9 +40,9 @@ const Profile = () => {
         shedItemPrice
       })
       .then(res => {
-        console.log(username, email, address, shedItem, shedItemPrice);
         console.log("POST Status: " + res.statusText);
         handleClose();
+        handleShowProfile();
       })
       .catch(err => {
         console.log("POST Status: " + err);
@@ -64,9 +64,9 @@ const Profile = () => {
   const handleItemPriceChange = event => {
     setItemPrice(event.target.value);
   };
-  // const handleShowProfile = () => {
-  //   setProfile(true);
-  // };
+  const handleShowProfile = () => {
+    setProfile(true);
+  };
 
   const handleClose = () => {
     setShow(false);
@@ -84,6 +84,8 @@ const Profile = () => {
             shedItem={shedItem}
             shedItemPrice={shedItemPrice}
             show={show}
+            showProfile={showProfile}
+            handleClose={handleClose}
           />
         </div>
         {/* ) : ( */}
