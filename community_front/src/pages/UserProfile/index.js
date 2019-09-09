@@ -15,6 +15,7 @@ class UserProfile extends React.Component {
     this.setState({ show: false });
   };
   handleShow = () => this.setState({ show: true });
+
   handleImageSrc = event => {
     this.setState({
       imgChange: true
@@ -23,10 +24,18 @@ class UserProfile extends React.Component {
 
   handleImageChange = () => {
     let src = prompt("Enter a image url");
-    this.setState({ imgSrc: src });
+    if (src !== null) this.setState({ imgSrc: src });
+    else this.setState({ imgSrc: this.state.imgSrc });
   };
   render() {
-    const { username, email, address, shedItem, shedItemPrice } = this.props;
+    const {
+      username,
+      email,
+      address,
+      shedItem,
+      shedItemPrice,
+      showProfile
+    } = this.props;
 
     return (
       <>
@@ -35,7 +44,7 @@ class UserProfile extends React.Component {
             className="profile-image"
             src={this.state.imgSrc}
             alt="profile"
-            onClick={this.handleImageSrc}
+            onClick={this.handleImageChange}
           />
           {this.state.imgChange ? (
             <Modal show={this.state.show} onHide={this.handleClose}>
@@ -61,7 +70,7 @@ class UserProfile extends React.Component {
                 <Button variant="primary">Save changes</Button>
               </Modal.Footer>
             </Modal>
-          ) : username.length > 1 ? (
+          ) : showProfile ? (
             <div className="profile-info">
               <h2>{username}</h2>
               <p>{email}</p>
