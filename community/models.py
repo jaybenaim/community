@@ -21,6 +21,7 @@ class Item(models.Model):
 class Profile(models.Model): 
     # user = models.OneToOneField(User, on_delete=models.CASCADE)
     username = models.CharField(max_length=255)
+    profile_name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255) 
     address = models.CharField(max_length=255)
     initial_item = models.CharField(max_length=255)
@@ -29,11 +30,11 @@ class Profile(models.Model):
     def __str__(self): 
         return self.username
 
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
+# @receiver(post_save, sender=User)
+# def create_user_profile(sender, instance, created, **kwargs):
+#     if created:
+#         Profile.objects.create(user=instance)
 
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+# @receiver(post_save, sender=User)
+# def save_user_profile(sender, instance, **kwargs):
+#     instance.profile.save()

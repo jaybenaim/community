@@ -65,21 +65,17 @@ def signup_create(request):
     else: 
         return render(request, 'registration/signup.html', {'form': form})
 
-
-    
-def incrementingKey(num): 
-        return num + 1
     
 def api(request): 
     
     newProfile = Profile()  
     newItem = Item() 
-
-    req = request.POST
-
+    
     if request.method == 'POST': 
         body = json.loads(request.body)
-        newProfile.id =request.user.id
+        newProfile.id = request.user.id
+        print(body)
+        newProfile.profile_name = body["username"]
         newProfile.email = body["email"]
         newProfile.address = body["address"]
         newProfile.initial_item = body["shedItem"]
@@ -91,22 +87,23 @@ def api(request):
         newProfile.save()
         newItem.save()
 
-         
     items = Item.objects.all() 
     profiles = Profile.objects.all() 
     itemList = []
     profileList = []
     shed_items = []
 
-    for i, item in enumerate(items): 
-        itemList.append({'id': i + 1, 'name': item.name_of_item, 'price': item.price})
+    for item in items: 
+        itemList.append({'name': item.name_of_item, 'price': item.price})
 
     for profile in profiles: 
         profileList.append({
             'user_id': request.user.id, 
             'username': request.user.username, 
+            'profile_name': profile.profile_name,
             'email': profile.email, 
             'address': profile.address, 
+            'initial_item': profile.initial_item,
             'shed_items': shed_items
             }
         )
