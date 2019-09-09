@@ -1,7 +1,11 @@
-.logo {
+.nav {
   height: 80px;
+}
+
+.logo {
+  height: 20px;
   zoom: 3;
   margin-left: 5px;
-  margin-top: -15px;
+  margin-top: -11px;
   margin-bottom: -10px;
 }
