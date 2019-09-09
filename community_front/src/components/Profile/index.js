@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import ProfileForm from "../../components/ProfileForm";
-import axios from "axios";
 import UserProfile from "../UserProfile";
 import "./index.css";
-
-axios.defaults.xsrfCookieName = "csrftoken";
-axios.defaults.xsrfHeaderName = "X-CSRFToken";
+import Root from "../../apis/root";
 
 const Profile = () => {
   const [username, setName] = useState("");
@@ -31,14 +28,14 @@ const Profile = () => {
 
   const handleProfileFormSubmit = event => {
     event.preventDefault();
-    axios
-      .post("/api", {
-        username,
-        email,
-        address,
-        shedItem,
-        shedItemPrice
-      })
+
+    Root.post("/api/profiles", {
+      username,
+      email,
+      address,
+      shedItem,
+      shedItemPrice
+    })
       .then(res => {
         console.log("POST Status: " + res.statusText);
         handleClose();

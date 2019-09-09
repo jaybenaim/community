@@ -2,7 +2,7 @@ import React from "react";
 import "./index.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NavBar from "../Navbar";
-import Profile from "../../pages/Profile";
+import Profile from "../Profile";
 import Home from "../Home";
 
 const App = () => {
