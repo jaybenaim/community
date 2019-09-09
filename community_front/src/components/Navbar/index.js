@@ -6,7 +6,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 // import { Helmet } from "react-helmet";
-import logo from "../../logo/logo.png";
+import logo from "./logo/logo.png";
 import "./index.css";
 
 const NavBar = () => {

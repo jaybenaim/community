@@ -1,1 +1,1 @@
-MIDDLEWARE.append('myapp.middleware.dev_cors_middleware')
+MIDDLEWARE.append('community.middleware.dev_cors_middleware')
