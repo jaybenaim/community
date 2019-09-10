@@ -105,6 +105,7 @@ def api_profiles(request):
         newProfile.email = body["email"]
         newProfile.address = body["address"]
         newProfile.initial_item = body["shedItem"]
+        newProfile.initial_item_price = body["shedItemPrice"]
         newItem.name_of_item = body["shedItem"]
         newItem.price = body['shedItemPrice']
         newItem.save()
@@ -119,7 +120,6 @@ def api_profiles(request):
     itemList = []
     profileList = []
     shed_items = []
-
     for item in items: 
         itemList.append({'name': item.name_of_item, 'price': item.price})
 
@@ -131,6 +131,7 @@ def api_profiles(request):
             'email': profile.email, 
             'address': profile.address, 
             'initial_item': profile.initial_item,
+            'initial_item_price': profile.initial_item_price, 
             'shed_items': shed_items
             }
         )
@@ -146,6 +147,22 @@ def api_profiles(request):
     )
 
     return response 
+
+def api_profiles_add_items(request): 
+ 
+    if request.method == 'POST': 
+        item = Item() 
+        arr = [] 
+        body = json.loads(request.body)
+        item.name_of_item = body['shedItem']
+        item.price = body['shedItemPrice']
+        profile = Profile.objects.filter(profile_name=body['user']).first()
+        item = Item.objects.filter(name_of_item=body['shedItem']).first() 
+        # profile.shed_items = 
+        # profile.shed_items = arr
+
+    return profile 
+
 
 
 class FrontendAppView(View):

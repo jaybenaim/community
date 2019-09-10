@@ -3,6 +3,7 @@ import ProfileForm from "../../components/ProfileForm";
 import UserProfile from "../UserProfile";
 import "./index.css";
 import Root from "../../apis/root";
+import axios from "axios";
 
 const Profile = () => {
   const [username, setName] = useState("");
@@ -40,10 +41,29 @@ const Profile = () => {
         console.log("POST Status: " + res.statusText);
         handleClose();
         handleShowProfile();
+        addItems();
       })
       .catch(err => {
         console.log("POST Status: " + err);
       });
+  };
+  const addItems = async () => {
+    await axios.get("/api/profiles").then(res => {
+      let profiles = res.data.profiles;
+      let user = "";
+      for (let i = 0; i < profiles.length; i++) {
+        if (profiles[i].profile_name === username) {
+          user = profiles[i].profile_name;
+        } else console.log("user not found ");
+      }
+      Root.post("/api/profiles/add_items", {
+        user,
+        shedItem,
+        shedItemPrice
+      }).then(res => {
+        console.log("items added");
+      });
+    });
   };
 
   const handleNameChange = event => {

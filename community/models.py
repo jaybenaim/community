@@ -25,6 +25,7 @@ class Profile(models.Model):
     email = models.EmailField(max_length=255) 
     address = models.CharField(max_length=255)
     initial_item = models.CharField(max_length=255)
+    initial_item_price = models.CharField(max_length=255)
     shed_items = models.ManyToManyField(Item) 
 
     def __str__(self): 
