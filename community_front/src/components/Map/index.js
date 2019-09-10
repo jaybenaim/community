@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import "./index.css";
 import GoogleMapReact from "google-map-react";
 import MAP_API_KEY from "../../apis/keys";

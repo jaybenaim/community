@@ -4,7 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Root from "../../apis/root";
 
-const ProfileForm = ({ show, handleShow, handleShowProfile, handleClose }) => {
+const ProfileForm = ({ show, handleShow, handleClose }) => {
   const nameRef = React.createRef();
   const emailRef = React.createRef();
   const addressRef = React.createRef();

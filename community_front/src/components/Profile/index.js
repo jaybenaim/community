@@ -3,7 +3,6 @@ import ProfileForm from "../../components/ProfileForm";
 import UserProfile from "../UserProfile";
 import "./index.css";
 import Root from "../../apis/root";
-import axios from "axios";
 
 const Profile = () => {
   const [profileName, setProfileName] = useState("");
@@ -34,19 +33,12 @@ const Profile = () => {
       });
   };
 
-  const onProfileFormSubmit = values => {
-    let name = values.profileName;
-    let email = values.email;
-    let address = values.address;
-    setProfileName(name);
-    setEmail(email);
-    setAddress(address);
-  };
   const handleShowProfile = () => {
     setProfile(true);
   };
   const handleClose = () => {
     setShow(false);
+    setProfile(true);
   };
   const handleShow = () => setShow(true);
   return (
@@ -66,7 +58,6 @@ const Profile = () => {
         <div className="create-profile-button">
           <ProfileForm
             show={show}
-            onProfileFormSubmit={onProfileFormSubmit}
             handleProfileFormSubmit={handleProfileFormSubmit}
             handleShowProfile={handleShowProfile}
             handleShow={handleShow}

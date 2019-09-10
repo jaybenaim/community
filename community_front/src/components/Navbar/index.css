@@ -1,11 +1,26 @@
+.body {
+  position: absolute;
+  z-index: 1;
+}
 .nav {
+  position: fixed;
   height: 80px;
+  width: 100%;
+  z-index: 2;
+}
+
+.navbar-nav :nth-child(n + 2) {
+  color: white !important;
+  background: rgba(33, 33, 33, 0.5);
+}
+.navbar-nav :first-child {
+  color: black !important;
 }
 
 .logo {
   height: 20px;
   zoom: 3;
   margin-left: 5px;
-  margin-top: -11px;
+  margin-top: -8px;
   margin-bottom: -10px;
 }

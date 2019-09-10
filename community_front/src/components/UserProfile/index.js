@@ -1,7 +1,7 @@
 import React from "react";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+// import Modal from "react-bootstrap/Modal";
+// import Form from "react-bootstrap/Form";
+// import Button from "react-bootstrap/Button";
 import "./index.css";
 
 class UserProfile extends React.Component {
@@ -28,14 +28,7 @@ class UserProfile extends React.Component {
     else this.setState({ imgSrc: this.state.imgSrc });
   };
   render() {
-    const {
-      username,
-      email,
-      address,
-      shedItem,
-      shedItemPrice,
-      showProfile
-    } = this.props;
+    const { profileName, email, address, showProfile } = this.props;
 
     return (
       <>
@@ -46,7 +39,7 @@ class UserProfile extends React.Component {
             alt="profile"
             onClick={this.handleImageChange}
           />
-          {this.state.imgChange ? (
+          {/* {this.state.imgChange ? (
             <Modal show={this.state.show} onHide={this.handleClose}>
               <Modal.Header closeButton>
                 <Modal.Title>Modal title</Modal.Title>
@@ -70,9 +63,11 @@ class UserProfile extends React.Component {
                 <Button variant="primary">Save changes</Button>
               </Modal.Footer>
             </Modal>
-          ) : showProfile ? (
+          ) : 
+          */}
+          {showProfile ? (
             <div className="profile-info">
-              <h2>{username}</h2>
+              <h2>{profileName}</h2>
               <label htmlFor="email">EMAIL</label>
               <p>{email}</p>
               <label htmlFor="address">ADDRESS</label>
