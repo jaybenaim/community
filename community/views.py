@@ -1,4 +1,3 @@
-from .serializers import UserSerializer, GroupSerializer
 from django.shortcuts import render, reverse, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth import authenticate, login, logout
@@ -11,6 +10,7 @@ from django.views.generic import View
 from rest_framework import viewsets
 from django.core import serializers
 from django.conf import settings
+from .serializers import *
 from .models import *
 import logging
 import random 
@@ -198,6 +198,17 @@ class GroupViewSet(viewsets.ModelViewSet):
     """ API endpoint that allows groups to be viewed or edited """ 
     queryset = Group.objects.all() 
     serializer_class = GroupSerializer 
+
+class ProfileViewSet(viewsets.ModelViewSet): 
+    """ Api endpoint for profiles to be viewed or edited """ 
+    queryset = Profile.objects.all() 
+    serializer_class = ProfileSerializer 
+
+class ItemViewSet(viewsets.ModelViewSet): 
+    """ Api endpoint for items to be viewed or edited """ 
+    queryset = Item.objects.all() 
+    serializer_class = ItemSerializer 
+
 
 class ApiView(View):
     
