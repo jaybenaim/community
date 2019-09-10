@@ -2,30 +2,34 @@ import React from "react";
 import axios from "axios";
 import "./index.css";
 import GoogleMapReact from "google-map-react";
-import ShowMap from '../mapShow'
-
+import MAP_API_KEY from "../../apis/keys";
 
 class SimpleMap extends React.Component {
-  props = {
+  state = {
     center: {
-      lat: 59.95,
-      lng: 30.33
+      lat: 43.653225,
+      lng: -79.383186
     },
     zoom: 11
   };
 
   render() {
+    const handleApiLoaded = (map, maps) => {
+      // use map and maps objects
+    };
     return (
       <div className="map-container">
         <div style={{ height: "100vh", width: "100%" }}>
           <GoogleMapReact
             bootstrapURLKeys={{
-              key: "AIzaSyBvFKd_Y1LlmnjZFVoytzh_mCNDimEnP4M"
+              key: MAP_API_KEY
             }}
-            defaultCenter={this.props.center}
-            defaultZoom={this.props.zoom}
+            defaultCenter={this.state.center}
+            defaultZoom={this.state.zoom}
+            yesIWantToUseGoogleMapApiInternals
+            onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
           >
-            <ShowMap lat={59.955413} lng={30.337844} text="My Marker" />
+            {/* <ShowMap lat={43.653225} lng={-79.383186} text="My Marker" /> */}
           </GoogleMapReact>
         </div>
       </div>
