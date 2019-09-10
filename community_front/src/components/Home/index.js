@@ -4,7 +4,7 @@ import "./index.css";
 const Home = () => {
   return (
     <div className="image-slider">
-      <ul class="slideshow">
+      <ul className="slideshow">
         <li></li>
         <li></li>
         <li></li>

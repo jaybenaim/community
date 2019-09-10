@@ -12,14 +12,14 @@ import "./index.css";
 const NavBar = () => {
   return (
     <Navbar className="nav" bg="light" expand="lg">
-      <Navbar.Brand href="/home">
+      <Navbar.Brand href="/">
         <img className="logo" src={logo} alt="logo" />
         Community
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="/home">Home</Nav.Link>
+          <Nav.Link href="/">Home</Nav.Link>
           <Nav.Link href="/profiles">Profiles</Nav.Link>
           <Nav.Link href="/map">Map</Nav.Link>
           <NavDropdown title="Category" id="basic-nav-dropdown">
@@ -40,7 +40,7 @@ const NavBar = () => {
         </Nav>
         <Form inline>
           <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-          <Button variant="outline-success">Search</Button>
+          <Button variant="outline-primary">Search</Button>
         </Form>
       </Navbar.Collapse>
     </Navbar>

@@ -5,68 +5,40 @@ import "./index.css";
 import Root from "../../apis/root";
 
 const Profile = () => {
-  const [username, setName] = useState("");
+  const [profileName, setProfileName] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
-  const [shedItem, setItem] = useState([]);
-  const [shedItemPrice, setItemPrice] = useState("");
   const [show, setShow] = useState(false);
   const [showProfile, setProfile] = useState(false);
 
-  // const checkForProfile = () => {
-  //   axios.get("/api").then(res => {
-  //     console.log(username);
-  //     let profile = res.data.profiles;
-  //     console.log(res);
-  //     for (let i = 0; i < profile.length; i++) {
-  //       if (profile[i].username === username) {
-  //         console.log("hello");
-  //       }
-  //     }
-  //   });
-  // };
+  const handleProfileFormSubmit = async values => {
+    let name = values.profileName;
+    let email = values.email;
+    let address = values.address;
+    setProfileName(name);
+    setEmail(email);
+    setAddress(address);
 
-  const handleProfileFormSubmit = event => {
-    event.preventDefault();
-
-    Root.post("/api/profiles", {
-      username,
+    await Root.post("profiles/", {
+      profileName,
       email,
-      address,
-      shedItem,
-      shedItemPrice
+      address
     })
       .then(res => {
+        console.log(profileName + email + address);
         console.log("POST Status: " + res.statusText);
-        handleClose();
-        handleShowProfile();
       })
       .catch(err => {
         console.log("POST Status: " + err);
       });
   };
 
-  const handleNameChange = event => {
-    setName(event.target.value);
-  };
-  const handleEmailChange = event => {
-    setEmail(event.target.value);
-  };
-  const handleAddressChange = event => {
-    setAddress(event.target.value);
-  };
-  const handleItemChange = event => {
-    setItem(event.target.value);
-  };
-  const handleItemPriceChange = event => {
-    setItemPrice(event.target.value);
-  };
   const handleShowProfile = () => {
     setProfile(true);
   };
-
   const handleClose = () => {
     setShow(false);
+    setProfile(true);
   };
   const handleShow = () => setShow(true);
   return (
@@ -75,27 +47,21 @@ const Profile = () => {
         {/* {showProfile ? ( */}
         <div className="profile-page">
           <UserProfile
-            username={username}
+            profileName={profileName}
             email={email}
             address={address}
-            shedItem={shedItem}
-            shedItemPrice={shedItemPrice}
             show={show}
             showProfile={showProfile}
-            handleClose={handleClose}
           />
         </div>
         {/* ) : ( */}
         <div className="create-profile-button">
           <ProfileForm
             show={show}
-            handleShow={handleShow}
-            handleNameChange={handleNameChange}
-            handleEmailChange={handleEmailChange}
-            handleAddressChange={handleAddressChange}
-            handleItemChange={handleItemChange}
-            handleItemPriceChange={handleItemPriceChange}
             handleProfileFormSubmit={handleProfileFormSubmit}
+            handleShowProfile={handleShowProfile}
+            handleShow={handleShow}
+            handleClose={handleClose}
           />
         </div>
         {/* )} */}
