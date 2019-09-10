@@ -1,18 +1,21 @@
+from .serializers import UserSerializer, GroupSerializer
+from django.shortcuts import render, reverse, redirect, get_object_or_404
+from django.views.decorators.http import require_http_methods
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, reverse, redirect, get_object_or_404
-from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User, Group 
 from django.http import HttpResponse, JsonResponse
-import json 
-# from .forms import *
-from .models import *
-from django.core import serializers
-import logging
 from django.views.generic import View
+from rest_framework import viewsets
+from django.core import serializers
 from django.conf import settings
-import os
+from .models import *
+import logging
 import random 
+import json 
+import os
 
 def root(request): 
     return redirect('home/')
@@ -185,3 +188,26 @@ class FrontendAppView(View):
                 """,
                 status=501,
             )
+
+class UserViewSet(viewsets.ModelViewSet): 
+    """ API endpoint that allows users to be viewed or edited """ 
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer 
+
+class GroupViewSet(viewsets.ModelViewSet): 
+    """ API endpoint that allows groups to be viewed or edited """ 
+    queryset = Group.objects.all() 
+    serializer_class = GroupSerializer 
+
+class ApiView(View):
+    
+    def get(self, request):
+        return JsonResponse({
+            "it": "getting"
+        })
+
+    @csrf_exempt
+    def post(self, request):
+        return JsonResponse({
+            "it": "posting"
+        })
