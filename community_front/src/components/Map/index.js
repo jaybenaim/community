@@ -5,12 +5,12 @@ import GoogleMapReact from "google-map-react";
 import MAP_API_KEY from "../../apis/keys";
 
 class SimpleMap extends React.Component {
-  state = {
+  static defaultProps = {
     center: {
-      lat: 43.653225,
-      lng: -79.383186
+      lat: 43.88154,
+      lng: -79.46981
     },
-    zoom: 11
+    zoom: 15
   };
 
   render() {
@@ -24,8 +24,8 @@ class SimpleMap extends React.Component {
             bootstrapURLKeys={{
               key: MAP_API_KEY
             }}
-            defaultCenter={this.state.center}
-            defaultZoom={this.state.zoom}
+            defaultCenter={this.props.center}
+            defaultZoom={this.props.zoom}
             yesIWantToUseGoogleMapApiInternals
             onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
           >
