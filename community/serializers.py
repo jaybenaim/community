@@ -13,10 +13,10 @@ class GroupSerializer(serializers.Serializer):
         model = Group 
         feilds = ['url', 'name']
 
-class ProfileSerializer(serializers.Serializer): 
+class ProfileSerializer(serializers.ModelSerializer): 
     class Meta: 
         model = Profile 
-        fields = ['username', 'profile_name', 'email', 'address', 'shed_items']
+        fields = ['username', 'profile_name', 'email', 'address']
 
     def create(self, validated_data): 
         return Profile.objects.create(**validated_data)
@@ -24,7 +24,7 @@ class ProfileSerializer(serializers.Serializer):
     def update(self, instance, validated_data): 
         instance.email = validated_data.get('email', instance.email)
         instance.address = validated_data.get('address', instance.address) 
-        instance.save() 
+        instance.save(username=request.user) 
         return instance 
 
 

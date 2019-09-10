@@ -2,18 +2,34 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import Root from "../../apis/root";
 
-const ProfileForm = ({
-  show,
-  handleShow,
-  handleClose,
-  handleNameChange,
-  handleEmailChange,
-  handleAddressChange,
-  handleItemChange,
-  handleItemPriceChange,
-  handleProfileFormSubmit
-}) => {
+const ProfileForm = ({ show, handleShow, handleShowProfile, handleClose }) => {
+  const nameRef = React.createRef();
+  const emailRef = React.createRef();
+  const addressRef = React.createRef();
+
+  const handleProfileFormClick = event => {
+    event.preventDefault();
+    let profileName = nameRef.current.value;
+    let email = emailRef.current.value;
+    let address = addressRef.current.value;
+
+    Root.post("profiles/", {
+      username: profileName,
+      profile_name: profileName,
+      email,
+      address
+    })
+      .then(res => {
+        handleClose();
+        console.log("POST Status: " + res.statusText);
+      })
+      .catch(err => {
+        console.log("POST Status: " + err);
+      });
+  };
+
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
@@ -24,12 +40,12 @@ const ProfileForm = ({
           <Modal.Title>Create a Profile :)</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleProfileFormSubmit}>
+          <Form>
             <Form.Group controlId="formBasicName">
               <Form.Label>Profile Name</Form.Label>
               <Form.Control
                 name="name"
-                onChange={handleNameChange}
+                ref={nameRef}
                 type="name"
                 placeholder="Enter Profile Name"
               />
@@ -38,7 +54,7 @@ const ProfileForm = ({
               <Form.Label>Email</Form.Label>
               <Form.Control
                 name="email"
-                onChange={handleEmailChange}
+                ref={emailRef}
                 type="email"
                 placeholder="Enter Email"
               />
@@ -47,7 +63,7 @@ const ProfileForm = ({
               <Form.Label>Address</Form.Label>
               <Form.Control
                 name="address"
-                onChange={handleAddressChange}
+                ref={addressRef}
                 type="text"
                 placeholder="Enter Address"
               />
@@ -59,7 +75,7 @@ const ProfileForm = ({
           <Button onClick={handleClose} variant="secondary">
             Close
           </Button>
-          <Button onClick={handleProfileFormSubmit} variant="primary">
+          <Button variant="primary" onClick={handleProfileFormClick}>
             Save changes
           </Button>
         </Modal.Footer>
