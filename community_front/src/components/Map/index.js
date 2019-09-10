@@ -50,7 +50,6 @@ class SimpleMap extends React.Component {
   }
 
   render() {
-    var geocoder = new google.maps.Geocoder();
     const handleApiLoaded = (map, maps) => {
       // use map and maps objects
     };
