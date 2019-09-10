@@ -18,6 +18,16 @@ class ProfileSerializer(serializers.Serializer):
         model = Profile 
         fields = ['username', 'profile_name', 'email', 'address', 'shed_items']
 
+    def create(self, validated_data): 
+        return Profile.objects.create(**validated_data)
+
+    def update(self, instance, validated_data): 
+        instance.email = validated_data.get('email', instance.email)
+        instance.address = validated_data.get('address', instance.address) 
+        instance.save() 
+        return instance 
+
+
 class ItemSerializer(serializers.Serializer): 
     class Meta: 
         model = Item 

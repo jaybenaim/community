@@ -73,11 +73,11 @@ class UserProfile extends React.Component {
           ) : showProfile ? (
             <div className="profile-info">
               <h2>{username}</h2>
+              <label htmlFor="email">EMAIL</label>
               <p>{email}</p>
+              <label htmlFor="address">ADDRESS</label>
+
               <p>{address}</p>
-              <p>
-                Item for lend: {shedItem} <br /> Price: {shedItemPrice}
-              </p>
             </div>
           ) : (
             <div></div>

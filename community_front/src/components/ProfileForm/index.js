@@ -52,24 +52,6 @@ const ProfileForm = ({
                 placeholder="Enter Address"
               />
             </Form.Group>
-            <Form.Group controlId="formBasic">
-              <Form.Label>Item for lend</Form.Label>
-              <Form.Control
-                name="item"
-                onChange={handleItemChange}
-                type="text"
-                placeholder="Enter Item for lend"
-              />
-            </Form.Group>
-            <Form.Group controlId="formBasic">
-              <Form.Label>Item Price</Form.Label>
-              <Form.Control
-                name="itemPrice"
-                onChange={handleItemPriceChange}
-                type="text"
-                placeholder="Enter Item Price"
-              />
-            </Form.Group>
           </Form>
         </Modal.Body>
 

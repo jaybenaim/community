@@ -30,40 +30,36 @@ const Profile = () => {
   const handleProfileFormSubmit = event => {
     event.preventDefault();
 
-    Root.post("/api/profiles", {
+    Root.post("profiles/", {
       username,
       email,
-      address,
-      shedItem,
-      shedItemPrice
+      address
     })
       .then(res => {
         console.log("POST Status: " + res.statusText);
         handleClose();
         handleShowProfile();
-        addItems();
+        // addItems();
       })
       .catch(err => {
         console.log("POST Status: " + err);
       });
   };
   const addItems = async () => {
-    await axios.get("/api/profiles").then(res => {
-      let profiles = res.data.profiles;
-      let user = "";
-      for (let i = 0; i < profiles.length; i++) {
-        if (profiles[i].profile_name === username) {
-          user = profiles[i].profile_name;
-        } else console.log("user not found ");
-      }
-      Root.post("/api/profiles/add_items", {
-        user,
-        shedItem,
-        shedItemPrice
-      }).then(res => {
-        console.log("items added");
+    await axios
+      .get("/api/profiles/")
+      .then(res => {
+        let profiles = res.data.profiles;
+        let user = "";
+        for (let i = 0; i < profiles.length; i++) {
+          if (profiles[i].profile_name === username) {
+            user = profiles[i].profile_name;
+          } else console.log("user not found ");
+        }
+      })
+      .catch(err => {
+        console.log(err);
       });
-    });
   };
 
   const handleNameChange = event => {
