@@ -28,10 +28,6 @@ urlpatterns = [
     path('accounts/signup', signup, name='signup'), 
     path('accounts/signup_create', signup_create, name='signup_create'), 
     path('accounts/profile/', include('django.contrib.auth.urls')), 
-    # path('api/api/items', api_items, name='api_items'), 
-    path('api/api/profiles', api_profiles, name='api_profiles'), 
-    # path('api/profiles/add_items', api_profiles_add_items, name='api_profiles_add_items'), 
-    # path('', include(router.urls)),
     url(r'^', FrontendAppView.as_view()),
 
 

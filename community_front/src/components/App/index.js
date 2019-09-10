@@ -7,6 +7,9 @@ import Home from "../Home";
 import SimpleMap from "../Map";
 
 const App = () => {
+  const getUsersAddress = () => { 
+    
+  }
   return (
     <Router>
       <div className="App">
