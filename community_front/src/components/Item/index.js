@@ -2,15 +2,28 @@ import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Root from "../../apis/root";
 
 const Item = ({ show, handleClose }) => {
   //HOOKS
-  const [firstName, setFirstName] = useState("first name");
+  const [itemName, setItemName] = useState("first name");
 
-  const handleFirstNameChange = event => {
-    const firstName = event.target.value;
-    setFirstName({ [firstName]: firstName });
-    console.log(firstName);
+  //REFS
+  const itemRef = React.createRef();
+
+  const handleAddItem = event => {
+    // let itemName = event.target.value;
+    let newItemName = itemRef.current.value;
+    setItemName({ itemName: newItemName });
+  };
+
+  const handleFormSubmit = () => {
+    handleAddItem();
+    handleClose();
+    Root.post("items/", {
+      name_of_item: itemName.itemName,
+      price: "price"
+    });
   };
   return (
     <>
@@ -25,10 +38,11 @@ const Item = ({ show, handleClose }) => {
               <Form.Group controlId="formBasicName">
                 <Form.Label>Item</Form.Label>
                 <Form.Control
-                  name="name"
-                  type="name"
+                  name="item"
+                  type="text"
+                  ref={itemRef}
                   placeholder="Enter An Item Name"
-                  onChange={handleFirstNameChange}
+                  onChange={handleAddItem}
                 />
               </Form.Group>
             </Form>
@@ -36,12 +50,11 @@ const Item = ({ show, handleClose }) => {
 
           <Modal.Footer>
             <Button variant="secondary">Close</Button>
-            <Button variant="primary">Save changes</Button>
+            <Button variant="primary" onClick={handleFormSubmit}>
+              Save changes
+            </Button>
           </Modal.Footer>
         </Modal.Dialog>
-        {/*
-        
-*/}
       </div>
     </>
   );
