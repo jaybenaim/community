@@ -32,31 +32,27 @@ class UserProfile extends React.Component {
     });
   };
 
-  onChangeFile = event => {
+  onChangeFile = async event => {
     event.stopPropagation();
     event.preventDefault();
-    var file = event.target.files[0];
+    const file = event.target.files[0];
     console.log(file);
-    this.setState(
-      {
-        imgSrc: file
-      },
-      () => {
-        const form = new FormData();
-        form.append("file", this.state.imgSrc);
-        Root.post("/profile_img_upload/", form, {
-          headers: {
-            "Content-Type": "multipart/form-data"
-          }
-        });
+    await this.setState({ imgSrc: file });
 
-        // YourAjaxLib.doUpload('/yourEndpoint/',form).then(result=> console.log(result));
+    const form = new FormData();
+    form.append("file", this.state.imgSrc);
+    Root.post("/profile_img_upload/", form, {
+      headers: {
+        "Content-Type": "multipart/form-data"
       }
-    ); /// if you want to upload latter
+    }); /// if you want to upload latter
   };
 
-  handleImageChange = () => {
-    this.inputOpenFileReference.current.click();
+  handleImageChange = async () => {
+    let src = this.inputOpenFileReference.current.click();
+    console.log(src);
+    await this.setState({ imgSrc: src });
+
     // let src = prompt("Enter a image url");
     // if (src !== null) this.setState({ imgSrc: src });
     // else this.setState({ imgSrc: this.state.imgSrc });
