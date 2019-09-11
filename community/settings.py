@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'community_front', 
     'rest_framework',
     'community',
-    'corsheaders'
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -74,7 +74,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'community.wsgi.application'
+# WSGI_APPLICATION = 'community.wsgi.application'
 
 
 # Database

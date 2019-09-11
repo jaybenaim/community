@@ -3,14 +3,24 @@ import React from "react";
 // import Form from "react-bootstrap/Form";
 // import Button from "react-bootstrap/Button";
 import "./index.css";
+import Root from "../../apis/root";
 
 class UserProfile extends React.Component {
-  state = {
-    imgSrc:
-      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-    imgChange: false,
-    show: false
-  };
+  inputOpenFileReference;
+
+  constructor(props) {
+    super(props);
+
+    this.inputOpenFileReference = React.createRef();
+
+    this.state = {
+      imgSrc:
+        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+      imgChange: false,
+      show: false
+    };
+  }
+
   handleClose = () => {
     this.setState({ show: false });
   };
@@ -22,10 +32,34 @@ class UserProfile extends React.Component {
     });
   };
 
+  onChangeFile = event => {
+    event.stopPropagation();
+    event.preventDefault();
+    var file = event.target.files[0];
+    console.log(file);
+    this.setState(
+      {
+        imgSrc: file
+      },
+      () => {
+        const form = new FormData();
+        form.append("file", this.state.imgSrc);
+        Root.post("/profile_img_upload/", form, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        });
+
+        // YourAjaxLib.doUpload('/yourEndpoint/',form).then(result=> console.log(result));
+      }
+    ); /// if you want to upload latter
+  };
+
   handleImageChange = () => {
-    let src = prompt("Enter a image url");
-    if (src !== null) this.setState({ imgSrc: src });
-    else this.setState({ imgSrc: this.state.imgSrc });
+    this.inputOpenFileReference.current.click();
+    // let src = prompt("Enter a image url");
+    // if (src !== null) this.setState({ imgSrc: src });
+    // else this.setState({ imgSrc: this.state.imgSrc });
   };
   render() {
     const { profileName, email, address, showProfile } = this.props;
@@ -33,12 +67,19 @@ class UserProfile extends React.Component {
     return (
       <>
         <div className="profile-container">
+          <input
+            ref={this.inputOpenFileReference}
+            type="file"
+            style={{ display: "none" }}
+            onChange={this.onChangeFile}
+          />
           <img
             className="profile-image"
             src={this.state.imgSrc}
             alt="profile"
             onClick={this.handleImageChange}
           />
+
           {/* {this.state.imgChange ? (
             <Modal show={this.state.show} onHide={this.handleClose}>
               <Modal.Header closeButton>
