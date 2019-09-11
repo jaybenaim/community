@@ -9,13 +9,13 @@
   z-index: 2;
 }
 
-.navbar-nav :nth-child(n + 2) {
+/* .navbar-nav :nth-child(n + 2) {
   color: white !important;
   background: rgba(33, 33, 33, 0.5);
 }
 .navbar-nav :first-child {
   color: black !important;
-}
+} */
 
 .logo {
   height: 20px;
