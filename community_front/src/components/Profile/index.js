@@ -3,13 +3,23 @@ import ProfileForm from "../../components/ProfileForm";
 import UserProfile from "../UserProfile";
 import "./index.css";
 import Root from "../../apis/root";
+import Item from "../Item";
 
 const Profile = () => {
+  // Hooks
+
   const [profileName, setProfileName] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [show, setShow] = useState(false);
   const [showProfile, setProfile] = useState(false);
+  const [displayItemForm, setDisplayItemForm] = useState(false);
+
+  // Handlers
+  const handleAddItem = event => {
+    event.preventDefault();
+    setDisplayItemForm(prevState => !prevState);
+  };
 
   const handleProfileFormSubmit = values => {
     let name = values.profile_name;
@@ -50,10 +60,19 @@ const Profile = () => {
             handleShowProfile={handleShowProfile}
             handleShow={handleShow}
             handleClose={handleClose}
+            handleAddItem={handleAddItem}
           />
         </div>
         {/* )} */}
       </div>
+      {console.log(displayItemForm)}
+      {displayItemForm && (
+        <Item
+          show={show}
+          handleClose={handleClose}
+          handleAddItem={handleAddItem}
+        />
+      )}
     </>
   );
 };

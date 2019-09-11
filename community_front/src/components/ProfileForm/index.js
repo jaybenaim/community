@@ -1,28 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Root from "../../apis/root";
+import ModalTitle from "react-bootstrap/ModalTitle";
 
 const ProfileForm = ({
   show,
   handleShow,
   handleClose,
-  handleProfileFormSubmit
+  handleProfileFormSubmit,
+  handleAddItem
 }) => {
+  // REFS
   const nameRef = React.createRef();
   const emailRef = React.createRef();
   const addressRef = React.createRef();
+
+  // // Hooks
+
+  // const [displayItemForm, setDisplayItemForm] = useState(false);
+
+  // // Handlers
+  // const handleAddItem = event => {
+  //   event.preventDefault();
+  //   setDisplayItemForm(true);
+  // };
 
   const handleProfileFormClick = event => {
     event.preventDefault();
     let profileName = nameRef.current.value;
     let email = emailRef.current.value;
     let address = addressRef.current.value;
-    
-    console.log(profileName)
-    console.log(email)
-    console.log(address)
+
     Root.post("profiles/", {
       username: profileName,
       profile_name: profileName,
@@ -49,9 +59,13 @@ const ProfileForm = ({
       <Button variant="primary" onClick={handleShow}>
         Create Profile
       </Button>
+      <Button variant="primary" onClick={handleAddItem}>
+        Add Item
+      </Button>
+
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Create a Profile :)</Modal.Title>
+          <Modal.Title name="someValue">Create a Profile </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
