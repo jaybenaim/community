@@ -8,20 +8,11 @@ import MapMarker from "../MapMarker";
 
 class SimpleMap extends React.Component {
   state = {
-    user1: {
-      center: {
-        lat: 0,
-        lng: 0
-      },
-      zoom: 13
+    center: {
+      lat: 0,
+      lng: 0
     },
-    user2: {
-      center: {
-        lat: 0,
-        lng: 0
-      },
-      zoom: 13
-    }
+    zoom: 13
   };
   static defaultProps = {
     center: {
@@ -94,7 +85,11 @@ class SimpleMap extends React.Component {
               lng={this.state.lng}
               text="My Marker"
             /> */}
-            <Marker lat={this.state.lat} lng={this.state.lng} />
+            <Marker lat={this.state.center.lat} lng={this.state.center.lng} />
+            <MarkerTwo
+              lat={this.state.center.lat}
+              lng={this.state.center.lng}
+            />
           </GoogleMapReact>
         </div>
       </div>
@@ -102,6 +97,9 @@ class SimpleMap extends React.Component {
   }
 }
 const Marker = props => {
+  return <div className="pin"></div>;
+};
+const MarkerTwo = props => {
   return <div className="pin"></div>;
 };
 export default SimpleMap;
