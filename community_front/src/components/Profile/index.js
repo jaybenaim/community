@@ -11,26 +11,14 @@ const Profile = () => {
   const [show, setShow] = useState(false);
   const [showProfile, setProfile] = useState(false);
 
-  const handleProfileFormSubmit = async values => {
-    let name = values.profileName;
+  const handleProfileFormSubmit = values => {
+    let name = values.profile_name;
     let email = values.email;
     let address = values.address;
+
     setProfileName(name);
     setEmail(email);
     setAddress(address);
-
-    await Root.post("profiles/", {
-      profileName,
-      email,
-      address
-    })
-      .then(res => {
-        console.log(profileName + email + address);
-        console.log("POST Status: " + res.statusText);
-      })
-      .catch(err => {
-        console.log("POST Status: " + err);
-      });
   };
 
   const handleShowProfile = () => {

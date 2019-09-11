@@ -4,7 +4,12 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Root from "../../apis/root";
 
-const ProfileForm = ({ show, handleShow, handleClose }) => {
+const ProfileForm = ({
+  show,
+  handleShow,
+  handleClose,
+  handleProfileFormSubmit
+}) => {
   const nameRef = React.createRef();
   const emailRef = React.createRef();
   const addressRef = React.createRef();
@@ -26,6 +31,12 @@ const ProfileForm = ({ show, handleShow, handleClose }) => {
     })
       .then(res => {
         handleClose();
+        handleProfileFormSubmit({
+          username: profileName,
+          profile_name: profileName,
+          email,
+          address
+        });
         console.log("POST Status: " + res.statusText);
       })
       .catch(err => {

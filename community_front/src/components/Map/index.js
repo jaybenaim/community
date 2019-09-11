@@ -95,6 +95,7 @@ class SimpleMap extends React.Component {
               text="My Marker"
             /> */}
             <Marker lat={this.state.lat} lng={this.state.lng} />
+            <MarkerTwo lat={this.state.lat} lng={this.state.lng} />
           </GoogleMapReact>
         </div>
       </div>
@@ -102,6 +103,9 @@ class SimpleMap extends React.Component {
   }
 }
 const Marker = props => {
+  return <div className="pin"></div>;
+};
+const MarkerTwo = props => {
   return <div className="pin"></div>;
 };
 export default SimpleMap;
