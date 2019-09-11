@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'community_front', 
     'rest_framework',
     'community',
-    'corsheaders'
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
