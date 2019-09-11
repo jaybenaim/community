@@ -14,7 +14,10 @@ const ProfileForm = ({ show, handleShow, handleClose }) => {
     let profileName = nameRef.current.value;
     let email = emailRef.current.value;
     let address = addressRef.current.value;
-
+    
+    console.log(profileName)
+    console.log(email)
+    console.log(address)
     Root.post("profiles/", {
       username: profileName,
       profile_name: profileName,

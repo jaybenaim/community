@@ -1,3 +1,8 @@
 .create-profile-button {
   margin-top: 100px;
 }
+
+.profile-page:hover {
+  cursor: pointer;
+  /* background-color: red; */
+}
