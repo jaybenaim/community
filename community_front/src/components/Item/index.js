@@ -4,37 +4,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Root from "../../apis/root";
 
-const Item = ({ show, handleClose, profileName, email, address }) => {
-  //HOOKS
-  const [itemName, setItemName] = useState("first name");
-  const [itemPrice, setItemPrice] = useState("price");
-
-  //REFS
-  const itemRef = React.createRef();
-  const priceRef = React.createRef();
-
-  const handleAddItem = event => {
-    // let itemName = event.target.value;
-    let newItemName = itemRef.current.value;
-    let priceName = priceRef.current.value;
-    setItemName({ itemName: newItemName });
-    setItemPrice({ itemPrice: priceName });
-  };
-
-  const handleFormSubmit = () => {
-    handleAddItem();
-
-    Root.post("items/", {
-      name_of_item: itemName.itemName,
-      price: itemPrice.itemPrice
-    })
-      .then(res => {
-        console.log("Item added");
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
+const Item = ({ handleAddItemName, handleAddItemPrice, handleFormSubmit }) => {
   return (
     <>
       <div>
@@ -50,9 +20,9 @@ const Item = ({ show, handleClose, profileName, email, address }) => {
                 <Form.Control
                   name="item"
                   type="text"
-                  ref={itemRef}
+                  // ref={itemRef}
+                  onChange={handleAddItemName}
                   placeholder="Enter An Item Name"
-                  onChange={handleAddItem}
                 />
               </Form.Group>
               <Form.Group controlId="formBasicName">
@@ -60,9 +30,9 @@ const Item = ({ show, handleClose, profileName, email, address }) => {
                 <Form.Control
                   name="price"
                   type="text"
-                  ref={priceRef}
+                  // ref={priceRef}
+                  onChange={handleAddItemPrice}
                   placeholder="Enter An Item Price"
-                  onChange={handleAddItem}
                 />
               </Form.Group>
             </Form>

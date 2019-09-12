@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import "./index.css";
 import GoogleMapReact from "google-map-react";
 import MAP_API_KEY from "../../apis/keys";
 import Geocode from "react-geocode";
 import Root from "../../apis/root";
 import MapMarker from "../MapMarker";
+
+//  todo set zoom on marker click
 
 class SimpleMap extends React.Component {
   state = {
@@ -39,6 +41,7 @@ class SimpleMap extends React.Component {
     Root.get("/profiles/")
       .then(res => {
         let address = res.data[1].address;
+
         let address2 = res.data[3].address;
         let lastIndex = address.indexOf(" ");
         let lastIndex2 = address2.indexOf(" ");
@@ -74,6 +77,7 @@ class SimpleMap extends React.Component {
   }
 
   render() {
+    const { profileName } = this.props;
     const handleApiLoaded = (map, maps) => {
       // use map and maps objects
       new maps.Marker({
@@ -87,6 +91,7 @@ class SimpleMap extends React.Component {
         title: "Marker2"
       });
     };
+
     return (
       <div className="map-container">
         <button onClick={this.getMyLocation}>Get My Location</button>
@@ -101,14 +106,14 @@ class SimpleMap extends React.Component {
             onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
           >
             {/* Place map components here to place on map  */}
+            <Marker
+              lat={this.state.user1.center.lat}
+              lng={this.state.user1.center.lng}
+            />
             <MapMarker
               lat={this.state.user2.center.lat}
               lng={this.state.user2.center.lng}
               text="My Marker"
-            />
-            <Marker
-              lat={this.state.user1.center.lat}
-              lng={this.state.user1.center.lng}
             />
           </GoogleMapReact>
         </div>
@@ -116,7 +121,11 @@ class SimpleMap extends React.Component {
     );
   }
 }
-const Marker = props => {
-  return <div className="hammer"></div>;
+const Marker = () => {
+  return (
+    <div className="user-radius">
+      <div className="home"></div>
+    </div>
+  );
 };
 export default SimpleMap;

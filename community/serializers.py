@@ -23,7 +23,7 @@ class ProfileSerializer(serializers.ModelSerializer):
      )
     class Meta:
         model = Profile
-        fields = ["username", "profile_name", "email", "address", "shed_items"]
+        fields = ["id", "username", "profile_name", "email", "address", "shed_items"]
 
     def create(self, validated_data):
         return Profile.objects.create(**validated_data)
@@ -38,7 +38,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
-        fields = ["name_of_item", "price"]
+        fields = ["id", "name_of_item", "price"]
 
     def create(self, validated_data):
         return Item.objects.create(**validated_data)

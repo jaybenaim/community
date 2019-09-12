@@ -18,16 +18,15 @@ class UserProfile extends React.Component {
         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
       imgChange: false,
       show: false,
-      items: []
+      items: [],
+      userItems: []
     };
   }
   componentDidMount() {
     Root.get("items/").then(res => {
-      let items = res.data.item;
-      console.log(items);
-      // this.setState(prevState => {
-      //   [...prevState, ]
-      // })
+      let items = res.data;
+      this.setState({ items: [items] });
+      console.log(this.state.items);
     });
   }
   handleClose = () => {
@@ -70,8 +69,16 @@ class UserProfile extends React.Component {
     // if (src !== null) this.setState({ imgSrc: src });
     // else this.setState({ imgSrc: this.state.imgSrc });
   };
+
   render() {
-    const { profileName, email, address, showProfile } = this.props;
+    const {
+      profileName,
+      email,
+      address,
+      showProfile,
+      itemName,
+      itemPrice
+    } = this.props;
 
     return (
       <>
@@ -115,15 +122,21 @@ class UserProfile extends React.Component {
             </Modal>
           ) : 
           */}
-          {showProfile && (
+          {!showProfile && (
             <div className="profile-info">
               <h2>{profileName}</h2>
               <label htmlFor="email">EMAIL</label>
               <p>{email}</p>
               <label htmlFor="address">ADDRESS</label>
               <p>{address}</p>
-              <label htmlFor="items">Items for Lend</label>
-              <p>{this.state.items}</p>
+              <div>
+                <label htmlFor="items">Items for Lend</label>
+                <br />
+                <label htmlFor="items">Name:&nbsp;&nbsp;</label>
+                {itemName.itemName} <br />
+                <label htmlFor="items">Price:&nbsp;&nbsp; </label>
+                {itemPrice.itemPrice}
+              </div>
             </div>
           )}
         </div>
