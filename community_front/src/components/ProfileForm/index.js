@@ -37,7 +37,8 @@ const ProfileForm = ({
       username: profileName,
       profile_name: profileName,
       email,
-      address
+      address,
+      shed_items: { item: "item" }
     })
       .then(res => {
         handleClose();

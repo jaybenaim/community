@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Root from "../../apis/root";
 
-const Item = ({ show, handleClose }) => {
+const Item = ({ show, handleClose, profileName, email, address }) => {
   //HOOKS
   const [itemName, setItemName] = useState("first name");
 
@@ -19,11 +19,17 @@ const Item = ({ show, handleClose }) => {
 
   const handleFormSubmit = () => {
     handleAddItem();
-    handleClose();
+
     Root.post("items/", {
       name_of_item: itemName.itemName,
       price: "price"
-    });
+    })
+      .then(res => {
+        console.log("Item added");
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
   return (
     <>
