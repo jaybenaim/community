@@ -106,7 +106,7 @@ class UserProfile extends React.Component {
             </Modal>
           ) : 
           */}
-          {showProfile ? (
+          {showProfile && (
             <div className="profile-info">
               <h2>{profileName}</h2>
               <label htmlFor="email">EMAIL</label>
@@ -115,8 +115,6 @@ class UserProfile extends React.Component {
 
               <p>{address}</p>
             </div>
-          ) : (
-            <div></div>
           )}
         </div>
       </>

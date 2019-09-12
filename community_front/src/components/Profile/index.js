@@ -51,10 +51,24 @@ const Profile = () => {
             show={show}
             showProfile={showProfile}
           />
+          {displayItemForm && (
+            <Item
+              profileName={profileName}
+              email={email}
+              address={address}
+              show={show}
+              handleClose={handleClose}
+              handleAddItem={handleAddItem}
+            />
+          )}
         </div>
+
         {/* ) : ( */}
         <div className="create-profile-button">
           <ProfileForm
+            profileName={profileName}
+            email={email}
+            address={address}
             show={show}
             handleProfileFormSubmit={handleProfileFormSubmit}
             handleShowProfile={handleShowProfile}
@@ -65,14 +79,6 @@ const Profile = () => {
         </div>
         {/* )} */}
       </div>
-      {console.log(displayItemForm)}
-      {displayItemForm && (
-        <Item
-          show={show}
-          handleClose={handleClose}
-          handleAddItem={handleAddItem}
-        />
-      )}
     </>
   );
 };

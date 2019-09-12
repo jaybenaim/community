@@ -16,9 +16,14 @@ class GroupSerializer(serializers.Serializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+    shed_items = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='shed_items'
+     )
     class Meta:
         model = Profile
-        fields = ["username", "profile_name", "email", "address"]
+        fields = ["username", "profile_name", "email", "address", "shed_items"]
 
     def create(self, validated_data):
         return Profile.objects.create(**validated_data)
