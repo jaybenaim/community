@@ -80,12 +80,12 @@ class SimpleMap extends React.Component {
   render() {
     const handleApiLoaded = (map, maps) => {
       // use map and maps objects
-      let marker = new maps.Marker({
+      new maps.Marker({
         position: this.state.user1.center,
         map,
         title: "Hello World!"
       });
-      let marker2 = new maps.Marker({
+      new maps.Marker({
         position: this.state.user2.center,
         map,
         title: "Marker2"
@@ -105,18 +105,14 @@ class SimpleMap extends React.Component {
             onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
           >
             {/* Place map components here to place on map  */}
-            {/* <MapMarker
-              lat={this.state.lat}
-              lng={this.state.lng}
+            <MapMarker
+              lat={this.state.user2.center.lat}
+              lng={this.state.user2.center.lng}
               text="My Marker"
-            /> */}
+            />
             <Marker
               lat={this.state.user1.center.lat}
               lng={this.state.user1.center.lng}
-            />
-            <MarkerTwo
-              lat={this.state.user2.center.lat}
-              lng={this.state.user2.center.lng}
             />
           </GoogleMapReact>
         </div>
@@ -125,9 +121,6 @@ class SimpleMap extends React.Component {
   }
 }
 const Marker = props => {
-  return <div className="pin"></div>;
-};
-const MarkerTwo = props => {
   return <div className="hammer"></div>;
 };
 export default SimpleMap;
