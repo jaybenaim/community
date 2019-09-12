@@ -5,6 +5,7 @@ import NavBar from "../Navbar";
 import Profile from "../Profile";
 import Home from "../Home";
 import SimpleMap from "../Map";
+import Profiles from "../Profiles";
 
 const App = () => {
   return (
@@ -17,7 +18,10 @@ const App = () => {
           <NavBar />
         </Switch>
         <Switch>
-          <Route path="/profiles" render={props => <Profile />} />
+          <Route exact path="/profiles" render={props => <Profile />} />
+        </Switch>
+        <Switch>
+          <Route path="/all" component={Profiles} />
         </Switch>
         <Switch>
           <Route path="/map" component={SimpleMap} />
