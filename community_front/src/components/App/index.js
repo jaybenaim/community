@@ -17,7 +17,6 @@ const App = () => {
   const [show, setShow] = useState(false);
   const [showProfile, setProfile] = useState(false);
   const [displayItemForm, setDisplayItemForm] = useState(false);
-
   const [itemName, setItemName] = useState("first name");
   const [itemPrice, setItemPrice] = useState("price");
 
@@ -89,6 +88,7 @@ const App = () => {
                 showProfile={showProfile}
                 itemName={itemName}
                 itemPrice={itemPrice}
+                displayItemForm={displayItemForm}
                 handleShow={handleShow}
                 handleClose={handleClose}
                 handleAddItemName={handleAddItemName}
@@ -96,6 +96,7 @@ const App = () => {
                 handleAddItemToggle={handleAddItemToggle}
                 handleShowProfile={handleShowProfile}
                 handleProfileFormSubmit={handleProfileFormSubmit}
+                handleFormSubmit={handleFormSubmit}
               />
             )}
           />

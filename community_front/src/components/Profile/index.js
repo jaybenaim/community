@@ -104,6 +104,7 @@ const Profile = ({
               handleAddItemName={handleAddItemName}
               handleAddItemPrice={handleAddItemPrice}
               handleFormSubmit={handleFormSubmit}
+              displayItemForm={displayItemForm}
             />
           )}
         </div>
