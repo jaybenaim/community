@@ -88,7 +88,7 @@ class SimpleMap extends React.Component {
       let marker2 = new maps.Marker({
         position: this.state.user2.center,
         map,
-        title: "Hello World!"
+        title: "Marker2"
       });
     };
     return (
@@ -110,8 +110,14 @@ class SimpleMap extends React.Component {
               lng={this.state.lng}
               text="My Marker"
             /> */}
-            <Marker lat={this.state.lat} lng={this.state.lng} />
-            <MarkerTwo lat={this.state.lat} lng={this.state.lng} />
+            <Marker
+              lat={this.state.user1.center.lat}
+              lng={this.state.user1.center.lng}
+            />
+            <MarkerTwo
+              lat={this.state.user2.center.lat}
+              lng={this.state.user2.center.lng}
+            />
           </GoogleMapReact>
         </div>
       </div>
@@ -122,6 +128,6 @@ const Marker = props => {
   return <div className="pin"></div>;
 };
 const MarkerTwo = props => {
-  return <div className="pin"></div>;
+  return <div className="hammer"></div>;
 };
 export default SimpleMap;
