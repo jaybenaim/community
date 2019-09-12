@@ -39,16 +39,35 @@ class SimpleMap extends React.Component {
     Root.get("/profiles/")
       .then(res => {
         let address = res.data[1].address;
+        let address2 = res.data[3].address;
+        let lastIndex2 = address2.indexOf(" ");
         let lastIndex = address.indexOf(" ");
+        address2 = address2.substring(lastIndex2, address2.length);
         address = address.substring(lastIndex, address.length);
         homeAddress.push(address);
+        homeAddress.push(address2);
         console.log(homeAddress[0]);
+        console.log(homeAddress[1]);
       })
       .then(res => {
         Geocode.fromAddress(`${homeAddress[0]}`).then(
           response => {
             const { lat, lng } = response.results[0].geometry.location;
-            this.setState({ center: { lat, lng } });
+            this.setState({
+              user1: { center: { lat, lng } }
+            });
+            console.log(lat, lng);
+          },
+          error => {
+            console.error(error);
+          }
+        );
+        Geocode.fromAddress(`${homeAddress[1]}`).then(
+          response => {
+            const { lat, lng } = response.results[0].geometry.location;
+            this.setState({
+              user2: { center: { lat, lng } }
+            });
             console.log(lat, lng);
           },
           error => {
@@ -61,18 +80,15 @@ class SimpleMap extends React.Component {
   render() {
     const handleApiLoaded = (map, maps) => {
       // use map and maps objects
-      let marker = new maps.Marker({
-        position: this.state.center,
+      new maps.Marker({
+        position: this.state.user1.center,
         map,
         title: "Hello World!"
       });
-      let marker2 = new maps.Marker({
-        position: {
-          lat: 43.88154,
-          lng: -79.46981
-        },
+      new maps.Marker({
+        position: this.state.user2.center,
         map,
-        title: "Hello World!"
+        title: "Marker2"
       });
     };
     return (
@@ -89,13 +105,15 @@ class SimpleMap extends React.Component {
             onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
           >
             {/* Place map components here to place on map  */}
-            {/* <MapMarker
-              lat={this.state.lat}
-              lng={this.state.lng}
+            <MapMarker
+              lat={this.state.user2.center.lat}
+              lng={this.state.user2.center.lng}
               text="My Marker"
-            /> */}
-            <Marker lat={this.state.lat} lng={this.state.lng} />
-            <MarkerTwo lat={this.state.lat} lng={this.state.lng} />
+            />
+            <Marker
+              lat={this.state.user1.center.lat}
+              lng={this.state.user1.center.lng}
+            />
           </GoogleMapReact>
         </div>
       </div>
@@ -103,9 +121,6 @@ class SimpleMap extends React.Component {
   }
 }
 const Marker = props => {
-  return <div className="pin"></div>;
-};
-const MarkerTwo = props => {
-  return <div className="pin"></div>;
+  return <div className="hammer"></div>;
 };
 export default SimpleMap;

@@ -6,6 +6,7 @@
   margin: 0;
   padding: 0;
 }
+
 .pin {
   width: 30px;
   height: 30px;
@@ -340,4 +341,11 @@
     -ms-transform: translateY(0) rotate(-45deg);
     transform: translateY(0) rotate(-45deg);
   }
+}
+
+.hammer {
+  background: url("https://cdn.iconscout.com/icon/premium/png-256-thumb/hammer-629-884457.png");
+  background-size: cover;
+  height: 50px;
+  width: 50px;
 }

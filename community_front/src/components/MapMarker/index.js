@@ -1,7 +1,7 @@
 import React from "react";
 
 const MapMarker = () => {
-  return <div>Hammer</div>;
+  return <div className="hammer"></div>;
 };
 
 export default MapMarker;
