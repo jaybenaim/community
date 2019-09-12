@@ -7,14 +7,18 @@ import Root from "../../apis/root";
 const Item = ({ show, handleClose, profileName, email, address }) => {
   //HOOKS
   const [itemName, setItemName] = useState("first name");
+  const [itemPrice, setItemPrice] = useState("price");
 
   //REFS
   const itemRef = React.createRef();
+  const priceRef = React.createRef();
 
   const handleAddItem = event => {
     // let itemName = event.target.value;
     let newItemName = itemRef.current.value;
+    let priceName = priceRef.current.value;
     setItemName({ itemName: newItemName });
+    setItemPrice({ itemPrice: priceName });
   };
 
   const handleFormSubmit = () => {
@@ -22,7 +26,7 @@ const Item = ({ show, handleClose, profileName, email, address }) => {
 
     Root.post("items/", {
       name_of_item: itemName.itemName,
-      price: "price"
+      price: itemPrice.itemPrice
     })
       .then(res => {
         console.log("Item added");
@@ -48,6 +52,16 @@ const Item = ({ show, handleClose, profileName, email, address }) => {
                   type="text"
                   ref={itemRef}
                   placeholder="Enter An Item Name"
+                  onChange={handleAddItem}
+                />
+              </Form.Group>
+              <Form.Group controlId="formBasicName">
+                <Form.Label>Price</Form.Label>
+                <Form.Control
+                  name="price"
+                  type="text"
+                  ref={priceRef}
+                  placeholder="Enter An Item Price"
                   onChange={handleAddItem}
                 />
               </Form.Group>
