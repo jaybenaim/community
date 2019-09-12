@@ -4,12 +4,17 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Root from "../../apis/root";
 
-const Item = ({ handleAddItemName, handleAddItemPrice, handleFormSubmit }) => {
+const Item = ({
+  handleAddItemName,
+  handleAddItemPrice,
+  handleFormSubmit,
+  handleItemClose
+}) => {
   return (
     <>
       <div>
         <Modal.Dialog>
-          <Modal.Header closeButton>
+          <Modal.Header closeButton={true} onHide={handleItemClose}>
             <Modal.Title>Modal title</Modal.Title>
           </Modal.Header>
 

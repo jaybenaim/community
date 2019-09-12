@@ -59,7 +59,7 @@ const ProfileForm = ({
       <Button variant="primary" onClick={handleShow}>
         Create Profile
       </Button>
-      <Button variant="primary" onClick={handleAddItem}>
+      <Button variant="primary" onClick={event => handleAddItem(event)}>
         Add Item
       </Button>
 

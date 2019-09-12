@@ -49,6 +49,10 @@ const App = () => {
     setDisplayItemForm(prevState => !prevState);
   };
 
+  const handleItemClose = () => {
+    setDisplayItemForm(false);
+  };
+
   const handleProfileFormSubmit = values => {
     let name = values.profile_name;
     let email = values.email;
@@ -86,11 +90,13 @@ const App = () => {
                 email={email}
                 address={address}
                 show={show}
+                displayItemForm={displayItemForm}
                 showProfile={showProfile}
                 itemName={itemName}
                 itemPrice={itemPrice}
                 handleShow={handleShow}
                 handleClose={handleClose}
+                handleItemClose={handleItemClose}
                 handleAddItemName={handleAddItemName}
                 handleAddItemPrice={handleAddItemPrice}
                 handleAddItemToggle={handleAddItemToggle}

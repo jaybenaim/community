@@ -16,6 +16,7 @@ const Profile = ({
   itemPrice,
   handleShow,
   handleClose,
+  handleItemClose,
   handleAddItemName,
   handleAddItemPrice,
   handleAddItemToggle,
@@ -99,8 +100,7 @@ const Profile = ({
               profileName={profileName}
               email={email}
               address={address}
-              show={show}
-              handleClose={handleClose}
+              handleItemClose={handleItemClose}
               handleAddItemName={handleAddItemName}
               handleAddItemPrice={handleAddItemPrice}
               handleFormSubmit={handleFormSubmit}
@@ -122,6 +122,7 @@ const Profile = ({
             handleAddItem={handleAddItemToggle}
           />
         </div>
+
         {/* )} */}
       </div>
     </>
