@@ -9,20 +9,21 @@ const Item = ({ show, handleClose, profileName, email, address }) => {
   const [itemName, setItemName] = useState("first name");
   const [itemPrice, setItemPrice] = useState("price");
 
-  //REFS
-  const itemRef = React.createRef();
-  const priceRef = React.createRef();
+  // //REFS
+  // const itemRef = React.createRef();
+  // const priceRef = React.createRef();
 
-  const handleAddItem = event => {
-    // let itemName = event.target.value;
-    let newItemName = itemRef.current.value;
-    let priceName = priceRef.current.value;
-    setItemName({ itemName: newItemName });
-    setItemPrice({ itemPrice: priceName });
+  const handleAddItemName = event => {
+    let itemName = event.target.value;
+    setItemName({ itemName: itemName });
+  };
+  const handleAddItemPrice = event => {
+    let itemPrice = event.target.value;
+    setItemPrice({ itemPrice: itemPrice });
   };
 
   const handleFormSubmit = () => {
-    handleAddItem();
+    // handleAddItem();
 
     Root.post("items/", {
       name_of_item: itemName.itemName,
@@ -50,9 +51,9 @@ const Item = ({ show, handleClose, profileName, email, address }) => {
                 <Form.Control
                   name="item"
                   type="text"
-                  ref={itemRef}
+                  // ref={itemRef}
+                  onChange={handleAddItemName}
                   placeholder="Enter An Item Name"
-                  onChange={handleAddItem}
                 />
               </Form.Group>
               <Form.Group controlId="formBasicName">
@@ -60,9 +61,9 @@ const Item = ({ show, handleClose, profileName, email, address }) => {
                 <Form.Control
                   name="price"
                   type="text"
-                  ref={priceRef}
+                  // ref={priceRef}
+                  onChange={handleAddItemPrice}
                   placeholder="Enter An Item Price"
-                  onChange={handleAddItem}
                 />
               </Form.Group>
             </Form>

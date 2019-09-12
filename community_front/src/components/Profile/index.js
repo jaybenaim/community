@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ProfileForm from "../../components/ProfileForm";
 import UserProfile from "../UserProfile";
+import Root from "../../apis/root";
 import "./index.css";
 import Item from "../Item";
 
@@ -13,9 +14,11 @@ const Profile = () => {
   const [show, setShow] = useState(false);
   const [showProfile, setProfile] = useState(false);
   const [displayItemForm, setDisplayItemForm] = useState(false);
+  const [itemName, setItemName] = useState("first name");
+  const [itemPrice, setItemPrice] = useState("price");
 
   // Handlers
-  const handleAddItem = event => {
+  const handleAddItemToggle = event => {
     event.preventDefault();
     setDisplayItemForm(prevState => !prevState);
   };
@@ -30,6 +33,27 @@ const Profile = () => {
     setAddress(address);
   };
 
+  // const handleAddItem = event => {
+  //   // let itemName = event.target.value;
+  //   let newItemName = itemRef.current.value;
+  //   let priceName = priceRef.current.value;
+  //   setItemName({ itemName: newItemName });
+  //   setItemPrice({ itemPrice: priceName });
+  // };
+  // const handleFormSubmit = () => {
+  //   handleAddItem();
+
+  //   Root.post("items/", {
+  //     name_of_item: itemName.itemName,
+  //     price: itemPrice.itemPrice
+  //   })
+  //     .then(res => {
+  //       console.log("Item added");
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // };
   const handleShowProfile = () => {
     setProfile(true);
   };
@@ -57,7 +81,7 @@ const Profile = () => {
               address={address}
               show={show}
               handleClose={handleClose}
-              handleAddItem={handleAddItem}
+              // handleAddItem={handleAddItem}
             />
           )}
         </div>
@@ -73,7 +97,7 @@ const Profile = () => {
             handleShowProfile={handleShowProfile}
             handleShow={handleShow}
             handleClose={handleClose}
-            handleAddItem={handleAddItem}
+            handleAddItem={handleAddItemToggle}
           />
         </div>
         {/* )} */}

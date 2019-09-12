@@ -23,8 +23,12 @@ class UserProfile extends React.Component {
   }
   componentDidMount() {
     Root.get("items/").then(res => {
-      let items = res.data.item;
-      console.log(items);
+      let items = res.data;
+      let itemList = items.map((item, i) => {
+        return { [item.name_of_item]: item.price };
+      });
+
+      console.log(items[0]);
       // this.setState(prevState => {
       //   [...prevState, ]
       // })
