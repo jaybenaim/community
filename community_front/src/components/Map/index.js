@@ -83,7 +83,7 @@ class SimpleMap extends React.Component {
       new maps.Marker({
         position: this.state.user1.center,
         map,
-        title: "Hello World!"
+        title: "Marker1"
       });
       new maps.Marker({
         position: this.state.user2.center,
