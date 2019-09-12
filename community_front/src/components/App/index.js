@@ -5,12 +5,8 @@ import NavBar from "../Navbar";
 import Profile from "../Profile";
 import Home from "../Home";
 import SimpleMap from "../Map";
-import MapMarker from "../MapMarker";
 
 const App = () => {
-  const getUsersAddress = () => { 
-    
-  }
   return (
     <Router>
       <div className="App">
@@ -25,9 +21,6 @@ const App = () => {
         </Switch>
         <Switch>
           <Route path="/map" component={SimpleMap} />
-        </Switch>
-        <Switch>
-          <Route path="/map/test" component={MapMarker} />
         </Switch>
       </div>
     </Router>

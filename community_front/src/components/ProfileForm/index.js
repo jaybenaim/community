@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Root from "../../apis/root";
-import ModalTitle from "react-bootstrap/ModalTitle";
 
 const ProfileForm = ({
   show,

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import ProfileForm from "../../components/ProfileForm";
 import UserProfile from "../UserProfile";
 import "./index.css";
-import Root from "../../apis/root";
 import Item from "../Item";
 
 const Profile = () => {
