@@ -15,7 +15,8 @@ from .models import *
 import logging
 import random 
 import json 
-import os
+import os 
+from .api import * 
 
 def root(request): 
     return redirect('home/')
@@ -99,27 +100,3 @@ class GroupViewSet(viewsets.ModelViewSet):
     """ API endpoint that allows groups to be viewed or edited """ 
     queryset = Group.objects.all() 
     serializer_class = GroupSerializer 
-
-class ProfileViewSet(viewsets.ModelViewSet): 
-    """ Api endpoint for profiles to be viewed or edited """ 
-    queryset = Profile.objects.all() 
-    serializer_class = ProfileSerializer 
-
-class ItemViewSet(viewsets.ModelViewSet): 
-    """ Api endpoint for items to be viewed or edited """ 
-    queryset = Item.objects.all() 
-    serializer_class = ItemSerializer 
-
-
-class ApiView(View):
-    
-    def get(self, request):
-        return JsonResponse({
-            "it": "getting"
-        })
-
-    @csrf_exempt
-    def post(self, request):
-        return JsonResponse({
-            "it": "posting"
-        })

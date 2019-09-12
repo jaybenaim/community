@@ -17,10 +17,19 @@ class UserProfile extends React.Component {
       imgSrc:
         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
       imgChange: false,
-      show: false
+      show: false,
+      items: []
     };
   }
-
+  componentDidMount() {
+    Root.get("items/").then(res => {
+      let items = res.data.item;
+      console.log(items);
+      // this.setState(prevState => {
+      //   [...prevState, ]
+      // })
+    });
+  }
   handleClose = () => {
     this.setState({ show: false });
   };
@@ -112,8 +121,9 @@ class UserProfile extends React.Component {
               <label htmlFor="email">EMAIL</label>
               <p>{email}</p>
               <label htmlFor="address">ADDRESS</label>
-
               <p>{address}</p>
+              <label htmlFor="items">Items for Lend</label>
+              <p>{this.state.items}</p>
             </div>
           )}
         </div>
