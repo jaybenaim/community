@@ -24,11 +24,8 @@ class UserProfile extends React.Component {
   componentDidMount() {
     Root.get("items/").then(res => {
       let items = res.data;
-      let itemList = items.map((item, i) => {
-        return { [item.name_of_item]: item.price };
-      });
-
-      console.log(items[0]);
+      this.setState({ items: items });
+      console.log(this.state.items);
       // this.setState(prevState => {
       //   [...prevState, ]
       // })
@@ -75,7 +72,14 @@ class UserProfile extends React.Component {
     // else this.setState({ imgSrc: this.state.imgSrc });
   };
   render() {
-    const { profileName, email, address, showProfile } = this.props;
+    const {
+      profileName,
+      email,
+      address,
+      showProfile,
+      itemName,
+      itemPrice
+    } = this.props;
 
     return (
       <>
@@ -119,7 +123,7 @@ class UserProfile extends React.Component {
             </Modal>
           ) : 
           */}
-          {showProfile && (
+          {!showProfile && (
             <div className="profile-info">
               <h2>{profileName}</h2>
               <label htmlFor="email">EMAIL</label>
@@ -127,7 +131,11 @@ class UserProfile extends React.Component {
               <label htmlFor="address">ADDRESS</label>
               <p>{address}</p>
               <label htmlFor="items">Items for Lend</label>
-              <p>{this.state.items}</p>
+              <br />
+              <label htmlFor="items">Name:&nbsp;&nbsp;</label>
+              {itemName.itemName} <br />
+              <label htmlFor="items">Price:&nbsp;&nbsp; </label>
+              {itemPrice.itemPrice}
             </div>
           )}
         </div>

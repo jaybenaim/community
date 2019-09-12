@@ -14,8 +14,31 @@ const Profile = () => {
   const [show, setShow] = useState(false);
   const [showProfile, setProfile] = useState(false);
   const [displayItemForm, setDisplayItemForm] = useState(false);
+
   const [itemName, setItemName] = useState("first name");
   const [itemPrice, setItemPrice] = useState("price");
+
+  const handleAddItemName = event => {
+    let itemName = event.target.value;
+    setItemName({ itemName: itemName });
+  };
+  const handleAddItemPrice = event => {
+    let itemPrice = event.target.value;
+    setItemPrice({ itemPrice: itemPrice });
+  };
+
+  const handleFormSubmit = () => {
+    Root.post("items/", {
+      name_of_item: itemName.itemName,
+      price: itemPrice.itemPrice
+    })
+      .then(res => {
+        console.log("Item added");
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   // Handlers
   const handleAddItemToggle = event => {
@@ -33,27 +56,6 @@ const Profile = () => {
     setAddress(address);
   };
 
-  // const handleAddItem = event => {
-  //   // let itemName = event.target.value;
-  //   let newItemName = itemRef.current.value;
-  //   let priceName = priceRef.current.value;
-  //   setItemName({ itemName: newItemName });
-  //   setItemPrice({ itemPrice: priceName });
-  // };
-  // const handleFormSubmit = () => {
-  //   handleAddItem();
-
-  //   Root.post("items/", {
-  //     name_of_item: itemName.itemName,
-  //     price: itemPrice.itemPrice
-  //   })
-  //     .then(res => {
-  //       console.log("Item added");
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // };
   const handleShowProfile = () => {
     setProfile(true);
   };
@@ -73,6 +75,8 @@ const Profile = () => {
             address={address}
             show={show}
             showProfile={showProfile}
+            itemName={itemName}
+            itemPrice={itemPrice}
           />
           {displayItemForm && (
             <Item
@@ -81,7 +85,9 @@ const Profile = () => {
               address={address}
               show={show}
               handleClose={handleClose}
-              // handleAddItem={handleAddItem}
+              handleAddItemName={handleAddItemName}
+              handleAddItemPrice={handleAddItemPrice}
+              handleFormSubmit={handleFormSubmit}
             />
           )}
         </div>

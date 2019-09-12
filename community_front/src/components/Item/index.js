@@ -4,38 +4,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Root from "../../apis/root";
 
-const Item = ({ show, handleClose, profileName, email, address }) => {
-  //HOOKS
-  const [itemName, setItemName] = useState("first name");
-  const [itemPrice, setItemPrice] = useState("price");
-
-  // //REFS
-  // const itemRef = React.createRef();
-  // const priceRef = React.createRef();
-
-  const handleAddItemName = event => {
-    let itemName = event.target.value;
-    setItemName({ itemName: itemName });
-  };
-  const handleAddItemPrice = event => {
-    let itemPrice = event.target.value;
-    setItemPrice({ itemPrice: itemPrice });
-  };
-
-  const handleFormSubmit = () => {
-    // handleAddItem();
-
-    Root.post("items/", {
-      name_of_item: itemName.itemName,
-      price: itemPrice.itemPrice
-    })
-      .then(res => {
-        console.log("Item added");
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
+const Item = ({ handleAddItemName, handleAddItemPrice, handleFormSubmit }) => {
   return (
     <>
       <div>
