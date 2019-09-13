@@ -2,7 +2,7 @@ import React from "react";
 import "./index.css";
 
 const MapMarker = () => {
-  return <div className="hammer"></div>;
+  return <div className="pin"></div>;
 };
 
 export default MapMarker;

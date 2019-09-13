@@ -1,30 +1,32 @@
-import React, { useState } from "react";
+import React from "react";
 import "./index.css";
 import GoogleMapReact from "google-map-react";
 import MAP_API_KEY from "../../apis/keys";
 import Geocode from "react-geocode";
-import Root from "../../apis/root";
 import MapMarker from "../MapMarker";
+import Root from "../../apis/root";
 
 //  todo set zoom on marker click
 
 class SimpleMap extends React.Component {
-  state = {
-    user1: {
-      center: {
-        lat: 0,
-        lng: 0
-      },
-      zoom: 13
-    },
-    user2: {
-      center: {
-        lat: 0,
-        lng: 0
-      },
-      zoom: 13
-    }
-  };
+  // state = {
+  //   user: "",
+  //   user1: {
+  //     center: {
+  //       lat: 0,
+  //       lng: 0
+  //     },
+  //     zoom: 13
+  //   },
+  //   user2: {
+  //     center: {
+  //       lat: 0,
+  //       lng: 0
+  //     },
+  //     zoom: 13
+  //   }
+  // };
+  state = { lat: 0, lng: 0 };
   static defaultProps = {
     center: {
       lat: 43.88154,
@@ -37,47 +39,78 @@ class SimpleMap extends React.Component {
   componentDidMount() {
     Geocode.setApiKey(MAP_API_KEY);
     Geocode.enableDebug();
-    let homeAddress = [];
     // Root.get("/profiles/").then(res => {
     //   let address = res.data[0].address;
     //   let lastIndex = address.indexOf(" ");
     //   address = address.substring(lastIndex, address.length);
     //   homeAddress.push(address);
     // });
+    let homeAddress = [];
+    let profiles = this.props.allProfiles;
+    const allProfileAddresses = profiles.map((p, i) => {
+      return { ...p };
+    });
+    /// batch geocode  goes here
+    console.log(profiles);
+    // Root.get("/profiles/").then(res => {
+    //   let address = res.data[0].address;
+    //   let lastIndex = address.indexOf(" ");
+    //   address = address.substring(lastIndex, address.length);
+    //   homeAddress.push(address);
+    // });
+    // Geocode.fromAddress(`${allProfileAddresses}`).then(
+    //   response => {
+    //     const { lat, lng } = response.results[0].geometry.location;
+    //     console.log({ lat, lng });
+    //     // this.setState({
+    //     //   user1: { center: { lat, lng } }
+    //     // });
+    //   },
+    //   error => {
+    //     console.error(error);
+    //   }
+    // );
+  }
+  // console.log(homeAddress);
 
-    const allProfileAddresses = this.props.allProfiles.map((p, i) => {
+  render() {
+    const { allProfiles } = this.props;
+    const homeAddress = [];
+    const profileMarkers = allProfiles.map((p, i) => {
+      Root.get("/profiles/").then(res => {
+        let address = res.data[0].address;
+        let lastIndex = address.indexOf(" ");
+        address = address.substring(lastIndex, address.length);
+        homeAddress.push(address);
+      });
       Geocode.fromAddress(`${p.address}`).then(
         response => {
           const { lat, lng } = response.results[0].geometry.location;
-          this.setState({
-            user1: { center: { lat, lng } }
-          });
+          console.log({ lat, lng });
+          // this.setState({
+          //   user1: { center: { lat, lng } }
+          // });
+          // this.setState({ lat, lng });
         },
         error => {
           console.error(error);
         }
       );
+      return <MapMarker key={p.id} {...p} lat={this.lat} lng={this.lng} />;
     });
-  }
-
-  render() {
-    const { allProfiles } = this.props;
-    const profileMarkers = allProfiles.map((p, i) => (
-      <MapMarker key={p.id} {...p} lat={p.address} lng={p.address} />
-    ));
-
+    // lat={p.address} lng={p.address}
     const handleApiLoaded = (map, maps) => {
-      // use map and maps objects
-      new maps.Marker({
-        position: this.state.user1.center,
-        map,
-        title: "Marker1"
-      });
-      new maps.Marker({
-        position: this.state.user2.center,
-        map,
-        title: "Marker2"
-      });
+      // Standard Markers
+      // new maps.Marker({
+      //   position: this.state.user1.center,
+      //   map,
+      //   title: "Marker1"
+      // });
+      // new maps.Marker({
+      //   position: this.state.user2.center,
+      //   map,
+      //   title: "Marker2"
+      // });
     };
 
     return (
@@ -110,11 +143,5 @@ class SimpleMap extends React.Component {
     );
   }
 }
-const Marker = () => {
-  return (
-    <div className="user-radius">
-      <div className="home"></div>
-    </div>
-  );
-};
+
 export default SimpleMap;

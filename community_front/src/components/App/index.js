@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import "./index.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NavBar from "../Navbar";
 import Profile from "../Profile";
 import Home from "../Home";
-import SimpleMap from "../Map";
 import AllProfiles from "../AllProfiles";
 import Root from "../../apis/root";
 import Map from "../Map";
@@ -70,7 +69,7 @@ class App extends React.Component {
     Root.get("profiles/").then(res => {
       let profiles = res.data;
       this.setState({ allProfiles: profiles });
-      console.log(this.state.allProfiles);
+      // console.log(this.state.allProfiles);
     });
   };
   getAllItems = () => {
