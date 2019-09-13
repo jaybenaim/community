@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import "./index.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NavBar from "../Navbar";
 import Profile from "../Profile";
 import Home from "../Home";
-import SimpleMap from "../Map";
 import AllProfiles from "../AllProfiles";
 import Root from "../../apis/root";
+import SimpleMap from "../SimpleMap";
 
 class App extends React.Component {
   state = {
@@ -72,7 +72,7 @@ class App extends React.Component {
     Root.get("profiles/").then(res => {
       let profiles = res.data;
       this.setState({ allProfiles: profiles });
-      console.log(this.state.allProfiles);
+      // console.log(this.state.allProfiles);
     });
   };
   getAllItems = () => {
@@ -135,7 +135,12 @@ class App extends React.Component {
             />
           </Switch>
           <Switch>
-            <Route path="/map" component={SimpleMap} />
+            <Route
+              path="/map"
+              render={props => (
+                <SimpleMap allProfiles={this.state.allProfiles} />
+              )}
+            />
           </Switch>
         </div>
       </Router>

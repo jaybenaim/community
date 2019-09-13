@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import ProfileForm from "../../components/ProfileForm";
 import UserProfile from "../UserProfile";
-import Root from "../../apis/root";
 import "./index.css";
 import Item from "../Item";
 
@@ -21,7 +20,6 @@ const Profile = ({
   handleShowProfile,
   handleProfileFormSubmit,
   handleFormSubmit,
-
   onChangeItemName,
   onChangeItemPrice
 }) => {

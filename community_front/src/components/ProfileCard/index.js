@@ -52,14 +52,7 @@ class ProfileCard extends React.Component {
   // };
 
   render() {
-    const {
-      profile_name,
-      email,
-      address,
-      itemName,
-      itemPrice,
-      allItems
-    } = this.props;
+    const { profile_name, email, address, allItems } = this.props;
     return (
       <>
         <Container className="grid-container">
