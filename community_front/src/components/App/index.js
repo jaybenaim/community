@@ -5,7 +5,7 @@ import NavBar from "../Navbar";
 import Profile from "../Profile";
 import Home from "../Home";
 import SimpleMap from "../Map";
-import Profiles from "../Profiles";
+import AllProfiles from "../AllProfiles";
 import Root from "../../apis/root";
 
 class App extends React.Component {
@@ -58,7 +58,6 @@ class App extends React.Component {
   // Handlers
   handleAddItemToggle = event => {
     event.preventDefault();
-    // setDisplayItemForm(prevState => !prevState);
     this.setState(prevState => !prevState);
   };
 
@@ -67,20 +66,15 @@ class App extends React.Component {
     let email = values.email;
     let address = values.address;
 
-    // setProfileName(name);
-    // setEmail(email);
-    // setAddress(address);
     this.setState({ name });
     this.setState({ email });
     this.setState({ address });
   };
 
   handleShowProfile = () => {
-    // setProfile(true);
     this.setState({ showProfile: true });
   };
   handleClose = () => {
-    // setShow(false);
     this.setState({ showProfile: true });
   };
   handleShow = () => this.setState({ handleShow: true });
@@ -88,7 +82,6 @@ class App extends React.Component {
   getAllProfiles = () => {
     Root.get("profiles/").then(res => {
       let profiles = res.data;
-      // setAllProfiles(profiles);
       this.setState({ allProfiles: profiles });
       console.log(this.state.allProfiles);
     });
@@ -105,6 +98,14 @@ class App extends React.Component {
           </Switch>
           <Switch>
             <NavBar />
+          </Switch>
+          <Switch>
+            <Route
+              path="/users/profiles/"
+              render={props => (
+                <AllProfiles allProfiles={this.state.allProfiles} />
+              )}
+            />
           </Switch>
           <Switch>
             <Route
@@ -131,9 +132,6 @@ class App extends React.Component {
                 />
               )}
             />
-          </Switch>
-          <Switch>
-            <Route path="/all" component={Profiles} />
           </Switch>
           <Switch>
             <Route path="/map" component={SimpleMap} />
