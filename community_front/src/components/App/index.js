@@ -13,13 +13,15 @@ class App extends React.Component {
     profileName: "",
     email: "",
     address: "",
-    show: "",
+    show: "false",
     showProfile: false,
     displayItemForm: false,
     itemName: "first name",
     itemPrice: "price",
     allProfiles: []
   };
+
+  // Handlers
   handleAddItemName = event => {
     let itemName = event.target.value;
     this.setState({ itemName: itemName });
@@ -43,7 +45,6 @@ class App extends React.Component {
       });
   };
 
-  // Handlers
   handleAddItemToggle = event => {
     event.preventDefault();
     this.setState(prevState => !prevState);
@@ -63,7 +64,9 @@ class App extends React.Component {
   handleClose = () => {
     this.setState({ showProfile: true });
   };
-  handleShow = () => this.setState({ handleShow: true });
+  handleShow = () => {
+    this.setState({ show: true });
+  };
 
   getAllProfiles = () => {
     Root.get("profiles/").then(res => {
@@ -95,6 +98,12 @@ class App extends React.Component {
                 <AllProfiles
                   allProfiles={this.state.allProfiles}
                   allItems={this.allItems}
+                  handleProfileFormSubmit={this.handleProfileFormSubmit}
+                  handleFormSubmit={this.handleFormSubmit}
+                  handleShow={this.handleShow}
+                  handleClose={this.handleClose}
+                  show={this.show}
+                  handleProfileFormClick={this.handleProfileFormClick}
                 />
               )}
             />
