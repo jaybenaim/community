@@ -5,30 +5,18 @@ import Form from "react-bootstrap/Form";
 import Root from "../../apis/root";
 
 const Item = ({
-<<<<<<< HEAD
-  show,
-  handleAddItemName,
-  handleAddItemPrice,
-  handleFormSubmit
-=======
   handleFormSubmit,
   handleItemClose,
   itemName,
   itemPrice,
   onChangeItemPrice,
   onChangeItemName
->>>>>>> 65347de3ab93e4bc5e2c4e5d134bb8c94fd0bb1b
 }) => {
   return (
     <>
       <div>
-<<<<<<< HEAD
-        <Modal.Dialog show={show}>
-          <Modal.Header closeButton>
-=======
         <Modal.Dialog>
           <Modal.Header closeButton={true} onHide={handleItemClose}>
->>>>>>> 65347de3ab93e4bc5e2c4e5d134bb8c94fd0bb1b
             <Modal.Title>Modal title</Modal.Title>
           </Modal.Header>
 

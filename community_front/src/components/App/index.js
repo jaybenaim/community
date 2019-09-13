@@ -35,7 +35,7 @@ class App extends React.Component {
       price: this.state.itemPrice.itemPrice
     })
       .then(res => {
-        setDisplayItemForm(false);
+        this.setState({ displayItemForm: false });
         console.log("Item added");
       })
       .catch(err => {

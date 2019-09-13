@@ -40,15 +40,10 @@ class SimpleMap extends React.Component {
     let homeAddress = [];
     Root.get("/profiles/")
       .then(res => {
-        let address = res.data[1].address;
-
-        let address2 = res.data[3].address;
+        let address = res.data[0].address;
         let lastIndex = address.indexOf(" ");
-        let lastIndex2 = address2.indexOf(" ");
         address = address.substring(lastIndex, address.length);
-        address2 = address2.substring(lastIndex2, address2.length);
         homeAddress.push(address);
-        homeAddress.push(address2);
       })
       .then(res => {
         Geocode.fromAddress(`${homeAddress[0]}`).then(
@@ -56,17 +51,6 @@ class SimpleMap extends React.Component {
             const { lat, lng } = response.results[0].geometry.location;
             this.setState({
               user1: { center: { lat, lng } }
-            });
-          },
-          error => {
-            console.error(error);
-          }
-        );
-        Geocode.fromAddress(`${homeAddress[1]}`).then(
-          response => {
-            const { lat, lng } = response.results[0].geometry.location;
-            this.setState({
-              user2: { center: { lat, lng } }
             });
           },
           error => {

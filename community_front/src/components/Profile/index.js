@@ -65,11 +65,6 @@ const Profile = ({
             displayItemForm={displayItemForm}
           />
         </div>
-<<<<<<< HEAD
-=======
-
-        {/* )} */}
->>>>>>> 65347de3ab93e4bc5e2c4e5d134bb8c94fd0bb1b
       </div>
     </>
   );
