@@ -28,7 +28,9 @@ class UserProfile extends React.Component {
   handleClose = () => {
     this.setState({ show: false });
   };
-  handleShow = () => this.setState({ show: true });
+  handleShow = () => {
+    this.setState({ show: true })
+  };
 
   handleImageSrc = event => {
     this.setState({
