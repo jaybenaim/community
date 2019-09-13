@@ -4,11 +4,16 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Root from "../../apis/root";
 
-const Item = ({ handleAddItemName, handleAddItemPrice, handleFormSubmit }) => {
+const Item = ({
+  show,
+  handleAddItemName,
+  handleAddItemPrice,
+  handleFormSubmit
+}) => {
   return (
     <>
       <div>
-        <Modal.Dialog>
+        <Modal.Dialog show={show}>
           <Modal.Header closeButton>
             <Modal.Title>Modal title</Modal.Title>
           </Modal.Header>
