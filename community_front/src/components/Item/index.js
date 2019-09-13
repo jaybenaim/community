@@ -10,7 +10,8 @@ const Item = ({
   itemName,
   itemPrice,
   onChangeItemPrice,
-  onChangeItemName
+  onChangeItemName,
+  show,
 }) => {
   return (
     <>
