@@ -8,11 +8,19 @@ import Row from "react-bootstrap/Row";
 
 class ProfileCard extends React.Component {
   state = {
-    profiles: this.props.allProfiles
+    profiles: this.props.allProfiles,
+    items: this.props.allItems
   };
 
   render() {
-    const { profile_name, email, address, itemName, itemPrice } = this.props;
+    const {
+      profile_name,
+      email,
+      address,
+      itemName,
+      itemPrice,
+      allItems
+    } = this.props;
     return (
       <>
         <Container className="grid-container">
@@ -24,12 +32,15 @@ class ProfileCard extends React.Component {
                   src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                 />
                 <Card.Body>
-                  <Card.Title>{this.props.profile_name}</Card.Title>
+                  <Card.Title>{profile_name}</Card.Title>
                   <Card.Text>
                     {email}
+                    <br />
                     {address}
                   </Card.Text>
-                  <Button variant="primary">Click to see more</Button>
+                  <Button variant="primary" onClick={allItems}>
+                    Click to see more
+                  </Button>
                 </Card.Body>
               </Card>
             </Col>

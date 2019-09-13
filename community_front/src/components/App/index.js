@@ -9,17 +9,6 @@ import AllProfiles from "../AllProfiles";
 import Root from "../../apis/root";
 
 class App extends React.Component {
-  // Hooks
-
-  // const [profileName, setProfileName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [address, setAddress] = useState("");
-  // const [show, setShow] = useState(false);
-  // const [showProfile, setProfile] = useState(false);
-  // const [displayItemForm, setDisplayItemForm] = useState(false);
-  // const [itemName, setItemName] = useState("first name");
-  // const [itemPrice, setItemPrice] = useState("price");
-  // const [allProfiles, setAllProfiles] = useState([]);
   state = {
     profileName: "",
     email: "",
@@ -66,9 +55,7 @@ class App extends React.Component {
     let email = values.email;
     let address = values.address;
 
-    this.setState({ name });
-    this.setState({ email });
-    this.setState({ address });
+    this.setState({ name, email, address });
   };
 
   handleShowProfile = () => {
@@ -85,6 +72,9 @@ class App extends React.Component {
       this.setState({ allProfiles: profiles });
       console.log(this.state.allProfiles);
     });
+  };
+  getAllItems = () => {
+    return null;
   };
   componentDidMount() {
     this.getAllProfiles();
@@ -103,7 +93,10 @@ class App extends React.Component {
             <Route
               path="/users/profiles/"
               render={props => (
-                <AllProfiles allProfiles={this.state.allProfiles} />
+                <AllProfiles
+                  allProfiles={this.state.allProfiles}
+                  allItems={this.allItems}
+                />
               )}
             />
           </Switch>
