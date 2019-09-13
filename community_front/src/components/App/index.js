@@ -6,7 +6,7 @@ import Profile from "../Profile";
 import Home from "../Home";
 import AllProfiles from "../AllProfiles";
 import Root from "../../apis/root";
-import Map from "../Map";
+import SimpleMap from "../SimpleMap";
 
 class App extends React.Component {
   state = {
@@ -128,7 +128,9 @@ class App extends React.Component {
           <Switch>
             <Route
               path="/map"
-              render={props => <Map allProfiles={this.state.allProfiles} />}
+              render={props => (
+                <SimpleMap allProfiles={this.state.allProfiles} />
+              )}
             />
           </Switch>
         </div>

@@ -27,15 +27,31 @@ class SimpleMap extends React.Component {
   // changeState() {
   //   this.setState(prevState => ({ lat, lng, users: prevState + 1 }));
   // }
+  handleApiLoaded = (map, maps) => {
+    // Standard Markers
+    // new maps.Marker({
+    //   position: this.state,
+    //   map,
+    //   title: "Marker1"
+    // });
+    // new maps.Marker({
+    //   position: this.state,
+    //   map,
+    //   title: "Marker2"
+    // });
+  };
   render() {
     const { allProfiles } = this.props;
-    const homeAddress = [];
+    // const homeAddress = [];
+
     const profileMarkers = allProfiles.map((p, i) => {
       Root.get("/profiles/").then(res => {
         let address = res.data[0].address;
+
         let lastIndex = address.indexOf(" ");
         address = address.substring(lastIndex, address.length);
-        homeAddress.push(address);
+
+        // homeAddress.push(address);
       });
       Geocode.fromAddress(`${p.address}`).then(
         response => {
@@ -56,7 +72,7 @@ class SimpleMap extends React.Component {
                 defaultZoom={this.props.zoom}
                 yesIWantToUseGoogleMapApiInternals
                 onGoogleApiLoaded={({ map, maps }) =>
-                  handleApiLoaded(map, maps)
+                  this.handleApiLoaded(map, maps)
                 }
               >
                 <MapMarker
@@ -74,31 +90,34 @@ class SimpleMap extends React.Component {
         }
       );
     });
-    const handleApiLoaded = (map, maps) => {
-      // Standard Markers
-      // new maps.Marker({
-      //   position: this.state,
-      //   map,
-      //   title: "Marker1"
-      // });
-      // new maps.Marker({
-      //   position: this.state,
-      //   map,
-      //   title: "Marker2"
-      // });
-    };
+    // const handleApiLoaded = (map, maps) => {
+    //   // Standard Markers
+    //   // new maps.Marker({
+    //   //   position: this.state,
+    //   //   map,
+    //   //   title: "Marker1"
+    //   // });
+    //   // new maps.Marker({
+    //   //   position: this.state,
+    //   //   map,
+    //   //   title: "Marker2"
+    //   // });
+    // };
 
     return (
       <div className="map-container">
         <div style={{ height: "100vh", width: "100%" }}>
           <GoogleMapReact
+            style={{ height: "100vh", width: "100%" }
             bootstrapURLKeys={{
               key: MAP_API_KEY
             }}
             defaultCenter={this.props.center}
             defaultZoom={this.props.zoom}
             yesIWantToUseGoogleMapApiInternals
-            onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
+            onGoogleApiLoaded={({ map, maps }) =>
+              this.handleApiLoaded(map, maps)
+            }
           >
             {/* Place map components here to place on map  */}
             {/* <Marker
