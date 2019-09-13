@@ -9,24 +9,7 @@ import Root from "../../apis/root";
 //  todo set zoom on marker click
 
 class SimpleMap extends React.Component {
-  // state = {
-  //   user: "",
-  //   user1: {
-  //     center: {
-  //       lat: 0,
-  //       lng: 0
-  //     },
-  //     zoom: 13
-  //   },
-  //   user2: {
-  //     center: {
-  //       lat: 0,
-  //       lng: 0
-  //     },
-  //     zoom: 13
-  //   }
-  // };
-  state = { lat: 0, lng: 0 };
+  state = { lat: 43.88154, lng: -79.46981, users: 0 };
   static defaultProps = {
     center: {
       lat: 43.88154,
@@ -39,40 +22,11 @@ class SimpleMap extends React.Component {
   componentDidMount() {
     Geocode.setApiKey(MAP_API_KEY);
     Geocode.enableDebug();
-    // Root.get("/profiles/").then(res => {
-    //   let address = res.data[0].address;
-    //   let lastIndex = address.indexOf(" ");
-    //   address = address.substring(lastIndex, address.length);
-    //   homeAddress.push(address);
-    // });
-    let homeAddress = [];
-    let profiles = this.props.allProfiles;
-    const allProfileAddresses = profiles.map((p, i) => {
-      return { ...p };
-    });
-    /// batch geocode  goes here
-    console.log(profiles);
-    // Root.get("/profiles/").then(res => {
-    //   let address = res.data[0].address;
-    //   let lastIndex = address.indexOf(" ");
-    //   address = address.substring(lastIndex, address.length);
-    //   homeAddress.push(address);
-    // });
-    // Geocode.fromAddress(`${allProfileAddresses}`).then(
-    //   response => {
-    //     const { lat, lng } = response.results[0].geometry.location;
-    //     console.log({ lat, lng });
-    //     // this.setState({
-    //     //   user1: { center: { lat, lng } }
-    //     // });
-    //   },
-    //   error => {
-    //     console.error(error);
-    //   }
-    // );
   }
-  // console.log(homeAddress);
 
+  // changeState() {
+  //   this.setState(prevState => ({ lat, lng, users: prevState + 1 }));
+  // }
   render() {
     const { allProfiles } = this.props;
     const homeAddress = [];
@@ -86,28 +40,49 @@ class SimpleMap extends React.Component {
       Geocode.fromAddress(`${p.address}`).then(
         response => {
           const { lat, lng } = response.results[0].geometry.location;
-          console.log({ lat, lng });
-          // this.setState({
-          //   user1: { center: { lat, lng } }
-          // });
+          // this.changeState(lat, lng);
+          // this.setState(prevState => ({ lat, lng, users: prevState + 1 }));
           // this.setState({ lat, lng });
+          console.log({ lat, lng });
+          console.log(p.id);
+          console.log(this.state.lat);
+          return (
+            <>
+              <GoogleMapReact
+                bootstrapURLKeys={{
+                  key: MAP_API_KEY
+                }}
+                defaultCenter={this.props.center}
+                defaultZoom={this.props.zoom}
+                yesIWantToUseGoogleMapApiInternals
+                onGoogleApiLoaded={({ map, maps }) =>
+                  handleApiLoaded(map, maps)
+                }
+              >
+                <MapMarker
+                  key={p.id}
+                  {...p}
+                  lat={this.state.lat}
+                  lng={this.state.lng}
+                />
+              </GoogleMapReact>
+            </>
+          );
         },
         error => {
           console.error(error);
         }
       );
-      return <MapMarker key={p.id} {...p} lat={this.lat} lng={this.lng} />;
     });
-    // lat={p.address} lng={p.address}
     const handleApiLoaded = (map, maps) => {
       // Standard Markers
       // new maps.Marker({
-      //   position: this.state.user1.center,
+      //   position: this.state,
       //   map,
       //   title: "Marker1"
       // });
       // new maps.Marker({
-      //   position: this.state.user2.center,
+      //   position: this.state,
       //   map,
       //   title: "Marker2"
       // });
@@ -115,7 +90,6 @@ class SimpleMap extends React.Component {
 
     return (
       <div className="map-container">
-        <button onClick={this.getMyLocation}>Get My Location</button>
         <div style={{ height: "100vh", width: "100%" }}>
           <GoogleMapReact
             bootstrapURLKeys={{
@@ -130,12 +104,13 @@ class SimpleMap extends React.Component {
             {/* <Marker
               lat={this.state.user1.center.lat}
               lng={this.state.user1.center.lng}
-            />
-            <MapMarker
-              lat={this.state.user2.center.lat}
-              lng={this.state.user2.center.lng}
-              text="My Marker"
             /> */}
+            <MapMarker
+              lat={this.state.lat}
+              lng={this.state.lng}
+              text="My Marker"
+            />
+
             {profileMarkers}
           </GoogleMapReact>
         </div>
