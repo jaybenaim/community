@@ -133,9 +133,9 @@ class UserProfile extends React.Component {
                 <label htmlFor="items">Items for Lend</label>
                 <br />
                 <label htmlFor="items">Name:&nbsp;&nbsp;</label>
-                {itemName.itemName} <br />
+                {itemName} <br />
                 <label htmlFor="items">Price:&nbsp;&nbsp; </label>
-                {itemPrice.itemPrice}
+                {itemPrice}
               </div>
             </div>
           )}

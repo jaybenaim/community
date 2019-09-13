@@ -5,10 +5,12 @@ import Form from "react-bootstrap/Form";
 import Root from "../../apis/root";
 
 const Item = ({
-  handleAddItemName,
-  handleAddItemPrice,
   handleFormSubmit,
-  handleItemClose
+  handleItemClose,
+  itemName,
+  itemPrice,
+  onChangeItemPrice,
+  onChangeItemName
 }) => {
   return (
     <>
@@ -25,8 +27,9 @@ const Item = ({
                 <Form.Control
                   name="item"
                   type="text"
+                  value={itemName}
                   // ref={itemRef}
-                  onChange={handleAddItemName}
+                  onChange={event => onChangeItemName(event.target.value)}
                   placeholder="Enter An Item Name"
                 />
               </Form.Group>
@@ -35,8 +38,9 @@ const Item = ({
                 <Form.Control
                   name="price"
                   type="text"
+                  value={itemPrice}
                   // ref={priceRef}
-                  onChange={handleAddItemPrice}
+                  onChange={event => onChangeItemPrice(event.target.value)}
                   placeholder="Enter An Item Price"
                 />
               </Form.Group>
@@ -44,7 +48,9 @@ const Item = ({
           </Modal.Body>
 
           <Modal.Footer>
-            <Button variant="secondary">Close</Button>
+            <Button variant="secondary" onClick={handleItemClose}>
+              Close
+            </Button>
             <Button variant="primary" onClick={handleFormSubmit}>
               Save changes
             </Button>

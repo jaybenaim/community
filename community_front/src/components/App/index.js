@@ -18,24 +18,23 @@ const App = () => {
   const [showProfile, setProfile] = useState(false);
   const [displayItemForm, setDisplayItemForm] = useState(false);
 
-  const [itemName, setItemName] = useState("first name");
-  const [itemPrice, setItemPrice] = useState("price");
+  const [itemName, setItemName] = useState("");
+  const [itemPrice, setItemPrice] = useState("");
 
-  const handleAddItemName = event => {
-    let itemName = event.target.value;
-    setItemName({ itemName: itemName });
+  const onChangeItemName = newName => {
+    setItemName(newName);
   };
-  const handleAddItemPrice = event => {
-    let itemPrice = event.target.value;
-    setItemPrice({ itemPrice: itemPrice });
+  const onChangeItemPrice = newPrice => {
+    setItemPrice(newPrice);
   };
 
   const handleFormSubmit = () => {
     Root.post("items/", {
-      name_of_item: itemName.itemName,
-      price: itemPrice.itemPrice
+      name_of_item: itemName,
+      price: itemPrice
     })
       .then(res => {
+        setDisplayItemForm(false);
         console.log("Item added");
       })
       .catch(err => {
@@ -71,6 +70,7 @@ const App = () => {
     setProfile(true);
   };
   const handleShow = () => setShow(true);
+
   return (
     <Router>
       <div className="App">
@@ -97,8 +97,9 @@ const App = () => {
                 handleShow={handleShow}
                 handleClose={handleClose}
                 handleItemClose={handleItemClose}
-                handleAddItemName={handleAddItemName}
-                handleAddItemPrice={handleAddItemPrice}
+                onChangeItemName={onChangeItemName}
+                handleFormSubmit={handleFormSubmit}
+                onChangeItemPrice={onChangeItemPrice}
                 handleAddItemToggle={handleAddItemToggle}
                 handleShowProfile={handleShowProfile}
                 handleProfileFormSubmit={handleProfileFormSubmit}

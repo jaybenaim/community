@@ -17,12 +17,13 @@ const Profile = ({
   handleShow,
   handleClose,
   handleItemClose,
-  handleAddItemName,
-  handleAddItemPrice,
   handleAddItemToggle,
   handleShowProfile,
   handleProfileFormSubmit,
-  handleFormSubmit
+  handleFormSubmit,
+
+  onChangeItemName,
+  onChangeItemPrice
 }) => {
   // // Hooks
 
@@ -97,12 +98,11 @@ const Profile = ({
           />
           {displayItemForm && (
             <Item
-              profileName={profileName}
-              email={email}
-              address={address}
+              itemName={itemName}
+              itemPrice={itemPrice}
               handleItemClose={handleItemClose}
-              handleAddItemName={handleAddItemName}
-              handleAddItemPrice={handleAddItemPrice}
+              onChangeItemPrice={onChangeItemPrice}
+              onChangeItemName={onChangeItemName}
               handleFormSubmit={handleFormSubmit}
             />
           )}
