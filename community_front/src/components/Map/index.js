@@ -38,30 +38,34 @@ class SimpleMap extends React.Component {
     Geocode.setApiKey(MAP_API_KEY);
     Geocode.enableDebug();
     let homeAddress = [];
-    Root.get("/profiles/")
-      .then(res => {
-        let address = res.data[0].address;
-        let lastIndex = address.indexOf(" ");
-        address = address.substring(lastIndex, address.length);
-        homeAddress.push(address);
-      })
-      .then(res => {
-        Geocode.fromAddress(`${homeAddress[0]}`).then(
-          response => {
-            const { lat, lng } = response.results[0].geometry.location;
-            this.setState({
-              user1: { center: { lat, lng } }
-            });
-          },
-          error => {
-            console.error(error);
-          }
-        );
-      });
+    // Root.get("/profiles/").then(res => {
+    //   let address = res.data[0].address;
+    //   let lastIndex = address.indexOf(" ");
+    //   address = address.substring(lastIndex, address.length);
+    //   homeAddress.push(address);
+    // });
+
+    const allProfileAddresses = this.props.allProfiles.map((p, i) => {
+      Geocode.fromAddress(`${p.address}`).then(
+        response => {
+          const { lat, lng } = response.results[0].geometry.location;
+          this.setState({
+            user1: { center: { lat, lng } }
+          });
+        },
+        error => {
+          console.error(error);
+        }
+      );
+    });
   }
 
   render() {
-    const { profileName } = this.props;
+    const { allProfiles } = this.props;
+    const profileMarkers = allProfiles.map((p, i) => (
+      <MapMarker key={p.id} {...p} lat={p.address} lng={p.address} />
+    ));
+
     const handleApiLoaded = (map, maps) => {
       // use map and maps objects
       new maps.Marker({
@@ -90,7 +94,7 @@ class SimpleMap extends React.Component {
             onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
           >
             {/* Place map components here to place on map  */}
-            <Marker
+            {/* <Marker
               lat={this.state.user1.center.lat}
               lng={this.state.user1.center.lng}
             />
@@ -98,7 +102,8 @@ class SimpleMap extends React.Component {
               lat={this.state.user2.center.lat}
               lng={this.state.user2.center.lng}
               text="My Marker"
-            />
+            /> */}
+            {profileMarkers}
           </GoogleMapReact>
         </div>
       </div>
