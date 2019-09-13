@@ -5,34 +5,36 @@ import NavBar from "../Navbar";
 import Profile from "../Profile";
 import Home from "../Home";
 import SimpleMap from "../Map";
-import Profiles from "../Profiles";
+import AllProfiles from "../AllProfiles";
 import Root from "../../apis/root";
 
-const App = () => {
-  // Hooks
-
-  const [profileName, setProfileName] = useState("");
-  const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
-  const [show, setShow] = useState(false);
-  const [showProfile, setProfile] = useState(false);
-  const [displayItemForm, setDisplayItemForm] = useState(false);
-  const [itemName, setItemName] = useState("first name");
-  const [itemPrice, setItemPrice] = useState("price");
-
-  const handleAddItemName = event => {
+class App extends React.Component {
+  state = {
+    profileName: "",
+    email: "",
+    address: "",
+    show: "",
+    showProfile: false,
+    displayItemForm: false,
+    itemName: "first name",
+    itemPrice: "price",
+    allProfiles: []
+  };
+  handleAddItemName = event => {
     let itemName = event.target.value;
-    setItemName({ itemName: itemName });
+    // setItemName({ itemName: itemName });
+    this.setState({ itemName: itemName });
   };
-  const handleAddItemPrice = event => {
+  handleAddItemPrice = event => {
     let itemPrice = event.target.value;
-    setItemPrice({ itemPrice: itemPrice });
+    // setItemPrice({ itemPrice: itemPrice });
+    this.setState({ itemPrice: itemPrice });
   };
 
-  const handleFormSubmit = () => {
+  handleFormSubmit = () => {
     Root.post("items/", {
-      name_of_item: itemName.itemName,
-      price: itemPrice.itemPrice
+      name_of_item: this.state.itemName.itemName,
+      price: this.state.itemPrice.itemPrice
     })
       .then(res => {
         console.log("Item added");
@@ -43,73 +45,94 @@ const App = () => {
   };
 
   // Handlers
-  const handleAddItemToggle = event => {
+  handleAddItemToggle = event => {
     event.preventDefault();
-    setDisplayItemForm(prevState => !prevState);
+    this.setState(prevState => !prevState);
   };
 
-  const handleProfileFormSubmit = values => {
+  handleProfileFormSubmit = values => {
     let name = values.profile_name;
     let email = values.email;
     let address = values.address;
 
-    setProfileName(name);
-    setEmail(email);
-    setAddress(address);
+    this.setState({ name, email, address });
   };
 
-  const handleShowProfile = () => {
-    setProfile(true);
+  handleShowProfile = () => {
+    this.setState({ showProfile: true });
   };
-  const handleClose = () => {
-    setShow(false);
-    setProfile(true);
+  handleClose = () => {
+    this.setState({ showProfile: true });
   };
-  const handleShow = () => setShow(true);
-  return (
-    <Router>
-      <div className="App">
-        <Switch>
-          <Route exact path="/" component={Home} />
-        </Switch>
-        <Switch>
-          <NavBar />
-        </Switch>
-        <Switch>
-          <Route
-            exact
-            path="/profiles"
-            render={props => (
-              <Profile
-                profileName={profileName}
-                email={email}
-                address={address}
-                show={show}
-                showProfile={showProfile}
-                itemName={itemName}
-                itemPrice={itemPrice}
-                displayItemForm={displayItemForm}
-                handleShow={handleShow}
-                handleClose={handleClose}
-                handleAddItemName={handleAddItemName}
-                handleAddItemPrice={handleAddItemPrice}
-                handleAddItemToggle={handleAddItemToggle}
-                handleShowProfile={handleShowProfile}
-                handleProfileFormSubmit={handleProfileFormSubmit}
-                handleFormSubmit={handleFormSubmit}
-              />
-            )}
-          />
-        </Switch>
-        <Switch>
-          <Route path="/all" component={Profiles} />
-        </Switch>
-        <Switch>
-          <Route path="/map" component={SimpleMap} />
-        </Switch>
-      </div>
-    </Router>
-  );
-};
+  handleShow = () => this.setState({ handleShow: true });
+
+  getAllProfiles = () => {
+    Root.get("profiles/").then(res => {
+      let profiles = res.data;
+      this.setState({ allProfiles: profiles });
+      console.log(this.state.allProfiles);
+    });
+  };
+  getAllItems = () => {
+    return null;
+  };
+  componentDidMount() {
+    this.getAllProfiles();
+  }
+  render() {
+    return (
+      <Router>
+        <div className="App">
+          <Switch>
+            <Route exact path="/" component={Home} />
+          </Switch>
+          <Switch>
+            <NavBar />
+          </Switch>
+          <Switch>
+            <Route
+              path="/users/profiles/"
+              render={props => (
+                <AllProfiles
+                  allProfiles={this.state.allProfiles}
+                  allItems={this.allItems}
+                />
+              )}
+            />
+          </Switch>
+          <Switch>
+            <Route
+              exact
+              path="/profiles"
+              render={props => (
+                <Profile
+                  profileName={this.profileName}
+                  email={this.email}
+                  address={this.address}
+                  show={this.show}
+                  showProfile={this.showProfile}
+                  itemName={this.itemName}
+                  itemPrice={this.itemPrice}
+                  displayItemForm={this.displayItemForm}
+                  handleShow={this.handleShow}
+                  handleClose={this.handleClose}
+                  handleAddItemName={this.handleAddItemName}
+                  handleAddItemPrice={this.handleAddItemPrice}
+                  handleAddItemToggle={this.handleAddItemToggle}
+                  handleShowProfile={this.handleShowProfile}
+                  handleProfileFormSubmit={this.handleProfileFormSubmit}
+                  handleFormSubmit={this.handleFormSubmit}
+                />
+              )}
+            />
+          </Switch>
+          <Switch>
+            <Route path="/map" component={SimpleMap} />
+          </Switch>
+        </div>
+      </Router>
+    );
+  }
+}
 
 export default App;
