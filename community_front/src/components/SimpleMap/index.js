@@ -4,7 +4,6 @@ import GoogleMapReact from "google-map-react";
 import MAP_API_KEY from "../../apis/keys";
 import Geocode from "react-geocode";
 import MapMarker from "../MapMarker";
-import Root from "../../apis/root";
 
 /**
  *@prop [allProfiles] array required

@@ -1,6 +1,5 @@
 import React from "react";
 import "./index.css";
-import ProfileCard from "../ProfileCard";
 import Root from "../../apis/root";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -10,10 +9,10 @@ class MyProfile extends React.Component {
     items: []
   };
   getToken = () => {
-    Root.get("items/").then(res => {
+    Root.get("profiles/").then(res => {
       const { data } = res;
       // data.map();
-      console.log(data);
+      console.log(res.user);
     });
   };
   getProfileName = () => {
@@ -27,7 +26,6 @@ class MyProfile extends React.Component {
   render() {
     this.getToken();
     // this.getProfileName();
-    const { allProfiles } = this.props;
 
     return (
       <Container>
@@ -36,7 +34,7 @@ class MyProfile extends React.Component {
             <img
               className="profile-image"
               src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-              alt="profile picture"
+              alt="profile"
             />
             <Container>
               <Row>

@@ -19,7 +19,7 @@ class AllProfiles extends Component {
   };
 
   handleProfileFormClick = event => {
-    const { handleProfileFormSubmit, handleClose } = this.props;
+    const { handleProfileFormSubmit } = this.props;
 
     event.preventDefault();
     let profileName = this.nameRef.current.value;
@@ -48,16 +48,7 @@ class AllProfiles extends Component {
       });
   };
   render() {
-    const {
-      allProfiles,
-      allItems,
-      handleProfileFormSubmit,
-      handleFormSubmit,
-      handleShow,
-      show,
-      handleClose,
-      handleProfileFormClick
-    } = this.props;
+    const { allProfiles, allItems } = this.props;
 
     const profileElements = allProfiles.map((p, i) => (
       <ProfileCard key={p.id} {...p} allItems={allItems} />
