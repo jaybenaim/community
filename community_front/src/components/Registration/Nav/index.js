@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import "./index.css";
 import LoginForm from "../LoginForm";
 import SignupForm from "../SignupForm";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
 
 class Nav extends React.Component {
   logged_out_nav = (
@@ -30,15 +32,19 @@ class Nav extends React.Component {
     }
 
     return (
-      <div className="down">
-        {this.props.logged_in ? this.logged_in_nav : this.logged_out_nav}
-        {form}
-        <h3>
-          {this.props.logged_in
-            ? `Hello, ${this.props.username}`
-            : "Please Log In"}
-        </h3>
-      </div>
+      <Container>
+        <Row>
+          <div className="down">
+            {this.props.logged_in ? this.logged_in_nav : this.logged_out_nav}
+            {form}
+            <h3>
+              {this.props.logged_in
+                ? `Hello, ${this.props.username}`
+                : "Please Log In"}
+            </h3>
+          </div>
+        </Row>
+      </Container>
     );
   }
 }

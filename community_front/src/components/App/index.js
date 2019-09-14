@@ -172,6 +172,11 @@ class App extends React.Component {
                   display_form={this.display_form}
                   handle_logout={this.handle_logout}
                   username={this.state.username}
+                  displayed_form={this.state.displayed_form}
+                  logged_in={this.state.logged_in}
+                  username={this.state.username}
+                  handle_login={this.handle_login}
+                  handle_signup={this.handle_signup}
                 />
               )}
             />
