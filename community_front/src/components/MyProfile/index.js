@@ -10,10 +10,10 @@ class MyProfile extends React.Component {
     items: []
   };
   getToken = () => {
-    Root.post("api-auth").then(res => {
+    Root.get("items/").then(res => {
       const { data } = res;
       // data.map();
-      console.log(res);
+      console.log(data);
     });
   };
   getProfileName = () => {
