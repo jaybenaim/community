@@ -4,6 +4,10 @@ from django.contrib import admin
 from django.conf.urls import url
 from django.views.decorators.csrf import csrf_exempt
 from .views import *
+from rest_framework.authtoken import views as rest_framework_views
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -29,6 +33,7 @@ urlpatterns = [
     path('accounts/signup_create', signup_create, name='signup_create'), 
     path('accounts/profile/', include('django.contrib.auth.urls')), 
     url(r'^', FrontendAppView.as_view()),
+    path('api/login', login),
+    ] 
 
 
-]

@@ -3,6 +3,10 @@ from rest_framework import viewsets
 from .serializers import * 
 from django.views.generic import View
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 class ProfileViewSet(viewsets.ModelViewSet): 
     """ Api endpoint for profiles to be viewed or edited """ 
@@ -17,6 +21,7 @@ class ItemViewSet(viewsets.ModelViewSet):
 
 class ApiView(View):
     
+    
     def get(self, request):
         return JsonResponse({
             "it": "getting"
@@ -28,4 +33,13 @@ class ApiView(View):
             "it": "posting"
         })
 
+class TokenView(APIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
+    def get(self, request, format=None):
+        content = {
+            'user': unicode(request.user),  # `django.contrib.auth.User` instance.
+            'auth': unicode(request.auth),  # None
+        }
+        return Response(content)

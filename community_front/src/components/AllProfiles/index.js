@@ -20,6 +20,7 @@ class AllProfiles extends Component {
 
   handleProfileFormClick = event => {
     const { handleProfileFormSubmit, handleClose } = this.props;
+
     event.preventDefault();
     let profileName = this.nameRef.current.value;
     let email = this.emailRef.current.value;
