@@ -48,6 +48,7 @@ class MyProfile extends React.Component {
         // });
         const { url } = res.data.photos[0];
         console.log(url);
+        console.log(url);
         this.setState(prevstate => ({
           itemImages: url
         }));
