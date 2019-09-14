@@ -5,11 +5,13 @@ import LoginForm from "../LoginForm";
 import SignupForm from "../SignupForm";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import Nav from "react-bootstrap/Nav";
 
-class Nav extends React.Component {
+class NavbarNew extends React.Component {
   logged_out_nav = (
     <ul>
       <li onClick={() => this.props.display_form("login")}>login</li>
+
       <li onClick={() => this.props.display_form("signup")}>signup</li>
     </ul>
   );
@@ -48,9 +50,9 @@ class Nav extends React.Component {
     );
   }
 }
-export default Nav;
+export default NavbarNew;
 
-Nav.propTypes = {
+NavbarNew.propTypes = {
   logged_in: PropTypes.bool.isRequired,
   display_form: PropTypes.func.isRequired,
   handle_logout: PropTypes.func.isRequired
