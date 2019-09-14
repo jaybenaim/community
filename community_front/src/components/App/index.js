@@ -109,7 +109,7 @@ class App extends React.Component {
               )}
             />
           </Switch>
-          <Switch>
+          {/* <Switch>
             <Route
               exact
               path="/profiles"
@@ -134,7 +134,7 @@ class App extends React.Component {
                 />
               )}
             />
-          </Switch>
+          </Switch> */}
           <Switch>
             <Route
               path="/map"
@@ -145,7 +145,7 @@ class App extends React.Component {
           </Switch>
           <Switch>
             <Route
-              path="/myprofile"
+              path="/profiles"
               render={props => (
                 <MyProfile allProfiles={this.state.allProfiles} />
               )}
