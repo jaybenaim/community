@@ -7,7 +7,6 @@ class ProfileItem extends React.Component {
     return (
       <Col className="myprofile-container">
         Item Image
-        <ProfileItem />
         <img src={this.state.image} alt="item" />
       </Col>
     );
