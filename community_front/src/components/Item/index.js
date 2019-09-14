@@ -1,45 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import Root from "../../apis/root";
 
-const Item = ({ show, handleClose, profileName, email, address }) => {
-  //HOOKS
-  const [itemName, setItemName] = useState("first name");
-  const [itemPrice, setItemPrice] = useState("price");
-
-  //REFS
-  const itemRef = React.createRef();
-  const priceRef = React.createRef();
-
-  const handleAddItem = event => {
-    // let itemName = event.target.value;
-    let newItemName = itemRef.current.value;
-    let priceName = priceRef.current.value;
-    setItemName({ itemName: newItemName });
-    setItemPrice({ itemPrice: priceName });
-  };
-
-  const handleFormSubmit = () => {
-    handleAddItem();
-
-    Root.post("items/", {
-      name_of_item: itemName.itemName,
-      price: itemPrice.itemPrice
-    })
-      .then(res => {
-        console.log("Item added");
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
+const Item = ({
+  handleFormSubmit,
+  handleItemClose,
+  itemName,
+  itemPrice,
+  onChangeItemPrice,
+  onChangeItemName,
+  show,
+}) => {
   return (
     <>
       <div>
         <Modal.Dialog>
-          <Modal.Header closeButton>
+          <Modal.Header closeButton={true} onHide={handleItemClose}>
             <Modal.Title>Modal title</Modal.Title>
           </Modal.Header>
 
@@ -50,9 +27,10 @@ const Item = ({ show, handleClose, profileName, email, address }) => {
                 <Form.Control
                   name="item"
                   type="text"
-                  ref={itemRef}
+                  value={itemName}
+                  // ref={itemRef}
+                  onChange={event => onChangeItemName(event.target.value)}
                   placeholder="Enter An Item Name"
-                  onChange={handleAddItem}
                 />
               </Form.Group>
               <Form.Group controlId="formBasicName">
@@ -60,16 +38,19 @@ const Item = ({ show, handleClose, profileName, email, address }) => {
                 <Form.Control
                   name="price"
                   type="text"
-                  ref={priceRef}
+                  value={itemPrice}
+                  // ref={priceRef}
+                  onChange={event => onChangeItemPrice(event.target.value)}
                   placeholder="Enter An Item Price"
-                  onChange={handleAddItem}
                 />
               </Form.Group>
             </Form>
           </Modal.Body>
 
           <Modal.Footer>
-            <Button variant="secondary">Close</Button>
+            <Button variant="secondary" onClick={handleItemClose}>
+              Close
+            </Button>
             <Button variant="primary" onClick={handleFormSubmit}>
               Save changes
             </Button>

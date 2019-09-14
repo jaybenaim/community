@@ -1,7 +1,4 @@
 import React from "react";
-// import Modal from "react-bootstrap/Modal";
-// import Form from "react-bootstrap/Form";
-// import Button from "react-bootstrap/Button";
 import "./index.css";
 import Root from "../../apis/root";
 
@@ -23,17 +20,17 @@ class UserProfile extends React.Component {
   }
   componentDidMount() {
     Root.get("items/").then(res => {
-      let items = res.data.item;
-      console.log(items);
-      // this.setState(prevState => {
-      //   [...prevState, ]
-      // })
+      let items = res.data;
+      this.setState({ items: [items] });
+      console.log(this.state.items);
     });
   }
   handleClose = () => {
     this.setState({ show: false });
   };
-  handleShow = () => this.setState({ show: true });
+  handleShow = () => {
+    this.setState({ show: true })
+  };
 
   handleImageSrc = event => {
     this.setState({
@@ -70,8 +67,16 @@ class UserProfile extends React.Component {
     // if (src !== null) this.setState({ imgSrc: src });
     // else this.setState({ imgSrc: this.state.imgSrc });
   };
+
   render() {
-    const { profileName, email, address, showProfile } = this.props;
+    const {
+      profileName,
+      email,
+      address,
+      showProfile,
+      itemName,
+      itemPrice
+    } = this.props;
 
     return (
       <>
@@ -88,33 +93,6 @@ class UserProfile extends React.Component {
             alt="profile"
             onClick={this.handleImageChange}
           />
-
-          {/* {this.state.imgChange ? (
-            <Modal show={this.state.show} onHide={this.handleClose}>
-              <Modal.Header closeButton>
-                <Modal.Title>Modal title</Modal.Title>
-              </Modal.Header>
-
-              <Modal.Body>
-                <Form onSubmit={this.handleImageSrc}>
-                  <Form.Group controlId="formBasicName">
-                    <Form.Label>Enter an Image Url</Form.Label>
-                    <Form.Control
-                      name="name"
-                      type="name"
-                      placeholder="Enter Image Url"
-                    />
-                  </Form.Group>
-                </Form>
-              </Modal.Body>
-
-              <Modal.Footer>
-                <Button variant="secondary">Close</Button>
-                <Button variant="primary">Save changes</Button>
-              </Modal.Footer>
-            </Modal>
-          ) : 
-          */}
           {showProfile && (
             <div className="profile-info">
               <h2>{profileName}</h2>
@@ -122,8 +100,14 @@ class UserProfile extends React.Component {
               <p>{email}</p>
               <label htmlFor="address">ADDRESS</label>
               <p>{address}</p>
-              <label htmlFor="items">Items for Lend</label>
-              <p>{this.state.items}</p>
+              <div>
+                <label htmlFor="items">Items for Lend</label>
+                <br />
+                <label htmlFor="items">Name:&nbsp;&nbsp;</label>
+                {itemName} <br />
+                <label htmlFor="items">Price:&nbsp;&nbsp; </label>
+                {itemPrice}
+              </div>
             </div>
           )}
         </div>
