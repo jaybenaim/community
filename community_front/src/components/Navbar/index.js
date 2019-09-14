@@ -21,39 +21,22 @@ class NavBar extends React.Component {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
         <Navbar.Collapse id="basic-navbar-nav">
-          <NavbarNew
-            logged_in={this.props.logged_in}
-            display_form={this.props.display_form}
-            handle_logout={this.handle_logout}
-            username={this.props.username}
-            displayed_form={this.props.displayed_form}
-            logged_in={this.props.logged_in}
-            username={this.props.username}
-            handle_login={this.props.handle_login}
-            handle_signup={this.props.handle_signup}
-          />
-
           <Nav className="mr-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/profiles">Profiles</Nav.Link>
             <Nav.Link href="/map">Map</Nav.Link>
-            <NavDropdown title="Category" id="basic-nav-dropdown">
-              <NavDropdown.Item href="/category/outdoor">
-                Outdoor
-              </NavDropdown.Item>
-              <NavDropdown.Item href="/category/indoor">
-                Indoor
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="/category/powertools">
-                Power Tools
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="/category/saws">Saws</NavDropdown.Item>
-              <NavDropdown.Item href="/category/ladders">
-                Ladders
-              </NavDropdown.Item>
-            </NavDropdown>
+
+            <NavbarNew
+              logged_in={this.props.logged_in}
+              display_form={this.props.display_form}
+              handle_logout={this.props.handle_logout}
+              username={this.props.username}
+              displayed_form={this.props.displayed_form}
+              logged_in={this.props.logged_in}
+              username={this.props.username}
+              handle_login={this.props.handle_login}
+              handle_signup={this.props.handle_signup}
+            />
           </Nav>
           <Form inline>
             <FormControl type="text" placeholder="Search" className="mr-sm-2" />

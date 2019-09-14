@@ -9,16 +9,35 @@ import Nav from "react-bootstrap/Nav";
 
 class NavbarNew extends React.Component {
   logged_out_nav = (
-    <ul>
-      <li onClick={() => this.props.display_form("login")}>login</li>
+    <div className="center">
+      <ul>
+        <li
+          className="btn btn-primary login"
+          onClick={() => this.props.display_form("login")}
+        >
+          login
+        </li>
 
-      <li onClick={() => this.props.display_form("signup")}>signup</li>
-    </ul>
+        <li
+          className="btn btn-primary signup"
+          onClick={() => this.props.display_form("signup")}
+        >
+          signup
+        </li>
+      </ul>
+    </div>
   );
   logged_in_nav = (
-    <ul>
-      <li onClick={this.props.handle_logout}>logout</li>
-    </ul>
+    <div className="center">
+      <ul>
+        <li
+          className="btn btn-primary logout"
+          onClick={this.props.handle_logout}
+        >
+          logout
+        </li>
+      </ul>
+    </div>
   );
   render() {
     let form;
@@ -36,15 +55,13 @@ class NavbarNew extends React.Component {
     return (
       <Container>
         <Row>
-          <div className="down">
-            {this.props.logged_in ? this.logged_in_nav : this.logged_out_nav}
-            {form}
-            <h3>
-              {this.props.logged_in
-                ? `Hello, ${this.props.username}`
-                : "Please Log In"}
-            </h3>
-          </div>
+          {this.props.logged_in ? this.logged_in_nav : this.logged_out_nav}
+          {form}
+          <h3>
+            {this.props.logged_in
+              ? `Hello, ${this.props.username}`
+              : "Please Log In"}
+          </h3>
         </Row>
       </Container>
     );
