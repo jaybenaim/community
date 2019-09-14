@@ -1,0 +1,8 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: 4;
+}
+.show-grid {
+  margin-top: 100px;
+  grid-column: 2;
+}
