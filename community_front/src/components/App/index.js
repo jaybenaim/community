@@ -8,6 +8,10 @@ import AllProfiles from "../AllProfiles";
 import Root from "../../apis/root";
 import SimpleMap from "../SimpleMap";
 import MyProfile from "../MyProfile";
+import Nav from "../Registration/Nav";
+import LoginForm from "../Registration/LoginForm";
+import SignupForm from "../Registration/SignupForm";
+import Row from "react-bootstrap/Row";
 
 class App extends React.Component {
   state = {
@@ -19,7 +23,10 @@ class App extends React.Component {
     displayItemForm: false,
     itemName: "first name",
     itemPrice: "price",
-    allProfiles: []
+    allProfiles: [],
+    displayed_form: "",
+    logged_in: localStorage.getItem("token") ? true : false,
+    username: ""
   };
 
   // Handlers
@@ -79,9 +86,73 @@ class App extends React.Component {
   getAllItems = () => {
     return null;
   };
+
   componentDidMount() {
     this.getAllProfiles();
+    if (this.state.logged_in) {
+      fetch("http://localhost:8000/core/current_user/", {
+        headers: {
+          Authorization: `JWT ${localStorage.getItem("token")}`
+        }
+      })
+        .then(res => res.json())
+        .then(json => {
+          this.setState({ username: json.username });
+        });
+    }
   }
+
+  handle_login = (e, data) => {
+    e.preventDefault();
+    fetch("http://localhost:8000/token-auth/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(json => {
+        localStorage.setItem("token", json.token);
+        this.setState({
+          logged_in: true,
+          displayed_form: "",
+          username: json.user.username
+        });
+      });
+  };
+
+  handle_signup = (e, data) => {
+    e.preventDefault();
+    fetch("http://localhost:8000/core/users/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(json => {
+        localStorage.setItem("token", json.token);
+        this.setState({
+          logged_in: true,
+          displayed_form: "",
+          username: json.username
+        });
+      });
+  };
+
+  handle_logout = () => {
+    localStorage.removeItem("token");
+    this.setState({ logged_in: false, username: "" });
+  };
+
+  display_form = form => {
+    this.setState({
+      displayed_form: form
+    });
+  };
+
   render() {
     return (
       <Router>
@@ -89,8 +160,21 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={Home} />
           </Switch>
-          <Switch>
+          {/* <Switch>
             <NavBar />
+          </Switch> */}
+          <Switch>
+            <Route
+              path="/nav"
+              render={props => (
+                <Nav
+                  logged_in={this.state.logged_in}
+                  display_form={this.display_form}
+                  handle_logout={this.handle_logout}
+                  username={this.state.username}
+                />
+              )}
+            />
           </Switch>
           <Switch>
             <Route
