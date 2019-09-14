@@ -15,7 +15,9 @@ import Axios from "axios";
 class MyProfile extends React.Component {
   state = {
     items: [],
-    image: "",
+    profileImage:
+      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+    itemImages: [],
     query: ""
   };
   getToken = () => {
@@ -31,15 +33,24 @@ class MyProfile extends React.Component {
       console.log(name_of_item);
       this.setState({ query: name_of_item });
     });
-    await Axios.get(
-      `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${this.name_of_item}&limit=1&offset=0&rating=G&lang=en`
-    )
+    // await Axios.get(
+    //   `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${this.name_of_item}&limit=1&offset=0&rating=G&lang=en`
+    // )
+    await Axios.get(`https://api.pexels.com/v1/curated?per_page=1&page=1`, {
+      headers: { Authorization: PEXELS_API_KEY }
+    })
+
       .then(res => {
-        console.log(res.data.data[0].images.fixed_height_still);
-        const { url } = res.data.data[0].images.fixed_height_still;
-        this.setState({
-          image: url
-        });
+        // console.log(res.data.data[0].images.fixed_height_still);
+        // const { url } = res.data.data[0].images.fixed_height_still;
+        // this.setState({
+        //   image: url
+        // });
+        const { url } = res.data.photos[0];
+        console.log(url);
+        this.setState(prevstate => ({
+          itemImages: url
+        }));
       })
       .catch(err => {
         console.log(err);
@@ -66,18 +77,17 @@ class MyProfile extends React.Component {
           <Col>
             <img
               className="profile-image"
-              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+              src={this.state.profileImage}
               alt="profile"
               onClick={this.getImages}
             />
-            <Container>
-              <Row>
-                <Col className="profile-name">Name: </Col>
-              </Row>
-            </Container>
+            <Row className="profile-name">Name: </Row>
+            <Row className="profile-details"> Profile Details </Row>
           </Col>
-          <ProfileItem />
-          <Col className="myprofile-container">Item Details</Col>
+
+          <Col>
+            <ProfileItem image={this.state.itemImages} />{" "}
+          </Col>
         </Row>
       </Container>
     );
