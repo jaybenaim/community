@@ -55,11 +55,21 @@ class MyProfile extends React.Component {
     });
   };
 
+  get = () => {
+    fetch("http://localhost:8000/core/current_user/", {
+      headers: {
+        Authorization: `JWT ${localStorage.getItem("token")}`
+      }
+    }).then(res => {
+      console.log(res);
+    });
+  };
+
   render() {
     // this.getToken();
     // this.getImages();
     // this.getProfileName();
-
+    this.get();
     return (
       <Container>
         <Row>
