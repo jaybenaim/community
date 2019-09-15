@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken', 
     'community',
     'corsheaders',
+    'core.apps.CoreConfig'
 ]
 
 MIDDLEWARE = [
@@ -159,7 +160,6 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.BasicAuthentication',
         # 'rest_framework.authentication.SessionAuthentication',
         # 'rest_framework.authentication.TokenAuthentication',
-   
 
     ),
     # 'DEFAULT_PERMISSION_CLASSES': (
@@ -182,4 +182,9 @@ LOGGING = {
             'propagate': False,
         },
     },
+}
+
+
+JWT_AUTH = {
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'community.utils.my_jwt_response_handler'
 }

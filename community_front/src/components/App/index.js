@@ -2,12 +2,12 @@ import React from "react";
 import "./index.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NavBar from "../Navbar";
-import Profile from "../Profile";
 import Home from "../Home";
 import AllProfiles from "../AllProfiles";
 import Root from "../../apis/root";
 import SimpleMap from "../SimpleMap";
 import MyProfile from "../MyProfile";
+import Axios from "axios";
 
 class App extends React.Component {
   state = {
@@ -19,7 +19,10 @@ class App extends React.Component {
     displayItemForm: false,
     itemName: "first name",
     itemPrice: "price",
-    allProfiles: []
+    allProfiles: [],
+    displayed_form: "",
+    logged_in: localStorage.getItem("token") ? true : false,
+    username: ""
   };
 
   // Handlers
@@ -79,9 +82,73 @@ class App extends React.Component {
   getAllItems = () => {
     return null;
   };
+
   componentDidMount() {
     this.getAllProfiles();
+    if (this.state.logged_in) {
+      Axios.get("http://localhost:8000/core/current_user/", {
+        headers: {
+          Authorization: `JWT ${localStorage.getItem("token")}`
+        }
+      })
+        .then(res => res.json())
+        .then(json => {
+          this.setState({ username: json.username });
+        });
+    }
   }
+
+  handle_login = (e, data) => {
+    e.preventDefault();
+    Axios.get("http://localhost:8000/token-auth/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(json => {
+        localStorage.setItem("token", json.token);
+        this.setState({
+          logged_in: true,
+          displayed_form: "",
+          username: json.user.username
+        });
+      });
+  };
+
+  handle_signup = (e, data) => {
+    e.preventDefault();
+    Axios.get("http://localhost:8000/core/users/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(json => {
+        localStorage.setItem("token", json.token);
+        this.setState({
+          logged_in: true,
+          displayed_form: "",
+          username: json.username
+        });
+      });
+  };
+
+  handle_logout = () => {
+    localStorage.removeItem("token");
+    this.setState({ logged_in: false, username: "" });
+  };
+
+  display_form = form => {
+    this.setState({
+      displayed_form: form
+    });
+  };
+
   render() {
     return (
       <Router>
@@ -90,7 +157,15 @@ class App extends React.Component {
             <Route exact path="/" component={Home} />
           </Switch>
           <Switch>
-            <NavBar />
+            <NavBar
+              logged_in={this.state.logged_in}
+              display_form={this.display_form}
+              handle_logout={this.handle_logout}
+              username={this.state.username}
+              displayed_form={this.state.displayed_form}
+              handle_login={this.handle_login}
+              handle_signup={this.handle_signup}
+            />
           </Switch>
           <Switch>
             <Route
@@ -109,32 +184,6 @@ class App extends React.Component {
               )}
             />
           </Switch>
-          {/* <Switch>
-            <Route
-              exact
-              path="/profiles"
-              render={props => (
-                <Profile
-                  profileName={this.profileName}
-                  email={this.email}
-                  address={this.address}
-                  show={this.show}
-                  showProfile={this.showProfile}
-                  itemName={this.itemName}
-                  itemPrice={this.itemPrice}
-                  displayItemForm={this.displayItemForm}
-                  handleShow={this.handleShow}
-                  handleClose={this.handleClose}
-                  handleAddItemName={this.handleAddItemName}
-                  handleAddItemPrice={this.handleAddItemPrice}
-                  handleAddItemToggle={this.handleAddItemToggle}
-                  handleShowProfile={this.handleShowProfile}
-                  handleProfileFormSubmit={this.handleProfileFormSubmit}
-                  handleFormSubmit={this.handleFormSubmit}
-                />
-              )}
-            />
-          </Switch> */}
           <Switch>
             <Route
               path="/map"
@@ -145,7 +194,8 @@ class App extends React.Component {
           </Switch>
           <Switch>
             <Route
-              path="/profiles"
+              exact
+              path="/myprofile"
               render={props => (
                 <MyProfile allProfiles={this.state.allProfiles} />
               )}

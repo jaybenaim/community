@@ -8,6 +8,7 @@ from rest_framework.authtoken import views as rest_framework_views
 from django.conf import settings
 from django.conf.urls.static import static
 
+from rest_framework_jwt.views import obtain_jwt_token
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -34,6 +35,8 @@ urlpatterns = [
     path('accounts/profile/', include('django.contrib.auth.urls')), 
     url(r'^', FrontendAppView.as_view()),
     path('api/login', login),
+    path('token-auth/', obtain_jwt_token), 
+    path('core/', include('core.urls'))
     ] 
 
 

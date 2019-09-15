@@ -4,10 +4,12 @@ import Root from "../../apis/root";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import ImageApi from "../../apis/images";
-import IMAGE_ACCESS_KEY from "../../apis/keys";
-import PEXELS_API_KEY from "../../apis/keys";
-import GIPHY_API_KEY from "../../apis/keys";
+// import ImageApi from "../../apis/images";
+import {
+  GIPHY_API_KEY
+  // PEXELS_API_KEY,
+  // IMAGE_ACCESS_KEY
+} from "../../apis/keys";
 import ProfileItem from "../ProfileItem";
 
 import Axios from "axios";
@@ -17,30 +19,30 @@ class MyProfile extends React.Component {
     items: [],
     profileImage:
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-    itemImages: [],
+    itemGif: [],
     query: "",
     image:
-      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+    itemName: "",
+    itemPrice: ""
   };
-  getToken = () => {
-    Root.get(`token-auth/`).then(res => {
-      const { data } = res;
-      // data.map();
-      // console.log(res.user);
-    });
-  };
-  getImages = () => {
+  // todo get all items
+  getItems = () => {
     Root.get("items/").then(res => {
       const { name_of_item, price } = res.data[0];
-      console.log(name_of_item);
-      this.setState({ query: name_of_item });
+      this.setState({
+        query: name_of_item,
+        itemName: name_of_item,
+        itemPrice: price
+      });
     });
-    // this.setImages();
+    setTimeout(() => {
+      this.setImages();
+    }, 1000);
   };
-  setImages = async () => {
-    const src = this.getImages();
-    console.log("query" + this.state.query);
-    await Axios.get(
+
+  setImages = () => {
+    Axios.get(
       `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${this.state.query}&limit=1&offset=0&rating=G&lang=en`
     )
       // await Axios.get(`https://api.pexels.com/v1/curated?per_page=1&page=1`, {
@@ -51,14 +53,12 @@ class MyProfile extends React.Component {
       // })
 
       .then(res => {
-        // console.log(res.data.data[0].images.fixed_height_still);
+        let img = res.data.data[0].images.fixed_height.url;
         const { url } = res.data.data[0].images.fixed_height_still;
         this.setState({
-          image: url
+          image: url,
+          itemGif: img
         });
-        this.setState(prevstate => ({
-          itemImages: url
-        }));
       })
       .catch(err => {
         console.log(err);
@@ -74,11 +74,23 @@ class MyProfile extends React.Component {
     });
   };
 
-  render() {
-    // this.getToken();
-    // this.getImages();
-    // this.getProfileName();
+  get = () => {
+    fetch("http://localhost:8000/core/current_user/", {
+      headers: {
+        Authorization: `JWT ${localStorage.getItem("token")}`
+      }
+    }).then(res => {
+      console.log(res);
+    });
+  };
 
+  componentDidMount = () => {
+    this.getItems();
+  };
+  render() {
+    // this.getItems();
+    // this.getProfileName();
+    this.get();
     return (
       <Container>
         <Row>
@@ -96,7 +108,11 @@ class MyProfile extends React.Component {
           </Col>
 
           <Col>
-            <ProfileItem image={this.state.itemImages} />{" "}
+            <ProfileItem
+              image={this.state.itemGif}
+              name={this.state.itemName}
+              price={this.state.itemPrice}
+            />{" "}
           </Col>
         </Row>
       </Container>
