@@ -22,13 +22,7 @@
   width: 50px;
   margin: auto 0;
 }
-.home {
-  background: url("./markerLogos/House.png");
-  height: 50px;
-  width: 50px;
-  background-size: cover;
-  margin: auto 0;
-}
+
 .user-radius {
   height: 300px;
   width: 300px;
