@@ -1,18 +1,14 @@
 .profile-image {
   width: 140px;
   height: 140px;
-  margin-left: -110px;
 }
 .myprofile-container {
   margin-top: 200px;
 }
-
-.profile-name {
-  /* margin-top: 200px; */
-  padding-left: 10%;
-  padding-right: 10%;
+.con {
+  display: flex;
+  justify-content: center;
 }
-
 .profile-details {
   width: 200px;
   height: 200px;

@@ -82,15 +82,17 @@ class MyProfile extends React.Component {
     return (
       <Container>
         <Row>
-          <Col>
-            <img
-              className="profile-image"
-              src={this.state.profileImage}
-              alt="profile"
-              onClick={this.setImages}
-            />
-            <Row className="profile-name">Name: </Row>
-            <Row className="profile-details"> Profile Details </Row>
+          <Col className="con">
+            <section>
+              <img
+                className="profile-image"
+                src={this.state.profileImage}
+                alt="profile"
+                onClick={this.setImages}
+              />
+              <p className="profile-name">Name: </p>
+              <p className="profile-details"> Profile Details </p>
+            </section>
           </Col>
 
           <Col>
