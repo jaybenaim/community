@@ -7,7 +7,7 @@ import FormControl from "react-bootstrap/FormControl";
 // import { Helmet } from "react-helmet";
 import logo from "./logo/logo.png";
 import "./index.css";
-import NavbarNew from "../Registration/Nav";
+import NavbarLogin from "../Registration/Nav";
 
 class NavBar extends React.Component {
   render() {
@@ -26,7 +26,7 @@ class NavBar extends React.Component {
             <Nav.Link href="/myprofile">My Profile</Nav.Link>
             <Nav.Link href="/users/profiles">My Community</Nav.Link>
 
-            <NavbarNew
+            <NavbarLogin
               logged_in={this.props.logged_in}
               display_form={this.props.display_form}
               handle_logout={this.props.handle_logout}
