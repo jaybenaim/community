@@ -5,7 +5,15 @@
 .myprofile-container {
   margin-top: 200px;
 }
-
-.profile-name {
-  /* margin-top: 200px; */
+.con {
+  display: flex;
+  justify-content: center;
+}
+.profile-details {
+  width: 200px;
+  height: 200px;
+  background: #eee;
+  border: 2px gray outset;
+  display: flex;
+  justify-content: center;
 }
