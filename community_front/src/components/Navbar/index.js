@@ -23,8 +23,9 @@ class NavBar extends React.Component {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/profiles">Profiles</Nav.Link>
             <Nav.Link href="/map">Map</Nav.Link>
+            <Nav.Link href="/myprofile">My Profile</Nav.Link>
+            <Nav.Link href="/users/profiles">All Profiles</Nav.Link>
 
             <NavbarNew
               logged_in={this.props.logged_in}

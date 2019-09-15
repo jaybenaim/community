@@ -173,24 +173,6 @@ class App extends React.Component {
               handle_signup={this.handle_signup}
             />
           </Switch>
-          {/* <Switch>
-            <Route
-              path="/nav"
-              render={props => (
-                <Nav
-                  logged_in={this.state.logged_in}
-                  display_form={this.display_form}
-                  handle_logout={this.handle_logout}
-                  username={this.state.username}
-                  displayed_form={this.state.displayed_form}
-                  logged_in={this.state.logged_in}
-                  username={this.state.username}
-                  handle_login={this.handle_login}
-                  handle_signup={this.handle_signup}
-                />
-              )}
-            />
-          </Switch> */}
           <Switch>
             <Route
               path="/users/profiles/"
@@ -208,32 +190,6 @@ class App extends React.Component {
               )}
             />
           </Switch>
-          {/* <Switch>
-            <Route
-              exact
-              path="/profiles"
-              render={props => (
-                <Profile
-                  profileName={this.profileName}
-                  email={this.email}
-                  address={this.address}
-                  show={this.show}
-                  showProfile={this.showProfile}
-                  itemName={this.itemName}
-                  itemPrice={this.itemPrice}
-                  displayItemForm={this.displayItemForm}
-                  handleShow={this.handleShow}
-                  handleClose={this.handleClose}
-                  handleAddItemName={this.handleAddItemName}
-                  handleAddItemPrice={this.handleAddItemPrice}
-                  handleAddItemToggle={this.handleAddItemToggle}
-                  handleShowProfile={this.handleShowProfile}
-                  handleProfileFormSubmit={this.handleProfileFormSubmit}
-                  handleFormSubmit={this.handleFormSubmit}
-                />
-              )}
-            />
-          </Switch> */}
           <Switch>
             <Route
               path="/map"
@@ -244,7 +200,8 @@ class App extends React.Component {
           </Switch>
           <Switch>
             <Route
-              path="/profiles"
+              exact
+              path="/myprofile"
               render={props => (
                 <MyProfile allProfiles={this.state.allProfiles} />
               )}
