@@ -2,3 +2,7 @@
   width: 200px;
   height: 200px;
 }
+.item-container {
+  background: #eee;
+  border: 2px outset #eee;
+}
