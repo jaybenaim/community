@@ -5,7 +5,6 @@ import LoginForm from "../LoginForm";
 import SignupForm from "../SignupForm";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Nav from "react-bootstrap/Nav";
 
 class NavbarNew extends React.Component {
   logged_out_nav = (

@@ -2,16 +2,12 @@ import React from "react";
 import "./index.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NavBar from "../Navbar";
-import Profile from "../Profile";
 import Home from "../Home";
 import AllProfiles from "../AllProfiles";
 import Root from "../../apis/root";
 import SimpleMap from "../SimpleMap";
 import MyProfile from "../MyProfile";
-import Nav from "../Registration/Nav";
-import LoginForm from "../Registration/LoginForm";
-import SignupForm from "../Registration/SignupForm";
-import Row from "react-bootstrap/Row";
+import Axios from "axios";
 
 class App extends React.Component {
   state = {
@@ -90,7 +86,7 @@ class App extends React.Component {
   componentDidMount() {
     this.getAllProfiles();
     if (this.state.logged_in) {
-      fetch("http://localhost:8000/core/current_user/", {
+      Axios.get("http://localhost:8000/core/current_user/", {
         headers: {
           Authorization: `JWT ${localStorage.getItem("token")}`
         }
@@ -104,7 +100,7 @@ class App extends React.Component {
 
   handle_login = (e, data) => {
     e.preventDefault();
-    fetch("http://localhost:8000/token-auth/", {
+    Axios.get("http://localhost:8000/token-auth/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -124,7 +120,7 @@ class App extends React.Component {
 
   handle_signup = (e, data) => {
     e.preventDefault();
-    fetch("http://localhost:8000/core/users/", {
+    Axios.get("http://localhost:8000/core/users/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -167,8 +163,6 @@ class App extends React.Component {
               handle_logout={this.handle_logout}
               username={this.state.username}
               displayed_form={this.state.displayed_form}
-              logged_in={this.state.logged_in}
-              username={this.state.username}
               handle_login={this.handle_login}
               handle_signup={this.handle_signup}
             />

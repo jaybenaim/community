@@ -2,7 +2,6 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 // import { Helmet } from "react-helmet";
@@ -33,8 +32,6 @@ class NavBar extends React.Component {
               handle_logout={this.props.handle_logout}
               username={this.props.username}
               displayed_form={this.props.displayed_form}
-              logged_in={this.props.logged_in}
-              username={this.props.username}
               handle_login={this.props.handle_login}
               handle_signup={this.props.handle_signup}
             />
