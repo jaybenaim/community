@@ -73,7 +73,6 @@ class MyProfile extends React.Component {
       return profile;
     });
   };
-<<<<<<< HEAD
 
   get = () => {
     fetch("http://localhost:8000/core/current_user/", {
@@ -85,11 +84,9 @@ class MyProfile extends React.Component {
     });
   };
 
-=======
   componentDidMount = () => {
     this.getImages();
   };
->>>>>>> 6699e6f2f89ef88c0ce8b9883e94e500ebe32946
   render() {
     // this.getToken();
     // this.getImages();
