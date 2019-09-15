@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./index.css";
 import GoogleMapReact from "google-map-react";
-import MAP_API_KEY from "../../apis/keys";
+import { MAP_API_KEY } from "../../apis/keys";
 import Geocode from "react-geocode";
 import MapMarker from "../MapMarker";
 
