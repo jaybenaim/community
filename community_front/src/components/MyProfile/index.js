@@ -29,7 +29,7 @@ class MyProfile extends React.Component {
     urls: [],
     profileImage:
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-    itemGif: [],
+    itemGif: "",
     query: [],
     query2: "",
     image:
@@ -85,8 +85,8 @@ class MyProfile extends React.Component {
       });
     }, 1000);
   };
-  setImages = query => {
-    Axios.get(
+  setImages = async query => {
+    await Axios.get(
       `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${query}&limit=1&offset=0&rating=G&lang=en`
     )
       // await Axios.get(`https://api.pexels.com/v1/curated?per_page=1&page=1`, {
@@ -105,9 +105,18 @@ class MyProfile extends React.Component {
         // });
         let urls = [];
         urls.push({ url, img });
-        console.log(urls);
+        console.log(img);
+        const {
+          image,
+          itemGif,
+          name,
+          price,
+          profile_id,
+          id
+        } = this.state.items;
         this.setState(prevState => ({
-          urls: urls
+          urls: urls,
+          itemGif: img
         }));
       })
       .catch(err => {
@@ -141,16 +150,20 @@ class MyProfile extends React.Component {
     // this.getProfileName();
     // this.get();
 
-    const { items, urls } = this.state;
-    const { itemGif, name, price } = items;
-    let itemElements = items.map((item, i) => (
-      <ProfileItem
-        key={i}
-        image={urls.image}
-        name={item.name_of_item}
-        price={item.price}
-      />
-    ));
+    const { items, urls, itemGif } = this.state;
+
+    const { name, price } = items;
+    let itemElements = items.map((item, i) => {
+      console.log(itemGif);
+      return (
+        <ProfileItem
+          key={i}
+          image={itemGif}
+          name={item.name_of_item}
+          price={item.price}
+        />
+      );
+    });
 
     return (
       <Container>
