@@ -99,24 +99,13 @@ class MyProfile extends React.Component {
       .then(res => {
         let img = res.data.data[0].images.fixed_height.url;
         const { url } = res.data.data[0].images.fixed_height_still;
-        // this.setState({
-        //   image: url,
-        //   itemGif: img
-        // });
+
         let urls = [];
-        urls.push({ url, img });
-        console.log(img);
-        const {
-          image,
-          itemGif,
-          name,
-          price,
-          profile_id,
-          id
-        } = this.state.items;
+        urls.push(img);
         this.setState(prevState => ({
-          urls: urls,
-          itemGif: img
+          image: url,
+          itemGif: img,
+          urls: urls
         }));
       })
       .catch(err => {
