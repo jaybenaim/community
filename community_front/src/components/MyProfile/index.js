@@ -16,34 +16,78 @@ import Axios from "axios";
 
 class MyProfile extends React.Component {
   state = {
-    items: [],
+    items: [
+      {
+        image: null,
+        itemGif: null,
+        name: null,
+        price: null,
+        profile_id: null,
+        id: null
+      }
+    ],
+    urls: [],
     profileImage:
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
     itemGif: [],
-    query: "",
+    query: [],
+    query2: "",
     image:
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
     itemName: "",
-    itemPrice: ""
+    itemPrice: "",
+    profile_id: 14
   };
-  // todo get all items
+
+  getProfile = () => {
+    const { profile_id } = this.state;
+    Root.get(`profiles/${profile_id}/`).then(res => {
+      console.log(res.data);
+    });
+  };
+
+  // todo get all items related to user
+  // getItems = () => {
+  //   Root.get("items/").then(res => {
+  //     const { name_of_item, price } = res.data[0];
+  //     this.setState({
+  //       query: name_of_item,
+  //       itemName: name_of_item,
+  //       itemPrice: price
+  //     });
+  //   });
+  //   setTimeout(() => {
+  //     this.setImages();
+  //   }, 1000);
+  // };
+
   getItems = () => {
     Root.get("items/").then(res => {
-      const { name_of_item, price } = res.data[0];
-      this.setState({
-        query: name_of_item,
-        itemName: name_of_item,
-        itemPrice: price
+      let items = res.data;
+      let newItems = [];
+      let queries = [];
+      (items || []).map((item, i) => {
+        const { name, price, profile_id } = item;
+        // if ((profile_id = user.profile_id)) {
+        newItems.push(item);
+        queries.push(name);
+        this.setState(prevState => ({
+          query: queries,
+          items: newItems
+        }));
+        // }
       });
     });
     setTimeout(() => {
-      this.setImages();
+      const items = this.state.items;
+      items.forEach(item => {
+        this.setImages(item.name);
+      });
     }, 1000);
   };
-
-  setImages = () => {
+  setImages = query => {
     Axios.get(
-      `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${this.state.query}&limit=1&offset=0&rating=G&lang=en`
+      `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${query}&limit=1&offset=0&rating=G&lang=en`
     )
       // await Axios.get(`https://api.pexels.com/v1/curated?per_page=1&page=1`, {
       //   headers: { Authorization: PEXELS_API_KEY }
@@ -55,10 +99,16 @@ class MyProfile extends React.Component {
       .then(res => {
         let img = res.data.data[0].images.fixed_height.url;
         const { url } = res.data.data[0].images.fixed_height_still;
-        this.setState({
-          image: url,
-          itemGif: img
-        });
+        // this.setState({
+        //   image: url,
+        //   itemGif: img
+        // });
+        let urls = [];
+        urls.push({ url, img });
+        console.log(urls);
+        this.setState(prevState => ({
+          urls: urls
+        }));
       })
       .catch(err => {
         console.log(err);
@@ -88,9 +138,20 @@ class MyProfile extends React.Component {
     this.getItems();
   };
   render() {
-    // this.getItems();
     // this.getProfileName();
-    this.get();
+    // this.get();
+
+    const { items, urls } = this.state;
+    const { itemGif, name, price } = items;
+    let itemElements = items.map((item, i) => (
+      <ProfileItem
+        key={i}
+        image={urls.image}
+        name={item.name_of_item}
+        price={item.price}
+      />
+    ));
+
     return (
       <Container>
         <Row>
@@ -106,14 +167,7 @@ class MyProfile extends React.Component {
               <p className="profile-details"> Profile Details </p>
             </section>
           </Col>
-
-          <Col>
-            <ProfileItem
-              image={this.state.itemGif}
-              name={this.state.itemName}
-              price={this.state.itemPrice}
-            />{" "}
-          </Col>
+          <Col>{itemElements}</Col>
         </Row>
       </Container>
     );
