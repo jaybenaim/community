@@ -24,7 +24,7 @@ class NavBar extends React.Component {
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/map">Map</Nav.Link>
             <Nav.Link href="/myprofile">My Profile</Nav.Link>
-            <Nav.Link href="/users/profiles">All Profiles</Nav.Link>
+            <Nav.Link href="/users/profiles">My Community</Nav.Link>
 
             <NavbarNew
               logged_in={this.props.logged_in}
