@@ -22,13 +22,19 @@ class MyProfile extends React.Component {
     itemGif: [],
     query: "",
     image:
-      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+    itemName: "",
+    itemPrice: ""
   };
-
-  getImages = () => {
+  // todo get all items
+  getItems = () => {
     Root.get("items/").then(res => {
-      const { name_of_item } = res.data[0];
-      this.setState({ query: name_of_item });
+      const { name_of_item, price } = res.data[0];
+      this.setState({
+        query: name_of_item,
+        itemName: name_of_item,
+        itemPrice: price
+      });
     });
     setTimeout(() => {
       this.setImages();
@@ -79,10 +85,10 @@ class MyProfile extends React.Component {
   };
 
   componentDidMount = () => {
-    this.getImages();
+    this.getItems();
   };
   render() {
-    // this.getImages();
+    // this.getItems();
     // this.getProfileName();
     this.get();
     return (
@@ -102,7 +108,11 @@ class MyProfile extends React.Component {
           </Col>
 
           <Col>
-            <ProfileItem image={this.state.itemGif} />{" "}
+            <ProfileItem
+              image={this.state.itemGif}
+              name={this.state.itemName}
+              price={this.state.itemPrice}
+            />{" "}
           </Col>
         </Row>
       </Container>

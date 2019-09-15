@@ -1,7 +1,3 @@
-.profile-image {
-  width: 140px;
-  height: 140px;
-}
 .myprofile-container {
   margin-top: 200px;
 }
@@ -16,4 +12,14 @@
   border: 2px gray outset;
   display: flex;
   justify-content: center;
+}
+.profile-image {
+  border: 2px solid black;
+  border-radius: 50%;
+  width: 140px;
+  height: 140px;
+  margin-top: 180px;
+}
+.profile-info {
+  margin-top: 100px;
 }
