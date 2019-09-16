@@ -12,7 +12,7 @@ import PutTest from "../PutTest";
 
 class App extends React.Component {
   state = {
-    item: { item: null, price: null },
+    items: [],
     profileName: "",
     profileId: null,
     email: "",
@@ -181,7 +181,13 @@ class App extends React.Component {
     });
   };
   handleItem = (item, price) => {
-    this.setState(prevState => ({ item: { item, price } }));
+    let newItems = [];
+    newItems.push({ item, price });
+    this.setState(prevState => ({ items: newItems }));
+
+    setTimeout(() => {
+      console.log(this.state.items);
+    }, 1000);
   };
 
   render() {

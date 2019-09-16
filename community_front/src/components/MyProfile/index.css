@@ -27,3 +27,7 @@
   margin-top: 80px;
   overflow: auto;
 }
+.add-item-button {
+  margin-top: 40px;
+  height: 40px;
+}
