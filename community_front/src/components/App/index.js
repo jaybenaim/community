@@ -91,33 +91,29 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getAllProfiles();
-    if (this.state.logged_in) {
-      Root.get("/", {
-        headers: {
-          Authorization: `JWT ${localStorage.getItem("token")}`
-        }
-      })
-        .then(res => res.json())
-        .then(json => {
-          this.setState({ username: json.username });
-        });
-    }
   }
 
   handle_login = (e, data) => {
     e.preventDefault();
-    Axios.post("http://localhost:8000/api-token-auth/", data, {
-      // method: "POST",
-      // headers: {
-      //   // "Content-Type": "applicatio4n/json"
-      //   Authorization: `Token ${localStorage.getItem("token")}`
-      // }
-      // body: data
-    }).then(res => {
-      console.log(res.data.token);
-      window.localStorage["token"] = res.data.token;
-      console.log(window.localStorage["token"]);
-    });
+    console.log(data);
+    Axios.post("http://localhost:8000/api-token-auth/", data)
+      .then(res => {
+        console.log(res.data);
+        window.localStorage["token"] = res.data.token;
+        window.localStorage["username"] = data.username;
+      })
+      .then(
+        //////////
+        ///// get user from username or token then set state to current user
+        /// fetchusers method to get user from token
+
+        //////////
+        this.setState({
+          logged_in: true,
+          username: window.localStorage["username"],
+          display_form: ""
+        })
+      );
     // .then(json => {
     //   localStorage.setItem("token", json.token);
     //   this.setState({
