@@ -12,6 +12,7 @@ import PutTest from "../PutTest";
 
 class App extends React.Component {
   state = {
+    userProfile: [],
     items: [],
     profileName: "",
     profileId: null,
@@ -95,31 +96,35 @@ class App extends React.Component {
 
   handle_login = (e, data) => {
     e.preventDefault();
-    console.log(data);
     Axios.post("http://localhost:8000/api-token-auth/", data)
       .then(res => {
-        console.log(res.data);
         window.localStorage["token"] = res.data.token;
         window.localStorage["username"] = data.username;
       })
-      .then(
-        //////////
-        ///// get user from username or token then set state to current user
-        /// fetchusers method to get user from token
-
-        //////////
-        // this.setState({
-        //   logged_in: true,
-        //   username: window.localStorage["username"],
-        //   display_form: "",
-        //     username: json.user.username
-
-        // })
-        res => {}
-      );
+      .then(res => {
+        setTimeout(() => {
+          this.getProfileFromToken();
+        }, 1000);
+      });
   };
 
-  getProfileFromToken = () => {};
+  getProfileFromToken = () => {
+    Root.get("profiles/").then(res => {
+      let profiles = res.data;
+      console.log(window.localStorage["username"]);
+
+      profiles.forEach(profile => {
+        console.log(profile.username);
+        if (profile.username === window.localStorage["username"]) {
+          this.setState({ userProfile: profile });
+          console.log("Profile: " + profile);
+          console.log(this.state.userProfile);
+        } else {
+          console.log("Failed to find a profile with that name");
+        }
+      });
+    });
+  };
   handle_signup = (e, data) => {
     e.preventDefault();
     // Axios.post("http://localhost:8000/api-token-auth/", {
@@ -131,10 +136,10 @@ class App extends React.Component {
       // .then(res => res.json())
       .then(json => {
         localStorage.setItem("token", json.token);
+        this.getProfileFromToken();
         this.setState({
           logged_in: true,
-          displayed_form: "",
-          username: data.username
+          displayed_form: ""
         });
       });
   };
