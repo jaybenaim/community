@@ -37,9 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'community_front', 
+    'community_front',
     'rest_framework',
-    'rest_framework.authtoken', 
+    'rest_framework.authtoken',
     'community',
     'corsheaders',
     'core.apps.CoreConfig'
@@ -165,6 +165,8 @@ REST_FRAMEWORK = {
     # 'DEFAULT_PERMISSION_CLASSES': (
     #     'rest_framework.permissions.IsAuthenticated',
     # ),
+    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework.athentication.TookenAuthentication'),
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated')
 }
 
 LOGGING = {
