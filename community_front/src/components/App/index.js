@@ -91,30 +91,35 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getAllProfiles();
-    if (this.state.logged_in) {
-      Root.get("profiles/", {
-        headers: {
-          Authorization: `Token ${window.localStorage["token"]}`
-        }
-      });
-    }
   }
 
   handle_login = (e, data) => {
     e.preventDefault();
-    Axios.post("http://localhost:8000/api-token-auth/", data).then(res => {
-      window.localStorage["token"] = res.data.token;
-    });
-    // .then(json => {
-    //   localStorage.setItem("token", json.token);
-    //   this.setState({
-    //     logged_in: true,
-    //     displayed_form: "",
-    //     username: json.user.username
-    //   });
-    // });
+    console.log(data);
+    Axios.post("http://localhost:8000/api-token-auth/", data)
+      .then(res => {
+        console.log(res.data);
+        window.localStorage["token"] = res.data.token;
+        window.localStorage["username"] = data.username;
+      })
+      .then(
+        //////////
+        ///// get user from username or token then set state to current user
+        /// fetchusers method to get user from token
+
+        //////////
+        // this.setState({
+        //   logged_in: true,
+        //   username: window.localStorage["username"],
+        //   display_form: "",
+        //     username: json.user.username
+
+        // })
+        res => {}
+      );
   };
 
+  getProfileFromToken = () => {};
   handle_signup = (e, data) => {
     e.preventDefault();
     // Axios.post("http://localhost:8000/api-token-auth/", {
