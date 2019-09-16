@@ -2,3 +2,31 @@
   width: 200px;
   height: 200px;
 }
+
+.item-container {
+  margin-top: 40px;
+  background: #eee;
+  border: 2px outset #eee;
+  max-height: 400px;
+  width: 600px;
+  padding-top: -40px;
+  /* overflow: auto; */
+}
+.item-container:first-child {
+  margin-top: 30px;
+}
+.item-image {
+  margin-top: 20px;
+  padding: 20px;
+}
+.item-content {
+  margin-top: 50px;
+}
+.item-square {
+  padding-bottom: 40px;
+}
+.borrow-button {
+  height: 50px;
+  margin-right: 10px;
+  margin-left: 10px;
+}

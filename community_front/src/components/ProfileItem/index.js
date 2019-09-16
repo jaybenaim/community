@@ -1,4 +1,5 @@
 import React from "react";
+import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
@@ -8,16 +9,25 @@ class ProfileItem extends React.Component {
   render() {
     return (
       <>
-        <Row>
-          <Col className="myprofile-container">
-            <img className="item-image" src={this.props.image} alt="item" />
-          </Col>
-          <Col className="myprofile-container">{this.props.name}</Col>
-          <label htmlFor="item-price">Item Price</label>
-          <Col className="myprofile-container">
-            {this.props.price}
-            <Button className="myprofile-container">Click to borrow </Button>
-          </Col>
+        <Row className="item-card">
+          <div className="item-container">
+            <Container>
+              <Row className="item-square">
+                <Col>
+                  <img
+                    className="item-image"
+                    src={this.props.image}
+                    alt="item"
+                  />
+                </Col>
+                <Col className="item-content item-name">{this.props.name}</Col>
+                <Col className="item-content">{this.props.price}</Col>
+                <Button className="item-content borrow-button">
+                  Click to borrow{" "}
+                </Button>
+              </Row>
+            </Container>
+          </div>
         </Row>
       </>
     );
