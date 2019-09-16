@@ -57,6 +57,8 @@
 }
 .slideshow li:nth-child(5) {
   background-image: url(https://i.imgur.com/GiRuiFB.jpg);
+  background-size: contain;
+  background-repeat: repeat;
   animation-delay: 40s;
 }
 

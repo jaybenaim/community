@@ -69,3 +69,5 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 
 CREDITS
 Icons made by https://www.flaticon.com/authors/eucalyp Eucalyp
+
+Look at the awesome logo I made at: https://www.onlinelogomaker.com

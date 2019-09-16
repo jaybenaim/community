@@ -8,10 +8,12 @@ import Root from "../../apis/root";
 import SimpleMap from "../SimpleMap";
 import MyProfile from "../MyProfile";
 import Axios from "axios";
+import PutTest from "../PutTest";
 
 class App extends React.Component {
   state = {
     profileName: "",
+    profileId: null,
     email: "",
     address: "",
     show: "false",
@@ -22,7 +24,10 @@ class App extends React.Component {
     allProfiles: [],
     displayed_form: "",
     logged_in: localStorage.getItem("token") ? true : false,
-    username: ""
+    username: "",
+    searchItem: null,
+    profileSearched: "",
+    loading: false
   };
 
   // Handlers
@@ -149,6 +154,32 @@ class App extends React.Component {
     });
   };
 
+  getSearchQuery = query => {
+    Root.get("items/").then(res => {
+      let items = res.data;
+      (items || []).map((item, i) => {
+        // const { name_of_item, price, profile_id } = item;
+        if (item.name_of_item.toLowerCase() === query.toLowerCase()) {
+          this.setState({
+            searchItem: { ...item },
+            profileId: item.profile_id
+          });
+        }
+        return item;
+      });
+    });
+    this.setState({ loading: true });
+    this.state.loading && this.getSearchProfile();
+  };
+
+  getSearchProfile = () => {
+    const { profileId } = this.state;
+    Root.get(`profiles/${profileId}/`).then(res => {
+      this.setState({ profileSearched: res.data });
+      console.log(res.data);
+    });
+  };
+
   render() {
     return (
       <Router>
@@ -165,7 +196,12 @@ class App extends React.Component {
               displayed_form={this.state.displayed_form}
               handle_login={this.handle_login}
               handle_signup={this.handle_signup}
+              getItems={this.getSearchQuery}
+              getProfile={this.getSearchProfile}
             />
+          </Switch>
+          <Switch>
+            <Route exact path="/puttest" component={PutTest} />
           </Switch>
           <Switch>
             <Route
@@ -195,9 +231,13 @@ class App extends React.Component {
           <Switch>
             <Route
               exact
-              path="/myprofile"
+              path="/profiles/:profileId"
               render={props => (
-                <MyProfile allProfiles={this.state.allProfiles} />
+                <MyProfile
+                  allProfiles={this.state.allProfiles}
+                  profileId={this.state.profileId}
+                  profileSearched={this.state.profileSearched}
+                />
               )}
             />
           </Switch>
