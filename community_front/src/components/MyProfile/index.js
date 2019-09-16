@@ -122,7 +122,7 @@ class MyProfile extends React.Component {
   // };
 
   componentDidMount = () => {
-    this.getItems();
+    // this.getItems();
   };
   render() {
     // this.get();

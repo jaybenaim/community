@@ -106,34 +106,37 @@ class App extends React.Component {
 
   handle_login = (e, data) => {
     e.preventDefault();
-    Axios.post("http://localhost:8000/api-token-auth/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: data
-    })
-      .then(res => res.json())
-      .then(json => {
-        localStorage.setItem("token", json.token);
-        this.setState({
-          logged_in: true,
-          displayed_form: "",
-          username: json.user.username
-        });
-      });
+    Axios.post("http://localhost:8000/api-token-auth/", data, {
+      // method: "POST",
+      // headers: {
+      //   // "Content-Type": "applicatio4n/json"
+      //   Authorization: `Token ${localStorage.getItem("token")}`
+      // }
+      // body: data
+    }).then(res => {
+      console.log(res.data.token);
+      window.localStorage["token"] = res.data.token;
+      console.log(window.localStorage["token"]);
+    });
+    // .then(json => {
+    //   localStorage.setItem("token", json.token);
+    //   this.setState({
+    //     logged_in: true,
+    //     displayed_form: "",
+    //     username: json.user.username
+    //   });
+    // });
   };
 
   handle_signup = (e, data) => {
     e.preventDefault();
-    Root.get("http://localhost:8000/api-token-auth/", {
-      method: "POST",
+    // Axios.post("http://localhost:8000/api-token-auth/", {
+    Root.post("users/", data, {
       headers: {
         "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
+      }
     })
-      .then(res => res.json())
+      // .then(res => res.json())
       .then(json => {
         localStorage.setItem("token", json.token);
         this.setState({
