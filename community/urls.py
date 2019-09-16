@@ -33,10 +33,10 @@ urlpatterns = [
     path('accounts/signup', signup, name='signup'), 
     path('accounts/signup_create', signup_create, name='signup_create'), 
     path('accounts/profile/', include('django.contrib.auth.urls')), 
-    url(r'^', FrontendAppView.as_view()),
     path('api/login', login),
     path('token-auth/', obtain_jwt_token), 
-    path('core/', include('core.urls'))
+    path('core/', include('core.urls')),
+    url(r'^', FrontendAppView.as_view()),
     ] 
 
 
