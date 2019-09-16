@@ -92,31 +92,18 @@ class App extends React.Component {
   componentDidMount() {
     this.getAllProfiles();
     if (this.state.logged_in) {
-      Root.get("/", {
+      Root.get("profiles/", {
         headers: {
-          Authorization: `JWT ${localStorage.getItem("token")}`
+          Authorization: `Token ${window.localStorage["token"]}`
         }
-      })
-        .then(res => res.json())
-        .then(json => {
-          this.setState({ username: json.username });
-        });
+      });
     }
   }
 
   handle_login = (e, data) => {
     e.preventDefault();
-    Axios.post("http://localhost:8000/api-token-auth/", data, {
-      // method: "POST",
-      // headers: {
-      //   // "Content-Type": "applicatio4n/json"
-      //   Authorization: `Token ${localStorage.getItem("token")}`
-      // }
-      // body: data
-    }).then(res => {
-      console.log(res.data.token);
+    Axios.post("http://localhost:8000/api-token-auth/", data).then(res => {
       window.localStorage["token"] = res.data.token;
-      console.log(window.localStorage["token"]);
     });
     // .then(json => {
     //   localStorage.setItem("token", json.token);
@@ -142,7 +129,7 @@ class App extends React.Component {
         this.setState({
           logged_in: true,
           displayed_form: "",
-          username: json.username
+          username: data.username
         });
       });
   };
