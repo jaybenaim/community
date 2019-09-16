@@ -6,7 +6,14 @@ class ProfileViewSet(viewsets.ModelViewSet):
     """ Api endpoint for profiles to be viewed or edited """ 
     queryset = Profile.objects.all() 
     serializer_class = ProfileSerializer 
-  
+    permission_classes = [permissions.AllowAny, permissions.IsAuthenticated]
+
+#  get permissions  if request method is get allow any 
+    def get_permissions(self): 
+        if self.request.method == 'GET': 
+            self.permission_classes = (permissions.AllowAny,)
+        return super(UserViewSet, self).get_permissions() 
+
 
 class ItemViewSet(viewsets.ModelViewSet): 
     """ Api endpoint for items to be viewed or edited """ 

@@ -13,20 +13,10 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
-        # password = validated_data.pop('password', None)
-        # instance = self.Meta.model(**validated_data)
-        # if password is not None:
-        #     instance.set_password(password)
-        # instance.save()
-        # return instance
-
-    
-
 class GroupSerializer(serializers.Serializer):
     class Meta:
         model = Group
         feilds = ["url", "name"]
-
 
 class ProfileSerializer(serializers.ModelSerializer):
  
@@ -44,12 +34,6 @@ class ProfileSerializer(serializers.ModelSerializer):
         instance.address = validated_data.get("address", instance.address)
         instance.save(username=request.user)
 
-
-# # .save() will create a new instance.
-# serializer = CommentSerializer(data=data)
-
-# # .save() will update the existing `comment` instance.
-# serializer = CommentSerializer(comment, data=data)
         return instance
 
 

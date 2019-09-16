@@ -92,7 +92,7 @@ class App extends React.Component {
   componentDidMount() {
     this.getAllProfiles();
     if (this.state.logged_in) {
-      Axios.get("http://localhost:8000/core/current_user/", {
+      Root.get("/", {
         headers: {
           Authorization: `JWT ${localStorage.getItem("token")}`
         }
@@ -106,12 +106,12 @@ class App extends React.Component {
 
   handle_login = (e, data) => {
     e.preventDefault();
-    Axios.get("http://localhost:8000/token-auth/", {
+    Axios.post("http://localhost:8000/api-token-auth/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(data)
+      body: data
     })
       .then(res => res.json())
       .then(json => {
@@ -126,7 +126,7 @@ class App extends React.Component {
 
   handle_signup = (e, data) => {
     e.preventDefault();
-    Axios.get("http://localhost:8000/core/users/", {
+    Root.get("http://localhost:8000/api-token-auth/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
