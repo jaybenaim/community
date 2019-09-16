@@ -78,12 +78,12 @@ class MyProfile extends React.Component {
         // }
       });
     });
-    setTimeout(() => {
-      const items = this.state.items;
-      items.forEach(item => {
-        this.setImages(item.name);
-      });
-    }, 1000);
+    // setTimeout(() => {
+    //   const items = this.state.items;
+    //   items.forEach(item => {
+    //     this.setImages(item.name);
+    //   });
+    // }, 1000);
   };
   setImages = async query => {
     await Axios.get(
@@ -139,14 +139,14 @@ class MyProfile extends React.Component {
     // this.getProfileName();
     // this.get();
 
-    const { items, urls, itemGif } = this.state;
+    const { items, urls, itemGif, image } = this.state;
 
     let itemElements = items.map((item, i) => {
       const { name_of_item, price } = item;
       return (
         <ProfileItem
           key={i}
-          image={itemGif}
+          image={itemGif || image}
           name={name_of_item}
           price={price}
         />
@@ -156,7 +156,7 @@ class MyProfile extends React.Component {
     return (
       <Container>
         <Row>
-          <Col className="con">
+          <Col xs={12} md={6} className="con">
             <section>
               <img
                 className="profile-image"
@@ -168,7 +168,7 @@ class MyProfile extends React.Component {
               <p className="profile-details"> Profile Details </p>
             </section>
           </Col>
-          <Col>{itemElements}</Col>
+          <Col className="profile-items">{itemElements}</Col>
         </Row>
       </Container>
     );
