@@ -30,12 +30,13 @@ const Item = ({
     /// call the function to set state in app
     setItem(itemVal);
     setPrice(priceVal);
-    handleItem(itemVal, PriceVal);
 
     // make post request
-
+    setTimeout(() => {
+      handleItem(itemVal, priceVal);
+    }, 1000);
     Root.post("items/", {
-      profile_id: 4,
+      profile_id: 14,
       name_of_item: itemVal,
       price: priceVal
     })
