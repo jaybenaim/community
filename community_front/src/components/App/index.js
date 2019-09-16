@@ -8,6 +8,7 @@ import Root from "../../apis/root";
 import SimpleMap from "../SimpleMap";
 import MyProfile from "../MyProfile";
 import Axios from "axios";
+import PutTest from "../PutTest";
 
 class App extends React.Component {
   state = {
@@ -166,6 +167,9 @@ class App extends React.Component {
               handle_login={this.handle_login}
               handle_signup={this.handle_signup}
             />
+          </Switch>
+          <Switch>
+            <Route exact path="/puttest" component={PutTest} />
           </Switch>
           <Switch>
             <Route

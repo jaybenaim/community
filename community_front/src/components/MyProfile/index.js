@@ -16,34 +16,78 @@ import Axios from "axios";
 
 class MyProfile extends React.Component {
   state = {
-    items: [],
+    items: [
+      {
+        image: null,
+        itemGif: null,
+        name: null,
+        price: null,
+        profile_id: null,
+        id: null
+      }
+    ],
+    urls: [],
     profileImage:
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-    itemGif: [],
-    query: "",
+    itemGif: "",
+    query: [],
+    query2: "",
     image:
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
     itemName: "",
-    itemPrice: ""
-  };
-  // todo get all items
-  getItems = () => {
-    Root.get("items/").then(res => {
-      const { name_of_item, price } = res.data[0];
-      this.setState({
-        query: name_of_item,
-        itemName: name_of_item,
-        itemPrice: price
-      });
-    });
-    setTimeout(() => {
-      this.setImages();
-    }, 1000);
+    itemPrice: "",
+    profile_id: 14
   };
 
-  setImages = () => {
-    Axios.get(
-      `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${this.state.query}&limit=1&offset=0&rating=G&lang=en`
+  getProfile = () => {
+    const { profile_id } = this.state;
+    Root.get(`profiles/${profile_id}/`).then(res => {
+      console.log(res.data);
+    });
+  };
+
+  // todo get all items related to user
+  // getItems = () => {
+  //   Root.get("items/").then(res => {
+  //     const { name_of_item, price } = res.data[0];
+  //     this.setState({
+  //       query: name_of_item,
+  //       itemName: name_of_item,
+  //       itemPrice: price
+  //     });
+  //   });
+  //   setTimeout(() => {
+  //     this.setImages();
+  //   }, 1000);
+  // };
+
+  getItems = () => {
+    Root.get("items/").then(res => {
+      let items = res.data;
+      let newItems = [];
+      let queries = [];
+      (items || []).map((item, i) => {
+        const { name, price, profile_id } = item;
+        // if ((profile_id = user.profile_id)) {
+        newItems.push(item);
+        queries.push(name);
+        this.setState(prevState => ({
+          query: queries,
+          items: newItems
+        }));
+        // }
+      });
+    });
+    // setTimeout(() => {
+    //   const items = this.state.items;
+    //   items.forEach(item => {
+    //     this.setImages(item.name);
+    //   });
+    // }, 1000);
+  };
+  setImages = async query => {
+    await Axios.get(
+      `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${query}&limit=1&offset=0&rating=G&lang=en`
     )
       // await Axios.get(`https://api.pexels.com/v1/curated?per_page=1&page=1`, {
       //   headers: { Authorization: PEXELS_API_KEY }
@@ -55,10 +99,14 @@ class MyProfile extends React.Component {
       .then(res => {
         let img = res.data.data[0].images.fixed_height.url;
         const { url } = res.data.data[0].images.fixed_height_still;
-        this.setState({
+
+        let urls = [];
+        urls.push(img);
+        this.setState(prevState => ({
           image: url,
-          itemGif: img
-        });
+          itemGif: img,
+          urls: urls
+        }));
       })
       .catch(err => {
         console.log(err);
@@ -88,13 +136,27 @@ class MyProfile extends React.Component {
     this.getItems();
   };
   render() {
-    // this.getItems();
     // this.getProfileName();
-    this.get();
+    // this.get();
+
+    const { items, urls, itemGif, image } = this.state;
+
+    let itemElements = items.map((item, i) => {
+      const { name_of_item, price } = item;
+      return (
+        <ProfileItem
+          key={i}
+          image={itemGif || image}
+          name={name_of_item}
+          price={price}
+        />
+      );
+    });
+
     return (
       <Container>
         <Row>
-          <Col className="con">
+          <Col xs={12} md={6} className="con">
             <section>
               <img
                 className="profile-image"
@@ -106,14 +168,7 @@ class MyProfile extends React.Component {
               <p className="profile-details"> Profile Details </p>
             </section>
           </Col>
-
-          <Col>
-            <ProfileItem
-              image={this.state.itemGif}
-              name={this.state.itemName}
-              price={this.state.itemPrice}
-            />{" "}
-          </Col>
+          <Col className="profile-items">{itemElements}</Col>
         </Row>
       </Container>
     );
