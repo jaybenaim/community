@@ -170,6 +170,7 @@ class MyProfile extends React.Component {
                 onChangeItemName={this.onChangeItemName}
                 handleFormSubmit={this.handleFormSubmit}
                 displayItemForm={this.displayItemForm}
+                handleItem={this.props.handleItem}
               />
             </section>
           </Col>

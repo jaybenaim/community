@@ -11,7 +11,8 @@ const Item = ({
   itemPrice,
   onChangeItemPrice,
   onChangeItemName,
-  show
+  show,
+  handleItem
 }) => {
   // create hook state for holding item and price temp
   const [item, setItem] = useState(null);
@@ -25,8 +26,10 @@ const Item = ({
     e.preventDefault();
     let itemVal = itemRef.current.value;
     let priceVal = priceRef.current.value;
+    /// call the function to set state in app
     setItem(itemVal);
     setPrice(priceVal);
+    handleItem(itemVal, PriceVal);
 
     // make post request
 
@@ -42,6 +45,13 @@ const Item = ({
         console.log(err);
       });
   };
+
+  // handleItem = (item, price) => {
+  //   this.setState(prevState => ({ item: { item, price } }));
+  // };
+  /// define a function that will set state in app to itemname with itemval
+  //// one function that takes params to do both
+  // define another function that does the same for price
 
   return (
     <>
