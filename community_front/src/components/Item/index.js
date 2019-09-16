@@ -1,67 +1,85 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-class Item extends React.Component {
-  render() {
-    const {
-      handleFormSubmit,
-      handleItemClose,
-      itemName,
-      itemPrice,
-      onChangeItemPrice,
-      onChangeItemName,
-      show
-    } = this.props;
-    return (
-      <>
-        <div>
-          <Modal.Dialog>
-            <Modal.Header closeButton={true} onHide={handleItemClose}>
-              <Modal.Title>Modal title</Modal.Title>
-            </Modal.Header>
+const Item = ({
+  handleFormSubmit,
+  handleItemClose,
+  itemName,
+  itemPrice,
+  onChangeItemPrice,
+  onChangeItemName,
+  show
+}) => {
+  // create hook state for holding item and price temp
+  const [item, setItem] = useState(null);
+  const [price, setPrice] = useState(null);
 
-            <Modal.Body>
-              <Form>
-                <Form.Group controlId="formBasicName">
-                  <Form.Label>Item</Form.Label>
-                  <Form.Control
-                    name="item"
-                    type="text"
-                    value={itemName}
-                    // ref={itemRef}
-                    onChange={event => onChangeItemName(event.target.value)}
-                    placeholder="Enter An Item Name"
-                  />
-                </Form.Group>
-                <Form.Group controlId="formBasicName">
-                  <Form.Label>Price</Form.Label>
-                  <Form.Control
-                    name="price"
-                    type="text"
-                    value={itemPrice}
-                    // ref={priceRef}
-                    onChange={event => onChangeItemPrice(event.target.value)}
-                    placeholder="Enter An Item Price"
-                  />
-                </Form.Group>
-              </Form>
-            </Modal.Body>
+  // create ref here for input values
+  const itemRef = React.createRef();
+  const priceRef = React.createRef();
 
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleItemClose}>
-                Close
-              </Button>
-              <Button variant="primary" onClick={handleFormSubmit}>
-                Save changes
-              </Button>
-            </Modal.Footer>
-          </Modal.Dialog>
-        </div>
-      </>
-    );
-  }
-}
+  /// create function to handle form submit or use passed down one
+  /// in this function get the value of the ref
+
+  ///
+
+  const handleItemForm = e => {
+    e.preventDefault();
+    let itemVal = itemRef.current.value;
+    let priceVal = priceRef.current.value;
+    setItem(item);
+    setPrice(price);
+
+    console.log(item + price);
+  };
+
+  return (
+    <>
+      <div>
+        <Modal.Dialog>
+          <Modal.Header closeButton={true} onHide={handleItemClose}>
+            <Modal.Title>Modal title</Modal.Title>
+          </Modal.Header>
+
+          <Modal.Body>
+            <Form>
+              <Form.Group controlId="formBasicName">
+                <Form.Label>Item</Form.Label>
+                <Form.Control
+                  name="item"
+                  type="text"
+                  ref={itemRef}
+                  // onChange={event => onChangeItemName(event.target.value)}
+                  placeholder="Enter An Item Name"
+                />
+              </Form.Group>
+              <Form.Group controlId="formBasicName">
+                <Form.Label>Price</Form.Label>
+                <Form.Control
+                  name="price"
+                  type="text"
+                  ref={priceRef}
+                  // onChange={event => onChangeItemPrice(event.target.value)}
+                  placeholder="Enter An Item Price"
+                />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleItemClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={() => handleItemForm}>
+              Save changes
+            </Button>
+          </Modal.Footer>
+        </Modal.Dialog>
+      </div>
+    </>
+  );
+};
 
 export default Item;
