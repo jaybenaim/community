@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Route, BrowserRouter } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -10,6 +10,7 @@ import logo from "./logo/logo.png";
 import "./index.css";
 import NavbarLogin from "../Registration/Nav";
 import Root from "../../apis/root";
+import MyProfile from "../MyProfile";
 
 const NavBar = props => {
   const [items, setItems] = useState([]);
@@ -21,29 +22,44 @@ const NavBar = props => {
   const searchByNameOfItem = e => {
     e.preventDefault();
     let query = searchRef.current.value;
-    getItems(query);
+    props.getItems(query);
   };
 
-  const getItems = query => {
-    Root.get("items/").then(res => {
-      let items = res.data;
-      (items || []).map((item, i) => {
-        // const { name_of_item, price, profile_id } = item;
-        if (item.name_of_item.toLowerCase() === query.toLowerCase()) {
-          setItems(item);
-          setProfileId(item.profile_id);
-        }
-        return item;
-      });
-    });
-    setLoading(false);
-    !loading && getProfile();
-  };
+  // const getItems = query => {
+  //   Root.get("items/").then(res => {
+  //     let items = res.data;
+  //     (items || []).map((item, i) => {
+  //       // const { name_of_item, price, profile_id } = item;
+  //       if (item.name_of_item.toLowerCase() === query.toLowerCase()) {
+  //         setItems(item);
+  //         setProfileId(item.profile_id);
+  //       }
+  //       return item;
+  //     });
+  //   });
+  //   setLoading(false);
+  //   !loading && getProfile();
+  // };
+  // const getProfile = () => {
+  //   Root.get(`profiles/${profileId}/`).then(res => {
+  //     setRedirect(true);
 
-  const getProfile = () => {
-    Root.get(`profiles/${profileId}/`).then(res => {
-      console.log(res.data);
-    });
+  //     console.log(res.data);
+  //   });
+  //   renderRedirect();
+  // };
+
+  const renderRedirect = () => {
+    console.log(redirect);
+    if (redirect)
+      return (
+        <BrowserRouter>
+          <Route
+            path="profiles/:profileId"
+            render={props => <MyProfile {...props} profileId={profileId} />}
+          />
+        </BrowserRouter>
+      );
   };
 
   return (
@@ -58,7 +74,7 @@ const NavBar = props => {
         <Nav className="mr-auto">
           <Nav.Link href="/">Home</Nav.Link>
           <Nav.Link href="/map">Map</Nav.Link>
-          <Nav.Link href="/myprofile">My Profile</Nav.Link>
+          <Nav.Link href="/profiles/:profileId/">My Profile</Nav.Link>
           <Nav.Link href="/users/profiles">My Community</Nav.Link>
 
           <NavbarLogin

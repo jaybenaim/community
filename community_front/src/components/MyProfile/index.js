@@ -36,12 +36,13 @@ class MyProfile extends React.Component {
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
     itemName: "",
     itemPrice: "",
-    profile_id: 14
+    profile_id: this.props.profileId
   };
 
   getProfile = () => {
-    const { profile_id } = this.state;
-    Root.get(`profiles/${profile_id}/`).then(res => {
+    const { profileId } = this.props;
+    Root.get(`profiles/${profileId}/`).then(res => {
+      console.log(profileId);
       console.log(res.data);
     });
   };
@@ -134,7 +135,8 @@ class MyProfile extends React.Component {
   };
 
   componentDidMount = () => {
-    this.getItems();
+    // this.getItems();
+    this.getProfile();
   };
   render() {
     // this.getProfileName();
