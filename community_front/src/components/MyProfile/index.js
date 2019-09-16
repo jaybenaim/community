@@ -121,7 +121,7 @@ class MyProfile extends React.Component {
   };
 
   componentDidMount = () => {
-    this.getItems();
+    // this.getItems();
   };
   render() {
     // this.get();
@@ -164,11 +164,7 @@ class MyProfile extends React.Component {
                 <Item
                   itemName={this.state.itemName}
                   itemPrice={this.state.itemPrice}
-                  handleItemClose={this.state.handleItemClose}
-                  onChangeItemPrice={this.state.onChangeItemPrice}
-                  onChangeItemName={this.state.onChangeItemName}
-                  handleFormSubmit={this.state.handleFormSubmit}
-                  displayItemForm={this.state.displayItemForm}
+                  handleItemClose={this.handleItemClose}
                   onChangeItemPrice={this.onChangeItemPrice}
                   onChangeItemName={this.onChangeItemName}
                   handleFormSubmit={this.handleFormSubmit}

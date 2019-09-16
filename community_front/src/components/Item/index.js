@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -10,8 +10,31 @@ const Item = ({
   itemPrice,
   onChangeItemPrice,
   onChangeItemName,
-  show,
+  show
 }) => {
+  // create hook state for holding item and price temp
+  const [item, setItem] = useState(null);
+  const [price, setPrice] = useState(null);
+
+  // create ref here for input values
+  const itemRef = React.createRef();
+  const priceRef = React.createRef();
+
+  /// create function to handle form submit or use passed down one
+  /// in this function get the value of the ref
+
+  ///
+
+  const handleItemForm = e => {
+    e.preventDefault();
+    let itemVal = itemRef.current.value;
+    let priceVal = priceRef.current.value;
+    setItem(item);
+    setPrice(price);
+
+    console.log(item + price);
+  };
+
   return (
     <>
       <div>
@@ -27,9 +50,8 @@ const Item = ({
                 <Form.Control
                   name="item"
                   type="text"
-                  value={itemName}
-                  // ref={itemRef}
-                  onChange={event => onChangeItemName(event.target.value)}
+                  ref={itemRef}
+                  // onChange={event => onChangeItemName(event.target.value)}
                   placeholder="Enter An Item Name"
                 />
               </Form.Group>
@@ -38,9 +60,8 @@ const Item = ({
                 <Form.Control
                   name="price"
                   type="text"
-                  value={itemPrice}
-                  // ref={priceRef}
-                  onChange={event => onChangeItemPrice(event.target.value)}
+                  ref={priceRef}
+                  // onChange={event => onChangeItemPrice(event.target.value)}
                   placeholder="Enter An Item Price"
                 />
               </Form.Group>
@@ -51,7 +72,7 @@ const Item = ({
             <Button variant="secondary" onClick={handleItemClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={handleFormSubmit}>
+            <Button variant="primary" onClick={() => handleItemForm}>
               Save changes
             </Button>
           </Modal.Footer>
