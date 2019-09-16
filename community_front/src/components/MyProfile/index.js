@@ -110,19 +110,19 @@ class MyProfile extends React.Component {
       });
   };
 
-  get = () => {
-    Root.post("users/", {
-      data: {
-        username: "johnny",
-        password: "jbjbjbjbjb12$"
-      }
-    }).then(res => {
-      console.log(res);
-    });
-  };
+  // get = () => {
+  //   Root.post("users/", {
+  //     data: {
+  //       username: "johnny",
+  //       password: "jbjbjbjbjb12$"
+  //     }
+  //   }).then(res => {
+  //     console.log(res);
+  //   });
+  // };
 
   componentDidMount = () => {
-    // this.getItems();
+    this.getItems();
   };
   render() {
     // this.get();

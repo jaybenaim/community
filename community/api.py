@@ -12,13 +12,19 @@ class ProfileViewSet(viewsets.ModelViewSet):
     def get_permissions(self): 
         if self.request.method == 'GET': 
             self.permission_classes = (permissions.AllowAny,)
-        return super(UserViewSet, self).get_permissions() 
+        return super(ProfileViewSet, self).get_permissions() 
 
 
 class ItemViewSet(viewsets.ModelViewSet): 
     """ Api endpoint for items to be viewed or edited """ 
-    queryset = Item.objects.all() 
+    queryset = Item.objects.all().order_by('id')[:6]
     serializer_class = ItemSerializer
+    permission_classes = [permissions.AllowAny, permissions.IsAuthenticated]
+
+    def get_permissions(self): 
+        if self.request.method == 'GET': 
+            self.permission_classes = (permissions.AllowAny,)
+        return super(ItemViewSet, self).get_permissions() 
 
 class UserViewSet(viewsets.ModelViewSet): 
     """ API endpoint that allows users to be viewed or edited """ 
