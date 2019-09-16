@@ -41,7 +41,7 @@ class App extends React.Component {
     this.setState({ itemPrice: itemPrice });
   };
 
-  handleFormSubmit = () => {
+  handleItemFormSubmit = () => {
     Root.post("items/", {
       name_of_item: this.state.itemName.itemName,
       price: this.state.itemPrice.itemPrice
