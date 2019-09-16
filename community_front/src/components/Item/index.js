@@ -26,7 +26,16 @@ const Item = ({
     e.preventDefault();
     let itemVal = itemRef.current.value;
     let priceVal = priceRef.current.value;
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+    setItem(itemVal);
+    setPrice(priceVal);
+    Root.post("items/", {
+      profile_id: 14,
+=======
+>>>>>>> 578c303f2ce06d3d3c073e8768b259dbabe2c008
     /// call the function to set state in app
     setItem(itemVal);
     setPrice(priceVal);
@@ -36,6 +45,7 @@ const Item = ({
 
     Root.post("items/", {
       profile_id: 4,
+>>>>>>> af29f991ef4087a4bdaa80df08d2ca75a12ff029
       name_of_item: itemVal,
       price: priceVal
     })
@@ -56,37 +66,47 @@ const Item = ({
 
   return (
     <>
-      <div>
-        <Modal.Dialog>
-          <Modal.Header closeButton={true} onHide={handleItemClose}>
-            <Modal.Title>Modal title</Modal.Title>
-          </Modal.Header>
+      <Modal.Dialog>
+        <Modal.Header closeButton={true} onHide={handleItemClose}>
+          <Modal.Title>Modal title</Modal.Title>
+        </Modal.Header>
 
-          <Modal.Body>
-            <Form>
-              <Form.Group controlId="formBasicName">
-                <Form.Label>Item</Form.Label>
-                <Form.Control
-                  name="item"
-                  type="text"
-                  ref={itemRef}
-                  // onChange={event => onChangeItemName(event.target.value)}
-                  placeholder="Enter An Item Name"
-                />
-              </Form.Group>
-              <Form.Group controlId="formBasicName">
-                <Form.Label>Price</Form.Label>
-                <Form.Control
-                  name="price"
-                  type="text"
-                  ref={priceRef}
-                  // onChange={event => onChangeItemPrice(event.target.value)}
-                  placeholder="Enter An Item Price"
-                />
-              </Form.Group>
-            </Form>
-          </Modal.Body>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="formBasicName">
+              <Form.Label>Item</Form.Label>
+              <Form.Control
+                name="item"
+                type="text"
+                ref={itemRef}
+                // onChange={event => onChangeItemName(event.target.value)}
+                placeholder="Enter An Item Name"
+              />
+            </Form.Group>
+            <Form.Group controlId="formBasicName">
+              <Form.Label>Price</Form.Label>
+              <Form.Control
+                name="price"
+                type="text"
+                ref={priceRef}
+                // onChange={event => onChangeItemPrice(event.target.value)}
+                placeholder="Enter An Item Price"
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
 
+<<<<<<< HEAD
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleItemClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleItemForm}>
+            Save changes
+          </Button>
+        </Modal.Footer>
+      </Modal.Dialog>
+=======
           <Modal.Footer>
             <Button variant="secondary" onClick={handleItemClose}>
               Close
@@ -97,6 +117,7 @@ const Item = ({
           </Modal.Footer>
         </Modal.Dialog>
       </div>
+>>>>>>> af29f991ef4087a4bdaa80df08d2ca75a12ff029
     </>
   );
 };
