@@ -30,24 +30,7 @@ urlpatterns = [
     url(r'^api/token/$', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     url(r'^api/token/refresh/$', TokenRefreshView.as_view(), name='token_refresh'),
     path('home/', home),
-<<<<<<< HEAD
-    path('accounts/signup', signup, name='signup'),
-    path('accounts/signup_create', signup_create, name='signup_create'),
-    path('accounts/profile/', include('django.contrib.auth.urls')),
-    url(r'^', FrontendAppView.as_view()),
     path('api/login', login),
-    path('token-auth/', obtain_jwt_token),
-    path('core/', include('core.urls'))
+    # path('core/', include('core.urls')),
+    url(r'^', FrontendAppView.as_view()),
 ]
-=======
-    path('accounts/signup', signup, name='signup'), 
-    path('accounts/signup_create', signup_create, name='signup_create'), 
-    path('accounts/profile/', include('django.contrib.auth.urls')), 
-    path('api/login', login),
-    path('token-auth/', obtain_jwt_token), 
-    path('core/', include('core.urls')),
-    url(r'^', FrontendAppView.as_view()),
-    ] 
-
-
->>>>>>> 81a95ba3eeea604105e310324f196165dba73805

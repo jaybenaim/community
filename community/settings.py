@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'community',
     'corsheaders',
-    'core.apps.CoreConfig'
+    # 'core.apps.CoreConfig'
 ]
 
 MIDDLEWARE = [
@@ -187,6 +187,6 @@ LOGGING = {
 }
 
 
-JWT_AUTH = {
-    'JWT_RESPONSE_PAYLOAD_HANDLER': 'community.utils.my_jwt_response_handler'
-}
+# JWT_AUTH = {
+#     'JWT_RESPONSE_PAYLOAD_HANDLER': 'community.utils.my_jwt_response_handler'
+# }

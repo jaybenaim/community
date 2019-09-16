@@ -6,6 +6,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 // import ImageApi from "../../apis/images";
+import EditProfile from "./EditProfile";
+
 import {
   GIPHY_API_KEY
   // PEXELS_API_KEY,
@@ -38,7 +40,8 @@ class MyProfile extends React.Component {
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
     itemName: "",
     itemPrice: "",
-    profile_id: this.props.profileId
+    profile_id: this.props.profileId,
+    showEditForm: false
   };
 
   // todo get all items related to user
@@ -123,6 +126,17 @@ class MyProfile extends React.Component {
   componentDidMount = () => {
     // this.getItems();
   };
+
+  toggleEditForm = e => {
+    e.preventDefault();
+    console.log("clicked");
+    if (this.state.showEditForm === false) {
+      return this.setState({ showEditForm: true });
+    }
+
+    return this.setState({ showEditForm: false });
+  };
+
   render() {
     // this.get();
 
@@ -142,6 +156,25 @@ class MyProfile extends React.Component {
 
     return (
       <Container>
+        <Button
+          className="edit-profile-button"
+          variant="primary"
+          onClick={this.toggleEditForm}
+        >
+          Edit Profile
+        </Button>
+
+        {/*
+          
+          When Show Edit Form is false, this will not show on the page
+          When the toggleShowEditForm is clicked it will update the value of
+          showEditForm. if the value is false, it will hide the component
+          if the value is true it will show the form
+        */}
+        {this.state.showEditForm && (
+          <EditProfile toggleEditForm={this.toggleEditForm} />
+        )}
+
         <Row>
           <Col xs={12} md={6} className="con">
             <section>
