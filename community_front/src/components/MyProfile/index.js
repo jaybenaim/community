@@ -79,12 +79,12 @@ class MyProfile extends React.Component {
         // }
       });
     });
-    // setTimeout(() => {
-    //   const items = this.state.items;
-    //   items.forEach(item => {
-    //     this.setImages(item.name);
-    //   });
-    // }, 1000);
+    setTimeout(() => {
+      const items = this.state.items;
+      items.forEach(item => {
+        this.setImages(item.name);
+      });
+    }, 1000);
   };
   setImages = async query => {
     await Axios.get(
