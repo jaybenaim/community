@@ -26,6 +26,7 @@ const Item = ({
     e.preventDefault();
     let itemVal = itemRef.current.value;
     let priceVal = priceRef.current.value;
+
     /// call the function to set state in app
     setItem(itemVal);
     setPrice(priceVal);
