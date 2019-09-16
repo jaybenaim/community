@@ -1,11 +1,25 @@
-.profile-image {
-  width: 140px;
-  height: 140px;
-}
 .myprofile-container {
   margin-top: 200px;
 }
-
-.profile-name {
-  /* margin-top: 200px; */
+.con {
+  display: flex;
+  justify-content: center;
+}
+.profile-details {
+  width: 200px;
+  height: 200px;
+  background: #eee;
+  border: 2px gray outset;
+  display: flex;
+  justify-content: center;
+}
+.profile-image {
+  border: 2px solid black;
+  border-radius: 50%;
+  width: 140px;
+  height: 140px;
+  margin-top: 180px;
+}
+.profile-info {
+  margin-top: 100px;
 }

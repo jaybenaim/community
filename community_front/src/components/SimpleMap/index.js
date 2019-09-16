@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./index.css";
 import GoogleMapReact from "google-map-react";
-import MAP_API_KEY from "../../apis/keys";
+import { MAP_API_KEY } from "../../apis/keys";
 import Geocode from "react-geocode";
 import MapMarker from "../MapMarker";
 
@@ -14,15 +14,11 @@ class SimpleMap extends Component {
     super(props);
     this.state = {
       geocodes: [],
-      center: { lat: 43, lng: -80 },
-      zoom: 13,
+      center: { lat: 43.99, lng: -79 },
+      zoom: 10,
       loading: true
     };
   }
-
-  /**
-   * 10 profiles, 10 {geocode: pairs}
-   */
 
   componentDidMount() {
     // const { allProfiles } = this.props;
@@ -84,20 +80,6 @@ class SimpleMap extends Component {
     });
   };
 
-  handleApiLoaded = (map, maps) => {
-    // Standard Markers
-    // new maps.Marker({
-    //   position: this.state,
-    //   map,
-    //   title: "Marker1"
-    // });
-    // new maps.Marker({
-    //   position: this.state,
-    //   map,
-    //   title: "Marker2"
-    // });
-  };
-
   render() {
     // Setup the Render variables
     const { allProfiles } = this.props;
@@ -111,9 +93,6 @@ class SimpleMap extends Component {
             defaultCenter={center}
             defaultZoom={zoom}
             yesIWantToUseGoogleMapApiInternals
-            onGoogleApiLoaded={({ map, maps }) =>
-              this.handleApiLoaded(map, maps)
-            }
           >
             {allProfiles.map((profile, index) => {
               const { id } = profile;

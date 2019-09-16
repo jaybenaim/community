@@ -4,10 +4,12 @@ import Root from "../../apis/root";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import ImageApi from "../../apis/images";
-import IMAGE_ACCESS_KEY from "../../apis/keys";
-import PEXELS_API_KEY from "../../apis/keys";
-import GIPHY_API_KEY from "../../apis/keys";
+// import ImageApi from "../../apis/images";
+import {
+  GIPHY_API_KEY
+  // PEXELS_API_KEY,
+  // IMAGE_ACCESS_KEY
+} from "../../apis/keys";
 import ProfileItem from "../ProfileItem";
 
 import Axios from "axios";
@@ -15,30 +17,47 @@ import Axios from "axios";
 class MyProfile extends React.Component {
   state = {
     items: [],
-    image: "",
-    query: ""
+    profileImage:
+      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+    itemGif: [],
+    query: "",
+    image:
+      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+    itemName: "",
+    itemPrice: ""
   };
-  getToken = () => {
-    Root.get(`token-auth/`).then(res => {
-      const { data } = res;
-      // data.map();
-      // console.log(res.user);
-    });
-  };
-  getImages = async () => {
+  // todo get all items
+  getItems = () => {
     Root.get("items/").then(res => {
       const { name_of_item, price } = res.data[0];
-      console.log(name_of_item);
-      this.setState({ query: name_of_item });
+      this.setState({
+        query: name_of_item,
+        itemName: name_of_item,
+        itemPrice: price
+      });
     });
-    await Axios.get(
-      `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${this.name_of_item}&limit=1&offset=0&rating=G&lang=en`
+    setTimeout(() => {
+      this.setImages();
+    }, 1000);
+  };
+
+  setImages = () => {
+    Axios.get(
+      `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${this.state.query}&limit=1&offset=0&rating=G&lang=en`
     )
+      // await Axios.get(`https://api.pexels.com/v1/curated?per_page=1&page=1`, {
+      //   headers: { Authorization: PEXELS_API_KEY }
+      // })
+      // await Axios.get(`https://api.pexels.com/v1/curated?per_page=1&page=1`, {
+      //   headers: { Authorization: PEXELS_API_KEY }
+      // })
+
       .then(res => {
-        console.log(res.data.data[0].images.fixed_height_still);
+        let img = res.data.data[0].images.fixed_height.url;
         const { url } = res.data.data[0].images.fixed_height_still;
         this.setState({
-          image: url
+          image: url,
+          itemGif: img
         });
       })
       .catch(err => {
@@ -65,29 +84,36 @@ class MyProfile extends React.Component {
     });
   };
 
+  componentDidMount = () => {
+    this.getItems();
+  };
   render() {
-    // this.getToken();
-    // this.getImages();
+    // this.getItems();
     // this.getProfileName();
     this.get();
     return (
       <Container>
         <Row>
-          <Col>
-            <img
-              className="profile-image"
-              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-              alt="profile"
-              onClick={this.getImages}
-            />
-            <Container>
-              <Row>
-                <Col className="profile-name">Name: </Col>
-              </Row>
-            </Container>
+          <Col className="con">
+            <section>
+              <img
+                className="profile-image"
+                src={this.state.profileImage}
+                alt="profile"
+                onClick={this.setImages}
+              />
+              <p className="profile-name">Name: </p>
+              <p className="profile-details"> Profile Details </p>
+            </section>
           </Col>
-          <ProfileItem />
-          <Col className="myprofile-container">Item Details</Col>
+
+          <Col>
+            <ProfileItem
+              image={this.state.itemGif}
+              name={this.state.itemName}
+              price={this.state.itemPrice}
+            />{" "}
+          </Col>
         </Row>
       </Container>
     );
