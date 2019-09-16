@@ -161,16 +161,16 @@ class MyProfile extends React.Component {
                 >
                   Add Item
                 </Button>
-                <Item
-                  itemName={this.state.itemName}
-                  itemPrice={this.state.itemPrice}
-                  handleItemClose={this.handleItemClose}
-                  onChangeItemPrice={this.onChangeItemPrice}
-                  onChangeItemName={this.onChangeItemName}
-                  handleFormSubmit={this.handleFormSubmit}
-                  displayItemForm={this.displayItemForm}
-                />
               </p>
+              <Item
+                itemName={this.state.itemName}
+                itemPrice={this.state.itemPrice}
+                handleItemClose={this.handleItemClose}
+                onChangeItemPrice={this.onChangeItemPrice}
+                onChangeItemName={this.onChangeItemName}
+                handleFormSubmit={this.handleFormSubmit}
+                displayItemForm={this.displayItemForm}
+              />
             </section>
           </Col>
           <Col className="profile-items">{itemElements}</Col>
