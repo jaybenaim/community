@@ -30,7 +30,6 @@ const Item = ({
     /// call the function to set state in app
     setItem(itemVal);
     setPrice(priceVal);
-    handleItem(itemVal, PriceVal);
 
     // make post request
 
@@ -40,6 +39,8 @@ const Item = ({
       price: priceVal
     })
       .then(res => {
+        handleItem(item, price);
+
         console.log("Success");
       })
       .catch(err => {
