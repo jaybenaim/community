@@ -24,6 +24,7 @@
 }
 .item-square {
   padding-bottom: 40px;
+  max-height: 400px;
 }
 .borrow-button {
   height: 50px;
