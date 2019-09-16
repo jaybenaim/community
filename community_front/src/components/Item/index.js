@@ -11,7 +11,8 @@ const Item = ({
   itemPrice,
   onChangeItemPrice,
   onChangeItemName,
-  show
+  show,
+  handleItem
 }) => {
   // create hook state for holding item and price temp
   const [item, setItem] = useState(null);
@@ -21,19 +22,26 @@ const Item = ({
   const itemRef = React.createRef();
   const priceRef = React.createRef();
 
-  /// create function to handle form submit or use passed down one
-  /// in this function get the value of the ref
-
-  ///
-
   const handleItemForm = e => {
     e.preventDefault();
     let itemVal = itemRef.current.value;
     let priceVal = priceRef.current.value;
+<<<<<<< HEAD
     setItem(itemVal);
     setPrice(priceVal);
     Root.post("items/", {
       profile_id: 14,
+=======
+    /// call the function to set state in app
+    setItem(itemVal);
+    setPrice(priceVal);
+    handleItem(itemVal, PriceVal);
+
+    // make post request
+
+    Root.post("items/", {
+      profile_id: 4,
+>>>>>>> af29f991ef4087a4bdaa80df08d2ca75a12ff029
       name_of_item: itemVal,
       price: priceVal
     })
@@ -44,6 +52,13 @@ const Item = ({
         console.log(err);
       });
   };
+
+  // handleItem = (item, price) => {
+  //   this.setState(prevState => ({ item: { item, price } }));
+  // };
+  /// define a function that will set state in app to itemname with itemval
+  //// one function that takes params to do both
+  // define another function that does the same for price
 
   return (
     <>
@@ -77,6 +92,7 @@ const Item = ({
           </Form>
         </Modal.Body>
 
+<<<<<<< HEAD
         <Modal.Footer>
           <Button variant="secondary" onClick={handleItemClose}>
             Close
@@ -86,6 +102,18 @@ const Item = ({
           </Button>
         </Modal.Footer>
       </Modal.Dialog>
+=======
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleItemClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleItemForm}>
+              Save changes
+            </Button>
+          </Modal.Footer>
+        </Modal.Dialog>
+      </div>
+>>>>>>> af29f991ef4087a4bdaa80df08d2ca75a12ff029
     </>
   );
 };

@@ -12,6 +12,7 @@ import PutTest from "../PutTest";
 
 class App extends React.Component {
   state = {
+    item: { item: null, price: null },
     profileName: "",
     profileId: null,
     email: "",
@@ -179,6 +180,9 @@ class App extends React.Component {
       console.log(res.data);
     });
   };
+  handleItem = (item, price) => {
+    this.setState(prevState => ({ item: { item, price } }));
+  };
 
   render() {
     return (
@@ -240,6 +244,7 @@ class App extends React.Component {
                   itemName={this.state.itemName}
                   itemPrice={this.state.itemPrice}
                   handleItemCLose={this.handleItemClose}
+                  handleItem={this.handleItem}
                 />
               )}
             />
