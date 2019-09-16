@@ -162,17 +162,13 @@ class MyProfile extends React.Component {
                   Add Item
                 </Button>
                 <Item
-                  itemName={this.state.itemName}
-                  itemPrice={this.state.itemPrice}
-                  handleItemClose={this.state.handleItemClose}
-                  onChangeItemPrice={this.state.onChangeItemPrice}
-                  onChangeItemName={this.state.onChangeItemName}
-                  handleFormSubmit={this.state.handleFormSubmit}
-                  displayItemForm={this.state.displayItemForm}
-                  onChangeItemPrice={this.onChangeItemPrice}
-                  onChangeItemName={this.onChangeItemName}
-                  handleFormSubmit={this.handleFormSubmit}
-                  displayItemForm={this.displayItemForm}
+                  itemName={this.props.itemName}
+                  itemPrice={this.props.itemPrice}
+                  handleItemClose={this.props.handleItemClose}
+                  onChangeItemPrice={this.props.onChangeItemPrice}
+                  onChangeItemName={this.props.onChangeItemName}
+                  handleFormSubmit={this.props.handleFormSubmit}
+                  displayItemForm={this.props.displayItemForm}
                 />
               </p>
             </section>
