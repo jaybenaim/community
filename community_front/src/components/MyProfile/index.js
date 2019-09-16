@@ -39,14 +39,6 @@ class MyProfile extends React.Component {
     profile_id: this.props.profileId
   };
 
-  getProfile = () => {
-    const { profileId } = this.props;
-    Root.get(`profiles/${profileId}/`).then(res => {
-      console.log(profileId);
-      console.log(res.data);
-    });
-  };
-
   // todo get all items related to user
   // getItems = () => {
   //   Root.get("items/").then(res => {
@@ -69,7 +61,8 @@ class MyProfile extends React.Component {
       let queries = [];
       (items || []).map((item, i) => {
         // const { name, price, profile_id } = item;
-        // if ((profile_id = user.profile_id)) {
+
+        // if (item.profile_id == this.props.profileId) {
         newItems.push(item);
         queries.push(item.name);
         this.setState(prevState => ({
@@ -115,15 +108,6 @@ class MyProfile extends React.Component {
       });
   };
 
-  getProfileName = () => {
-    const { allProfiles } = this.props;
-    allProfiles.map(profile => {
-      console.log(profile);
-
-      return profile;
-    });
-  };
-
   get = () => {
     fetch("http://localhost:8000/core/current_user/", {
       headers: {
@@ -135,11 +119,9 @@ class MyProfile extends React.Component {
   };
 
   componentDidMount = () => {
-    // this.getItems();
-    this.getProfile();
+    this.getItems();
   };
   render() {
-    // this.getProfileName();
     // this.get();
 
     const { items, itemGif, image } = this.state;
@@ -167,7 +149,9 @@ class MyProfile extends React.Component {
                 alt="profile"
                 onClick={this.setImages}
               />
-              <p className="profile-name">Name: </p>
+              <p className="profile-name">
+                Name: {this.props.profileSearched.profile_name}
+              </p>
               <p className="profile-details"> Profile Details </p>
             </section>
           </Col>

@@ -26,6 +26,7 @@ class App extends React.Component {
     logged_in: localStorage.getItem("token") ? true : false,
     username: "",
     searchItem: null,
+    profileSearched: "",
     loading: false
   };
 
@@ -159,7 +160,10 @@ class App extends React.Component {
       (items || []).map((item, i) => {
         // const { name_of_item, price, profile_id } = item;
         if (item.name_of_item.toLowerCase() === query.toLowerCase()) {
-          this.setState({ searchItem: item, profileId: item.profile_id });
+          this.setState({
+            searchItem: { ...item },
+            profileId: item.profile_id
+          });
         }
         return item;
       });
@@ -171,6 +175,7 @@ class App extends React.Component {
   getSearchProfile = () => {
     const { profileId } = this.state;
     Root.get(`profiles/${profileId}/`).then(res => {
+      this.setState({ profileSearched: res.data });
       console.log(res.data);
     });
   };
@@ -228,7 +233,11 @@ class App extends React.Component {
               exact
               path="/profiles/:profileId"
               render={props => (
-                <MyProfile allProfiles={this.state.allProfiles} />
+                <MyProfile
+                  allProfiles={this.state.allProfiles}
+                  profileId={this.state.profileId}
+                  profileSearched={this.state.profileSearched}
+                />
               )}
             />
           </Switch>
