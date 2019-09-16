@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Root from "../../apis/root";
 
 const Item = ({
   handleFormSubmit,
@@ -20,11 +21,6 @@ const Item = ({
   const itemRef = React.createRef();
   const priceRef = React.createRef();
 
-  /// create function to handle form submit or use passed down one
-  /// in this function get the value of the ref
-
-  ///
-
   const handleItemForm = e => {
     e.preventDefault();
     let itemVal = itemRef.current.value;
@@ -32,7 +28,19 @@ const Item = ({
     setItem(itemVal);
     setPrice(priceVal);
 
-    console.log(itemVal + priceVal);
+    // make post request
+
+    Root.post("items/", {
+      profile_id: 4,
+      name_of_item: itemVal,
+      price: priceVal
+    })
+      .then(res => {
+        console.log("Success");
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   return (
