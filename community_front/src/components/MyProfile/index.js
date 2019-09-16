@@ -111,9 +111,10 @@ class MyProfile extends React.Component {
   };
 
   get = () => {
-    fetch("http://localhost:8000/core/current_user/", {
-      headers: {
-        Authorization: `JWT ${localStorage.getItem("token")}`
+    Root.post("users/", {
+      data: {
+        username: "johnny",
+        password: "jbjbjbjbjb12$"
       }
     }).then(res => {
       console.log(res);
@@ -149,7 +150,7 @@ class MyProfile extends React.Component {
                 className="profile-image"
                 src={this.state.profileImage}
                 alt="profile"
-                onClick={this.setImages}
+                onClick={this.get}
               />
               <p className="profile-name">
                 Name: {this.props.profileSearched.profile_name}
