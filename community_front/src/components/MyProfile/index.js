@@ -67,14 +67,15 @@ class MyProfile extends React.Component {
       let newItems = [];
       let queries = [];
       (items || []).map((item, i) => {
-        const { name, price, profile_id } = item;
+        // const { name, price, profile_id } = item;
         // if ((profile_id = user.profile_id)) {
         newItems.push(item);
-        queries.push(name);
+        queries.push(item.name);
         this.setState(prevState => ({
           query: queries,
           items: newItems
         }));
+        return item;
         // }
       });
     });
@@ -139,7 +140,7 @@ class MyProfile extends React.Component {
     // this.getProfileName();
     // this.get();
 
-    const { items, urls, itemGif, image } = this.state;
+    const { items, itemGif, image } = this.state;
 
     let itemElements = items.map((item, i) => {
       const { name_of_item, price } = item;

@@ -27,13 +27,14 @@ class PutTest extends Component {
         this.setState(prevState => ({
           items: newItems
         }));
+        return item;
       });
       console.log(this.state.items);
     });
   };
 
   updateItem = () => {
-    const { profile_id, name_of_item, price } = this.state;
+    // const { profile_id, name_of_item, price } = this.state;
     Root.put("items/2/", {
       profile_id: 14,
       name_of_item: "ladder",
