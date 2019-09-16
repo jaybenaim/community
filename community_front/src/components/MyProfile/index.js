@@ -4,6 +4,7 @@ import Root from "../../apis/root";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 // import ImageApi from "../../apis/images";
 import {
   GIPHY_API_KEY
@@ -13,6 +14,7 @@ import {
 import ProfileItem from "../ProfileItem";
 
 import Axios from "axios";
+import Item from "../Item";
 
 class MyProfile extends React.Component {
   state = {
@@ -152,7 +154,27 @@ class MyProfile extends React.Component {
               <p className="profile-name">
                 Name: {this.props.profileSearched.profile_name}
               </p>
-              <p className="profile-details"> Profile Details </p>
+              <p className="profile-details">
+                <Button
+                  variant="primary"
+                  onClick={event => this.handleAddItem(event)}
+                >
+                  Add Item
+                </Button>
+                <Item
+                  itemName={this.state.itemName}
+                  itemPrice={this.state.itemPrice}
+                  handleItemClose={this.state.handleItemClose}
+                  onChangeItemPrice={this.state.onChangeItemPrice}
+                  onChangeItemName={this.state.onChangeItemName}
+                  handleFormSubmit={this.state.handleFormSubmit}
+                  displayItemForm={this.state.displayItemForm}
+                  onChangeItemPrice={this.onChangeItemPrice}
+                  onChangeItemName={this.onChangeItemName}
+                  handleFormSubmit={this.handleFormSubmit}
+                  displayItemForm={this.displayItemForm}
+                />
+              </p>
             </section>
           </Col>
           <Col className="profile-items">{itemElements}</Col>

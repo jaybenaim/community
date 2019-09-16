@@ -2,7 +2,6 @@ import React from "react";
 import ProfileForm from "../../components/ProfileForm";
 import UserProfile from "../UserProfile";
 import "./index.css";
-import Item from "../Item";
 
 const Profile = ({
   profileName,
@@ -37,17 +36,6 @@ const Profile = ({
             itemName={itemName}
             itemPrice={itemPrice}
           />
-          {displayItemForm && (
-            <Item
-              itemName={itemName}
-              itemPrice={itemPrice}
-              handleItemClose={handleItemClose}
-              onChangeItemPrice={onChangeItemPrice}
-              onChangeItemName={onChangeItemName}
-              handleFormSubmit={handleFormSubmit}
-              displayItemForm={displayItemForm}
-            />
-          )}
         </div>
         <div className="create-profile-button">
           <ProfileForm

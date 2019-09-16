@@ -237,6 +237,9 @@ class App extends React.Component {
                   allProfiles={this.state.allProfiles}
                   profileId={this.state.profileId}
                   profileSearched={this.state.profileSearched}
+                  itemName={this.state.itemName}
+                  itemPrice={this.state.itemPrice}
+                  handleItemCLose={this.handleItemClose}
                 />
               )}
             />
