@@ -29,10 +29,10 @@ const Item = ({
     e.preventDefault();
     let itemVal = itemRef.current.value;
     let priceVal = priceRef.current.value;
-    setItem(item);
-    setPrice(price);
+    setItem(itemVal);
+    setPrice(priceVal);
 
-    console.log(item + price);
+    console.log(itemVal + priceVal);
   };
 
   return (
@@ -72,7 +72,7 @@ const Item = ({
             <Button variant="secondary" onClick={handleItemClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={() => handleItemForm}>
+            <Button variant="primary" onClick={handleItemForm}>
               Save changes
             </Button>
           </Modal.Footer>
