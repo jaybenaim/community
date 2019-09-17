@@ -10,7 +10,7 @@ import logo from "./logo/logo.png";
 import "./index.css";
 import NavbarLogin from "./NavbarLogin";
 import Root from "../../apis/root";
-import MyProfile from "../MyProfile";
+import MyProfile from "../App/MyProfile";
 
 const NavBar = props => {
   const [items, setItems] = useState([]);

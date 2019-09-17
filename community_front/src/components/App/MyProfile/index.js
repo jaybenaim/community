@@ -1,6 +1,6 @@
 import React from "react";
 import "./index.css";
-import Root from "../../apis/root";
+import Root from "../../../apis/root";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -10,11 +10,11 @@ import {
   GIPHY_API_KEY
   // PEXELS_API_KEY,
   // IMAGE_ACCESS_KEY
-} from "../../apis/keys";
-import ProfileItem from "../ProfileItem";
+} from "../../../apis/keys";
+import ProfileItem from "./ProfileItem";
 
 import Axios from "axios";
-import ItemForm from "../ItemForm";
+import ItemForm from "./ItemForm";
 
 class MyProfile extends React.Component {
   state = {

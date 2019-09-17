@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import "./index.css";
+import "../index.css";
 import GoogleMapReact from "google-map-react";
-import { MAP_API_KEY } from "../../apis/keys";
+import { MAP_API_KEY } from "../../../apis/keys";
 import Geocode from "react-geocode";
-import MapMarker from "../MapMarker";
+import MapMarker from "./MapMarker";
 
 /**
  *@prop [allProfiles] array required
  */
 
-class SimpleMap extends Component {
+class Map extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -114,4 +114,4 @@ class SimpleMap extends Component {
   }
 }
 
-export default SimpleMap;
+export default Map;

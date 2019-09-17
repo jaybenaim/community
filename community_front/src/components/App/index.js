@@ -3,10 +3,10 @@ import "./index.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NavBar from "../Navbar";
 import Home from "./Home";
-import CreateProfileForm from "../CreateProfileForm";
+import CreateProfileForm from "./CreateProfileForm";
 import Root from "../../apis/root";
-import SimpleMap from "../SimpleMap";
-import MyProfile from "../MyProfile";
+import Map from "./Map";
+import MyProfile from "./MyProfile";
 import Axios from "axios";
 import PutTest from "../PutTest";
 
@@ -273,9 +273,7 @@ class App extends React.Component {
           <Switch>
             <Route
               path="/map"
-              render={props => (
-                <SimpleMap allProfiles={this.state.allProfiles} />
-              )}
+              render={props => <Map allProfiles={this.state.allProfiles} />}
             />
           </Switch>
           <Switch>
