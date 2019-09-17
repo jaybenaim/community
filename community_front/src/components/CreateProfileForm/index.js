@@ -30,13 +30,8 @@ class CreateProfileForm extends Component {
     Root.post(
       "profiles/",
       {
-<<<<<<< HEAD
-        user: { username: "jay", password: "jbjb" },
-        username: window.localStorage["username"],
-=======
         user: this.props.userProfile[0].user,
         username: this.props.username,
->>>>>>> ed3b96d0d3dc15ae14b01cc68bb7aed25ee6fc50
         profile_name: profileName,
         email,
         address
