@@ -1,3 +1,4 @@
+import os
 """
 Django settings for community project.
 
@@ -9,9 +10,6 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-
-import os
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -40,12 +38,8 @@ INSTALLED_APPS = [
     'community_front',
     'community',
     'corsheaders',
-<<<<<<< HEAD
-    # 'core.apps.CoreConfig'
-=======
     'rest_framework',
     'rest_framework.authtoken',
->>>>>>> ce91ffb6ac6d827ac3e84afc43a6a454c381dbb7
 ]
 
 MIDDLEWARE = [
@@ -156,8 +150,8 @@ STATICFILES_DIRS = [
 #     "http://localhost:3000"
 # ]
 
-CORS_ORIGIN_ALLOW_ALL = True 
-CORS_ALLOW_CREDENTIALS = True 
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
 
 
 REST_FRAMEWORK = {
@@ -165,12 +159,12 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
 
     ),
-     'DEFAULT_PERMISSION_CLASSES': (
-       'rest_framework.permissions.AllowAny',
-       'rest_framework.permissions.IsAuthenticated',
-       'rest_framework.permissions.IsAdminUser',
-       
-     ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAdminUser',
+
+    ),
 }
 
 LOGGING = {
