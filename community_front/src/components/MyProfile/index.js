@@ -61,14 +61,6 @@ class MyProfile extends React.Component {
   // };
 
   getItems = () => {
-    const {
-      id: profileId,
-      username,
-      profile_name: profileName,
-      email,
-      address
-    } = this.props.userProfile[0];
-
     Root.get("items/").then(res => {
       let items = res.data;
       let newItems = [];
@@ -76,17 +68,17 @@ class MyProfile extends React.Component {
 
       // displays empty box if no item is in profile
       (items || []).map((item, i) => {
-        // const { name, price, profile_id } = item;
-        console.log(item.profile_id + " = " + profileId);
-        if (item.profile_id === profileId) {
-          newItems.push(item);
-          queries.push(item.name);
-          this.setState(prevState => ({
-            query: queries,
-            items: newItems
-          }));
-          return item;
-        }
+        const { name, price, profile_id } = item;
+        // console.log(item.profile_id + " = " + profileId);
+        // if (item.profile_id === profileId) {
+        newItems.push(item);
+        queries.push(item.name);
+        this.setState(prevState => ({
+          query: queries,
+          items: newItems
+        }));
+        return item;
+        // }
       });
     });
 
@@ -128,29 +120,30 @@ class MyProfile extends React.Component {
   componentDidMount = () => {
     this.props.getProfileFromToken();
     setTimeout(() => {
-      this.getItems();
       this.displayProfile();
-    }, 1000);
+      this.getItems();
+    }, 2000);
   };
 
   displayProfile = () => {
-    const {
-      id: profileId,
-      username,
-      profile_name: profileName,
-      email,
-      address
-    } = this.props.userProfile[0];
+    console.log(this.state.user);
+    // const {
+    //   id: profileId,
+    //   username,
+    //   profile_name: profileName,
+    //   email,
+    //   address
+    // } = this.props.userProfile[0];
 
-    this.setState({
-      user: {
-        profileId,
-        username,
-        profileName,
-        email,
-        address
-      }
-    });
+    // this.setState({
+    //   user: {
+    //     profileId,
+    //     username,
+    //     profileName,
+    //     email,
+    //     address
+    //   }
+    // });
   };
 
   toggleEditForm = e => {
