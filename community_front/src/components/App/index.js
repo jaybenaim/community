@@ -105,23 +105,33 @@ class App extends React.Component {
       .then(res => {
         setTimeout(() => {
           this.getProfileFromToken();
-        }, 1000);
+        }, 2000);
       });
   };
 
   getProfileFromToken = () => {
     Root.get("profiles/").then(res => {
       let profiles = res.data;
-
       let matchedProfile = [];
+
       profiles.map(profile => {
-        if (profile.username === window.localStorage["username"]) {
+        console.log(profile.user);
+        console.log(
+          ` Profile: ${profile.username}` +
+            `Storage: ${window.localStorage["username"]}`
+        );
+        if (
+          profile.username.toLowerCase() ===
+          window.localStorage["username"].toLowerCase()
+        ) {
           matchedProfile.push(profile);
-          // console.log(this.state.userProfile);
+          console.log("profile set");
         }
       });
       this.setState({
         userProfile: matchedProfile,
+        username: window.localStorage["username"],
+        profileId: res.data,
         logged_in: true,
         displayed_form: ""
       });
@@ -195,6 +205,8 @@ class App extends React.Component {
   };
 
   render() {
+    // this.getProfileFromToken();
+
     return (
       <Router>
         <div className="App">
@@ -231,6 +243,10 @@ class App extends React.Component {
                   handleClose={this.handleClose}
                   show={this.show}
                   handleProfileFormClick={this.handleProfileFormClick}
+                  username={this.state.username}
+                  userProfile={this.state.userProfile}
+                  profileId={this.state.profileId}
+                  getProfileFromToken={this.getProfileFromToken}
                 />
               )}
             />
@@ -246,7 +262,7 @@ class App extends React.Component {
           <Switch>
             <Route
               exact
-              path="/profiles/:profileId"
+              path="/profiles/"
               render={props => (
                 <MyProfile
                   allProfiles={this.state.allProfiles}
