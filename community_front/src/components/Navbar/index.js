@@ -85,6 +85,7 @@ const NavBar = props => {
             displayed_form={props.displayed_form}
             handle_login={props.handle_login}
             handle_signup={props.handle_signup}
+            userProfile={props.userProfile}
           />
         </Nav>
         <Form inline>
