@@ -12,7 +12,7 @@ from django.conf import settings
 from rest_framework.authtoken.models import Token
 
 class Profile(models.Model): 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # user = models.OneToOneField(User, on_delete=models.CASCADE)
     username = models.CharField(max_length=255)
     profile_name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255) 
