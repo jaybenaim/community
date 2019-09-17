@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import ProfileCard from "../ProfileCard";
+import ProfileCard from "./ProfileCard";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import Root from "../../apis/root";
+import Root from "../../../apis/root";
 import Container from "react-bootstrap/Container";
 import "./index.css";
+
 class CreateProfileForm extends Component {
   nameRef = React.createRef();
   emailRef = React.createRef();

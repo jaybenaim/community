@@ -9,8 +9,8 @@ import FormControl from "react-bootstrap/FormControl";
 import logo from "./logo/logo.png";
 import "./index.css";
 import NavbarLogin from "./NavbarLogin";
-import Root from "../../apis/root";
-import MyProfile from "../App/MyProfile";
+import Root from "../../../apis/root";
+import MyProfile from "../MyProfile";
 
 const NavBar = props => {
   const [items, setItems] = useState([]);

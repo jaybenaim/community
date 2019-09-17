@@ -1,14 +1,15 @@
 import React from "react";
 import "./index.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import NavBar from "../Navbar";
+import NavBar from "./Navbar";
 import Home from "./Home";
-import CreateProfileForm from "./CreateProfileForm";
+import CreateProfileForm from "./MyCommunity";
 import Root from "../../apis/root";
 import Map from "./Map";
 import MyProfile from "./MyProfile";
 import Axios from "axios";
 import PutTest from "../PutTest";
+import Profile from "../Profile";
 
 class App extends React.Component {
   state = {
@@ -294,6 +295,9 @@ class App extends React.Component {
                 />
               )}
             />
+          </Switch>
+          <Switch>
+            <Route path="/newnew" component={Profile}></Route>
           </Switch>
         </div>
       </Router>
