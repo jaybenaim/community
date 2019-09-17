@@ -1,22 +1,22 @@
 import React, { Component } from "react";
-import "./index.css";
+import "../index.css";
 import GoogleMapReact from "google-map-react";
-import { MAP_API_KEY } from "../../apis/keys";
+import { MAP_API_KEY } from "../../../apis/keys";
 import Geocode from "react-geocode";
-import MapMarker from "../MapMarker";
+import MapMarker from "./MapMarker";
 
 /**
  *@prop [allProfiles] array required
  */
 
-class SimpleMap extends Component {
+class Map extends Component {
   constructor(props) {
     super(props);
     this.state = {
       geocodes: [],
       center: { lat: 43.99, lng: -79 },
       zoom: 10,
-      loading: true
+      loading: false
     };
   }
 
@@ -46,8 +46,12 @@ class SimpleMap extends Component {
 
   checkGeocodeLoading = index => {
     const { allProfiles } = this.props;
-    if (index === allProfiles.length - 1 && parseInt(index) !== 0) {
-      this.setState({ loading: false });
+    if (
+      index === allProfiles.length - 1 &&
+      parseInt(index) !== 0 &&
+      index !== 1
+    ) {
+      this.setState({ loading: true });
     }
   };
 
@@ -110,4 +114,4 @@ class SimpleMap extends Component {
   }
 }
 
-export default SimpleMap;
+export default Map;

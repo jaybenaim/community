@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import ProfileCard from "../ProfileCard";
+import ProfileCard from "./ProfileCard";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import Root from "../../apis/root";
+import Root from "../../../apis/root";
 import Container from "react-bootstrap/Container";
 import "./index.css";
-class AllProfiles extends Component {
+
+class CreateProfileForm extends Component {
   nameRef = React.createRef();
   emailRef = React.createRef();
   addressRef = React.createRef();
@@ -25,18 +26,29 @@ class AllProfiles extends Component {
     let profileName = this.nameRef.current.value;
     let email = this.emailRef.current.value;
     let address = this.addressRef.current.value;
-
-    Root.post("profiles/", {
-      username: profileName,
-      profile_name: profileName,
-      email,
-      address
-    })
+    console.log(window.localStorage["token"]);
+    console.log(this.props.profileId[0].user);
+    Root.post(
+      "profiles/",
+      {
+        user: this.props.profileId[0].user,
+        username: this.props.username,
+        profile_name: profileName,
+        email,
+        address
+      },
+      {
+        headers: {
+          // "Content-Type": "application/json",
+          Authorization: `Token ${window.localStorage["token"]}`
+        }
+      }
+    )
       .then(res => {
         this.handleShow();
 
         handleProfileFormSubmit({
-          username: profileName,
+          username: window.localStorage["username"],
           profile_name: profileName,
           email,
           address
@@ -46,6 +58,9 @@ class AllProfiles extends Component {
       .catch(err => {
         console.log("POST Status: " + err);
       });
+  };
+  componentDidMount = () => {
+    this.props.getProfileFromToken();
   };
   render() {
     const { allProfiles, allItems } = this.props;
@@ -115,4 +130,4 @@ class AllProfiles extends Component {
   }
 }
 
-export default AllProfiles;
+export default CreateProfileForm;

@@ -8,8 +8,8 @@ import FormControl from "react-bootstrap/FormControl";
 // import { Helmet } from "react-helmet";
 import logo from "./logo/logo.png";
 import "./index.css";
-import NavbarLogin from "../Registration/Nav";
-import Root from "../../apis/root";
+import NavbarLogin from "./NavbarLogin";
+import Root from "../../../apis/root";
 import MyProfile from "../MyProfile";
 
 const NavBar = props => {
@@ -74,7 +74,7 @@ const NavBar = props => {
         <Nav className="mr-auto">
           <Nav.Link href="/">Home</Nav.Link>
           <Nav.Link href="/map">Map</Nav.Link>
-          <Nav.Link href="/profiles/:profileId/">My Profile</Nav.Link>
+          <Nav.Link href="/profiles">My Profile</Nav.Link>
           <Nav.Link href="/users/profiles">My Community</Nav.Link>
 
           <NavbarLogin
@@ -85,6 +85,7 @@ const NavBar = props => {
             displayed_form={props.displayed_form}
             handle_login={props.handle_login}
             handle_signup={props.handle_signup}
+            userProfile={props.userProfile}
           />
         </Nav>
         <Form inline>

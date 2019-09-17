@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./index.css";
-import LoginForm from "../LoginForm";
-import SignupForm from "../SignupForm";
+import LoginForm from "./LoginForm";
+import SignupForm from "./SignupForm";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
@@ -50,7 +50,7 @@ class NavbarNew extends React.Component {
       default:
         form = null;
     }
-
+    // console.log(this.state.user);
     return (
       <Container>
         <Row>
@@ -58,7 +58,8 @@ class NavbarNew extends React.Component {
           {form}
           <h3>
             {this.props.logged_in
-              ? `Hello, ${this.props.username}`
+              ? `Hello, ${window.localStorage["username"] &&
+                  window.localStorage["username"].toUpperCase()}`
               : "Please Log In"}
           </h3>
         </Row>

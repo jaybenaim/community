@@ -1,17 +1,18 @@
 import React from "react";
 import "./index.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import NavBar from "../Navbar";
-import Home from "../Home";
-import AllProfiles from "../AllProfiles";
+import NavBar from "./Navbar";
+import Home from "./Home";
+import CreateProfileForm from "./MyCommunity";
 import Root from "../../apis/root";
-import SimpleMap from "../SimpleMap";
-import MyProfile from "../MyProfile";
+import Map from "./Map";
+import MyProfile from "./MyProfile";
 import Axios from "axios";
 import PutTest from "../PutTest";
 
 class App extends React.Component {
   state = {
+    userProfile: [],
     items: [],
     profileName: "",
     profileId: null,
@@ -24,7 +25,7 @@ class App extends React.Component {
     itemPrice: "price",
     allProfiles: [],
     displayed_form: "",
-    logged_in: localStorage.getItem("token") ? true : false,
+    logged_in: window.localStorage["token"] ? true : false,
     username: "",
     searchItem: null,
     profileSearched: "",
@@ -79,7 +80,12 @@ class App extends React.Component {
   };
 
   getAllProfiles = () => {
-    Root.get("profiles/").then(res => {
+    Root.get("profiles/", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${window.localStorage["token"]}`
+      }
+    }).then(res => {
       let profiles = res.data;
       this.setState({ allProfiles: profiles });
       // console.log(this.state.allProfiles);
@@ -91,61 +97,88 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getAllProfiles();
-    if (this.state.logged_in) {
-      Axios.get("http://localhost:8000/core/current_user/", {
-        headers: {
-          Authorization: `JWT ${localStorage.getItem("token")}`
-        }
-      })
-        .then(res => res.json())
-        .then(json => {
-          this.setState({ username: json.username });
-        });
-    }
+    this.getProfileFromToken();
   }
 
   handle_login = (e, data) => {
     e.preventDefault();
-    Axios.get("http://localhost:8000/token-auth/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    })
-      .then(res => res.json())
-      .then(json => {
-        localStorage.setItem("token", json.token);
-        this.setState({
-          logged_in: true,
-          displayed_form: "",
-          username: json.user.username
-        });
+    Axios.post("http://localhost:8000/api-token-auth/", data)
+      .then(res => {
+        window.localStorage["token"] = res.data.token;
+        window.localStorage["username"] = data.username;
+      })
+      .then(res => {
+        setTimeout(() => {
+          this.getProfileFromToken();
+        }, 2000);
       });
   };
 
+  getProfileFromToken = () => {
+    Root.get("profiles/").then(res => {
+      let profiles = res.data;
+      let matchedProfile = [];
+      let profileUser = [];
+
+      profiles.map(profile => {
+        console.log(profile.user);
+        console.log(
+          ` Profile: ${profile.username}` +
+            `Storage: ${window.localStorage["username"]}`
+        );
+        if (
+          //////   this is where the error for profile not displaying
+          profile.username.toLowerCase() ===
+          window.localStorage["username"].toLowerCase()
+        ) {
+          matchedProfile.push(profile);
+          matchedProfile.user = profile.user;
+          profileUser.push(profile.user);
+
+          console.log("profile set");
+        } else {
+          matchedProfile.push({
+            address: "null",
+            email: "null",
+            id: "null",
+            profile_name: "null",
+            user: [],
+            username: ""
+          });
+        }
+      });
+      this.setState({
+        userProfile: matchedProfile,
+        username: window.localStorage["username"],
+        profileId: this.state.userProfile.user,
+        logged_in: true,
+        displayed_form: ""
+      });
+      console.log(this.state.userProfile.user);
+    });
+  };
   handle_signup = (e, data) => {
     e.preventDefault();
-    Axios.get("http://localhost:8000/core/users/", {
-      method: "POST",
+    // Axios.post("http://localhost:8000/api-token-auth/", {
+    Root.post("users/", data, {
       headers: {
         "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
+      }
     })
-      .then(res => res.json())
-      .then(json => {
-        localStorage.setItem("token", json.token);
-        this.setState({
-          logged_in: true,
-          displayed_form: "",
-          username: json.username
-        });
+      .then(res => {
+        window.localStorage["token"] = res.data.token;
+        window.localStorage["username"] = data.username;
+      })
+      .then(res => {
+        setTimeout(() => {
+          this.getProfileFromToken();
+        }, 1000);
       });
   };
 
   handle_logout = () => {
-    localStorage.removeItem("token");
+    window.localStorage["token"] = "";
+    window.localStorage["username"] = "";
     this.setState({ logged_in: false, username: "" });
   };
 
@@ -191,6 +224,8 @@ class App extends React.Component {
   };
 
   render() {
+    // this.getProfileFromToken();
+
     return (
       <Router>
         <div className="App">
@@ -208,6 +243,7 @@ class App extends React.Component {
               handle_signup={this.handle_signup}
               getItems={this.getSearchQuery}
               getProfile={this.getSearchProfile}
+              userProfile={this.state.userProfile}
             />
           </Switch>
           <Switch>
@@ -217,7 +253,7 @@ class App extends React.Component {
             <Route
               path="/users/profiles/"
               render={props => (
-                <AllProfiles
+                <CreateProfileForm
                   allProfiles={this.state.allProfiles}
                   allItems={this.allItems}
                   handleProfileFormSubmit={this.handleProfileFormSubmit}
@@ -226,6 +262,10 @@ class App extends React.Component {
                   handleClose={this.handleClose}
                   show={this.show}
                   handleProfileFormClick={this.handleProfileFormClick}
+                  username={this.state.username}
+                  userProfile={this.state.userProfile}
+                  profileId={this.state.profileId}
+                  getProfileFromToken={this.getProfileFromToken}
                 />
               )}
             />
@@ -233,15 +273,13 @@ class App extends React.Component {
           <Switch>
             <Route
               path="/map"
-              render={props => (
-                <SimpleMap allProfiles={this.state.allProfiles} />
-              )}
+              render={props => <Map allProfiles={this.state.allProfiles} />}
             />
           </Switch>
           <Switch>
             <Route
               exact
-              path="/profiles/:profileId"
+              path="/profiles/"
               render={props => (
                 <MyProfile
                   allProfiles={this.state.allProfiles}
@@ -251,6 +289,8 @@ class App extends React.Component {
                   itemPrice={this.state.itemPrice}
                   handleItemCLose={this.handleItemClose}
                   handleItem={this.handleItem}
+                  userProfile={this.state.userProfile}
+                  getProfileFromToken={this.getProfileFromToken}
                 />
               )}
             />

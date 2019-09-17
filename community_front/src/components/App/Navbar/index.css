@@ -1,4 +1,4 @@
-.body {
+/* .body {
   position: absolute;
   z-index: 1;
 }
@@ -17,10 +17,20 @@
   color: black !important;
 } */
 
-.logo {
+/* .logo {
   height: 20px;
   zoom: 3;
   margin-left: 5px;
   margin-top: -8px;
   margin-bottom: -10px;
+} */
+.login,
+.logout,
+.signup {
+  float: right;
+  margin-right: 20px;
+  color: white;
+}
+.center {
+  float: right;
 }
