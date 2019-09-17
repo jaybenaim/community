@@ -54,6 +54,8 @@ const Item = ({
     )
 
       .then(res => {
+        handleItem(item, price);
+
         console.log("Success");
       })
       .catch(err => {
