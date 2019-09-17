@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import Axios from "axios";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import root from "../../apis/root";
 
 class EditProfile extends Component {
   constructor(props) {
@@ -18,10 +19,11 @@ class EditProfile extends Component {
   submitEditForm = e => {
     console.log("sumbit form clicked, not implemented");
     this.props.toggleEditForm(e);
+    // root.post('/users')
   };
 
   closeEditForm = e => {
-    console.log("close button is clicked");
+    console.log("close button clicked");
     this.props.toggleEditForm(e);
   };
 

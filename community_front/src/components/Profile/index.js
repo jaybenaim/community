@@ -26,7 +26,7 @@ const Profile = ({
     <>
       <div className="profile-page-container">
         <div className="profile-page">
-          {/* <AllProfiles /> */}
+          {/* <CreateProfileForm /> */}
           <UserProfile
             profileName={profileName}
             email={email}

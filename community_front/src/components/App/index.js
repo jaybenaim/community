@@ -3,7 +3,7 @@ import "./index.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NavBar from "../Navbar";
 import Home from "../Home";
-import AllProfiles from "../AllProfiles";
+import CreateProfileForm from "../CreateProfileForm";
 import Root from "../../apis/root";
 import SimpleMap from "../SimpleMap";
 import MyProfile from "../MyProfile";
@@ -12,6 +12,7 @@ import PutTest from "../PutTest";
 
 class App extends React.Component {
   state = {
+    userProfile: [],
     items: [],
     profileName: "",
     profileId: null,
@@ -78,7 +79,7 @@ class App extends React.Component {
     this.setState({ show: true });
   };
 
-  getAllProfiles = () => {
+  getCreateProfileForm = () => {
     Root.get("profiles/").then(res => {
       let profiles = res.data;
       this.setState({ allProfiles: profiles });
@@ -90,62 +91,65 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    this.getAllProfiles();
-    if (this.state.logged_in) {
-      Axios.get("http://localhost:8000/core/current_user/", {
-        headers: {
-          Authorization: `JWT ${localStorage.getItem("token")}`
-        }
-      })
-        .then(res => res.json())
-        .then(json => {
-          this.setState({ username: json.username });
-        });
-    }
+    this.getCreateProfileForm();
+    this.getProfileFromToken();
   }
 
   handle_login = (e, data) => {
     e.preventDefault();
-    Axios.get("http://localhost:8000/token-auth/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    })
-      .then(res => res.json())
-      .then(json => {
-        localStorage.setItem("token", json.token);
-        this.setState({
-          logged_in: true,
-          displayed_form: "",
-          username: json.user.username
-        });
+    Axios.post("http://localhost:8000/api-token-auth/", data)
+      .then(res => {
+        window.localStorage["token"] = res.data.token;
+        window.localStorage["username"] = data.username;
+      })
+      .then(res => {
+        setTimeout(() => {
+          this.getProfileFromToken();
+        }, 1000);
       });
   };
 
+  getProfileFromToken = () => {
+    Root.get("profiles/").then(res => {
+      let profiles = res.data;
+
+      let matchedProfile = [];
+      profiles.map(profile => {
+        if (profile.username === window.localStorage["username"]) {
+          matchedProfile.push(profile);
+          // console.log(this.state.userProfile);
+        }
+      });
+      this.setState({
+        userProfile: matchedProfile,
+        logged_in: true,
+        displayed_form: ""
+      });
+      // console.log(this.state.userProfile.username);
+    });
+  };
   handle_signup = (e, data) => {
     e.preventDefault();
-    Axios.get("http://localhost:8000/core/users/", {
-      method: "POST",
+    // Axios.post("http://localhost:8000/api-token-auth/", {
+    Root.post("users/", data, {
       headers: {
         "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
+      }
     })
-      .then(res => res.json())
-      .then(json => {
-        localStorage.setItem("token", json.token);
-        this.setState({
-          logged_in: true,
-          displayed_form: "",
-          username: json.username
-        });
+      .then(res => {
+        window.localStorage["token"] = res.data.token;
+        window.localStorage["username"] = data.username;
+      })
+      .then(res => {
+        setTimeout(() => {
+          this.getProfileFromToken();
+        }, 1000);
       });
   };
 
   handle_logout = () => {
-    localStorage.removeItem("token");
+    window.localStorage["token"] = "";
+    window.localStorage["username"] = "";
     this.setState({ logged_in: false, username: "" });
   };
 
@@ -208,6 +212,7 @@ class App extends React.Component {
               handle_signup={this.handle_signup}
               getItems={this.getSearchQuery}
               getProfile={this.getSearchProfile}
+              userProfile={this.state.userProfile}
             />
           </Switch>
           <Switch>
@@ -217,7 +222,7 @@ class App extends React.Component {
             <Route
               path="/users/profiles/"
               render={props => (
-                <AllProfiles
+                <CreateProfileForm
                   allProfiles={this.state.allProfiles}
                   allItems={this.allItems}
                   handleProfileFormSubmit={this.handleProfileFormSubmit}
@@ -251,6 +256,8 @@ class App extends React.Component {
                   itemPrice={this.state.itemPrice}
                   handleItemCLose={this.handleItemClose}
                   handleItem={this.handleItem}
+                  userProfile={this.state.userProfile}
+                  getProfileFromToken={this.getProfileFromToken}
                 />
               )}
             />

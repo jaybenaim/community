@@ -2,24 +2,27 @@ from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from .models import *
 
-
-class UserSerializer(serializers.Serializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        feilds = ["url", "username", "email", "groups"]
+        fields = ('id','username', 'password')
 
+    def create(self, validated_data):
+        user = super(UserSerializer, self).create(validated_data)
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
 
 class GroupSerializer(serializers.Serializer):
     class Meta:
         model = Group
         feilds = ["url", "name"]
 
-
 class ProfileSerializer(serializers.ModelSerializer):
  
     class Meta:
         model = Profile
-        fields = ["id", "username", "profile_name", "email", "address"]
+        fields = ["id", "user", "username", "profile_name", "email", "address"]
 
     def create(self, validated_data):
         return Profile.objects.create(**validated_data)
@@ -31,12 +34,6 @@ class ProfileSerializer(serializers.ModelSerializer):
         instance.address = validated_data.get("address", instance.address)
         instance.save(username=request.user)
 
-
-# # .save() will create a new instance.
-# serializer = CommentSerializer(data=data)
-
-# # .save() will update the existing `comment` instance.
-# serializer = CommentSerializer(comment, data=data)
         return instance
 
 

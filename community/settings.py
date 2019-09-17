@@ -38,11 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'community_front',
-    'rest_framework',
-    'rest_framework.authtoken',
     'community',
     'corsheaders',
+<<<<<<< HEAD
     # 'core.apps.CoreConfig'
+=======
+    'rest_framework',
+    'rest_framework.authtoken',
+>>>>>>> ce91ffb6ac6d827ac3e84afc43a6a454c381dbb7
 ]
 
 MIDDLEWARE = [
@@ -141,32 +144,33 @@ STATICFILES_DIRS = [
 ]
 
 
-# https://github.com/ottoyiu/django-cors-headers
-# Whitelist the create-react-app development server
-CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000"
-]
+# # https://github.com/ottoyiu/django-cors-headers
+# # Whitelist the create-react-app development server
+# CORS_ORIGIN_WHITELIST = [
+#     "http://localhost:3000"
+# ]
 
-# https://github.com/ottoyiu/django-cors-headers#csrf-integration
+# # https://github.com/ottoyiu/django-cors-headers#csrf-integration
 
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:3000"
-]
+# CSRF_TRUSTED_ORIGINS = [
+#     "http://localhost:3000"
+# ]
+
+CORS_ORIGIN_ALLOW_ALL = True 
+CORS_ALLOW_CREDENTIALS = True 
 
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-        # 'rest_framework.authentication.BasicAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication',
-        # 'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
 
     ),
-    # 'DEFAULT_PERMISSION_CLASSES': (
-    #     'rest_framework.permissions.IsAuthenticated',
-    # ),
-    # 'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework.athentication.TookenAuthentication'),
-    # 'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated')
+     'DEFAULT_PERMISSION_CLASSES': (
+       'rest_framework.permissions.AllowAny',
+       'rest_framework.permissions.IsAuthenticated',
+       'rest_framework.permissions.IsAdminUser',
+       
+     ),
 }
 
 LOGGING = {
