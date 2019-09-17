@@ -118,6 +118,7 @@ class App extends React.Component {
     Root.get("profiles/").then(res => {
       let profiles = res.data;
       let matchedProfile = [];
+      let profileUser = [];
 
       profiles.map(profile => {
         console.log(profile.user);
@@ -126,10 +127,14 @@ class App extends React.Component {
             `Storage: ${window.localStorage["username"]}`
         );
         if (
+          //////   this is where the error for profile not displaying
           profile.username.toLowerCase() ===
           window.localStorage["username"].toLowerCase()
         ) {
           matchedProfile.push(profile);
+          matchedProfile.user = profile.user;
+          profileUser.push(profile.user);
+
           console.log("profile set");
         } else {
           matchedProfile.push({
@@ -145,11 +150,11 @@ class App extends React.Component {
       this.setState({
         userProfile: matchedProfile,
         username: window.localStorage["username"],
-        profileId: res.data,
+        profileId: this.state.userProfile.user,
         logged_in: true,
         displayed_form: ""
       });
-      // console.log(this.state.userProfile.username);
+      console.log(this.state.userProfile.user);
     });
   };
   handle_signup = (e, data) => {
