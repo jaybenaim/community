@@ -48,7 +48,7 @@ class MyProfile extends React.Component {
     //   console.log(res.data);
     //   this.setState({ user: res.data });
     // });
-    this.setState({ user: this.props.userProfile[0] });
+    // this.setState({ user: this.props.userProfile[0] });
   };
   getItems = () => {
     console.log(this.state.user);
@@ -120,7 +120,7 @@ class MyProfile extends React.Component {
 
     setTimeout(() => {
       this.getProfile();
-      this.getItems();
+      // this.getItems();
     }, 1500);
   };
 
@@ -155,7 +155,7 @@ class MyProfile extends React.Component {
                   <p className="profile-name">
                     {/* Name: {this.props.profileSearched.profile_name} */}
                     <span className="bold"> Name:</span>{" "}
-                    {this.state.user.profile_name}
+                    {/* {this.state.user.profile_name}*/}
                   </p>
                 </Row>
                 <br />
