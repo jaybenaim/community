@@ -142,7 +142,7 @@ class MyProfile extends React.Component {
     return (
       <Container>
         <Row>
-          <Col xs={12} md={12} className="con">
+          <Col xs={12} md={12} lg={4} className="con">
             <section>
               <img
                 className="profile-image"
@@ -155,14 +155,14 @@ class MyProfile extends React.Component {
                 <Row>
                   <p className="profile-name">
                     {/* Name: {this.props.profileSearched.profile_name} */}
-                    <span className="bold"> Name:</span>{" "}
+                    <span className="bold"> Name:</span>
                     {this.state.user.profile_name}
                   </p>
                 </Row>
                 <br />
                 <Row>
                   <p className="profile-email">
-                    <span className="bold"> Email:</span>{" "}
+                    <span className="bold"> Email:</span>
                     {this.state.user.email}
                   </p>
                   <br />

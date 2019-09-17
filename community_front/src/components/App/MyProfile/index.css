@@ -36,6 +36,16 @@
 .profile-items {
   margin-top: 80px;
   /* overflow: auto; */
+  margin-left: 160px;
+}
+@media (max-width: 548px) {
+  .profile-items {
+    margin: 0;
+    padding: 40px;
+  }
+  .borrow-button {
+    margin: 10px;
+  }
 }
 .add-item-button {
   margin-top: 40px;
