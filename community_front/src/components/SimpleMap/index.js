@@ -46,7 +46,11 @@ class SimpleMap extends Component {
 
   checkGeocodeLoading = index => {
     const { allProfiles } = this.props;
-    if (index === allProfiles.length - 1 && parseInt(index) !== 0) {
+    if (
+      index === allProfiles.length - 1 &&
+      parseInt(index) !== 0 &&
+      index !== 1
+    ) {
       this.setState({ loading: true });
     }
   };
