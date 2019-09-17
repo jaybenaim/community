@@ -58,7 +58,8 @@ class NavbarNew extends React.Component {
           {form}
           <h3>
             {this.props.logged_in
-              ? `Hello, ${window.localStorage["username"].toUpperCase()}`
+              ? `Hello, ${window.localStorage["username"] &&
+                  window.localStorage["username"].toUpperCase()}`
               : "Please Log In"}
           </h3>
         </Row>
