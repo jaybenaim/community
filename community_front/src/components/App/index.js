@@ -115,6 +115,12 @@ class App extends React.Component {
 
       let matchedProfile = [];
       profiles.map(profile => {
+        /////////////////
+        console.log(profile.user);
+        console.log(
+          ` Profile: ${profile.username}` +
+            `Storage: ${window.localStorage["username"]}`
+        );
         if (profile.username === window.localStorage["username"]) {
           matchedProfile.push(profile);
           // console.log(this.state.userProfile);

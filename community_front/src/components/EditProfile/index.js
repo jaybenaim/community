@@ -4,6 +4,7 @@ import Axios from "axios";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import root from "../../apis/root";
+import "./index.css";
 
 class EditProfile extends Component {
   constructor(props) {
@@ -15,6 +16,8 @@ class EditProfile extends Component {
       address: props.address || ""
     };
   }
+
+  handleEditProfileFormSubmit = event => {};
 
   submitEditForm = e => {
     console.log("sumbit form clicked, not implemented");
