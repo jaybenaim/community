@@ -5,7 +5,20 @@ import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import "./index.css";
 class ProfileItem extends React.Component {
-  state = {};
+  state = {
+    itemAvailable: true,
+    isActive: false,
+    buttonClass: "success"
+  };
+
+  handleBorrow = () => {
+    this.setState({
+      itemAvailable: false,
+      isActive: true,
+      buttonClass: "danger"
+    });
+  };
+
   render() {
     return (
       <>
@@ -22,7 +35,12 @@ class ProfileItem extends React.Component {
                 </Col>
                 <Col className="item-content item-name">{this.props.name}</Col>
                 <Col className="item-content">{this.props.price}</Col>
-                <Button className="item-content borrow-button">
+                <Button
+                  className="item-content borrow-button"
+                  variant={this.state.buttonClass}
+                  onClick={this.handleBorrow}
+                  disabled={this.state.isActive}
+                >
                   Click to borrow{" "}
                 </Button>
               </Row>
