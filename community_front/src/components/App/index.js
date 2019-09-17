@@ -2,7 +2,7 @@ import React from "react";
 import "./index.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NavBar from "../Navbar";
-import Home from "../Home";
+import Home from "./Home";
 import CreateProfileForm from "../CreateProfileForm";
 import Root from "../../apis/root";
 import SimpleMap from "../SimpleMap";

@@ -30,7 +30,7 @@ class CreateProfileForm extends Component {
     Root.post(
       "profiles/",
       {
-        user: this.props.profileId[0].user + 1,
+        user: this.props.profileId[0].user,
         username: this.props.username,
         profile_name: profileName,
         email,

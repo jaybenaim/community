@@ -97,7 +97,7 @@ class MyProfile extends React.Component {
   };
   setImages = async query => {
     await Axios.get(
-      `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${query}&limit=1&offset=0&rating=G&lang=en`
+      `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=ladder&limit=1&offset=0&rating=G&lang=en`
     )
       // await Axios.get(`https://api.pexels.com/v1/curated?per_page=1&page=1`, {
       //   headers: { Authorization: PEXELS_API_KEY }
