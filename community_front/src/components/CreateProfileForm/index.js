@@ -26,10 +26,12 @@ class CreateProfileForm extends Component {
     let email = this.emailRef.current.value;
     let address = this.addressRef.current.value;
     console.log(window.localStorage["token"]);
+    console.log(this.props.profileId[0].user);
     Root.post(
       "profiles/",
       {
-        username: window.localStorage["username"],
+        user: this.props.profileId[0].user + 1,
+        username: this.props.username,
         profile_name: profileName,
         email,
         address
@@ -55,6 +57,9 @@ class CreateProfileForm extends Component {
       .catch(err => {
         console.log("POST Status: " + err);
       });
+  };
+  componentDidMount = () => {
+    this.props.getProfileFromToken();
   };
   render() {
     const { allProfiles, allItems } = this.props;

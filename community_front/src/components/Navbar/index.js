@@ -74,7 +74,7 @@ const NavBar = props => {
         <Nav className="mr-auto">
           <Nav.Link href="/">Home</Nav.Link>
           <Nav.Link href="/map">Map</Nav.Link>
-          <Nav.Link href="/profiles/:profileId/">My Profile</Nav.Link>
+          <Nav.Link href="/profiles">My Profile</Nav.Link>
           <Nav.Link href="/users/profiles">My Community</Nav.Link>
 
           <NavbarLogin

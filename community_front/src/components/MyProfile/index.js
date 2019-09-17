@@ -61,7 +61,14 @@ class MyProfile extends React.Component {
   // };
 
   getItems = () => {
+<<<<<<< HEAD
     const {
+=======
+    console.log(this.props.userProfile[0]);
+
+    const {
+      user,
+>>>>>>> 01d267e753c999e2ad989d9bd919b132a96bbf3a
       id: profileId,
       username,
       profile_name: profileName,
@@ -73,7 +80,10 @@ class MyProfile extends React.Component {
       let items = res.data;
       let newItems = [];
       let queries = [];
+<<<<<<< HEAD
 
+=======
+>>>>>>> 01d267e753c999e2ad989d9bd919b132a96bbf3a
       // displays empty box if no item is in profile
       (items || []).map((item, i) => {
         // const { name, price, profile_id } = item;
@@ -89,7 +99,10 @@ class MyProfile extends React.Component {
         }
       });
     });
+<<<<<<< HEAD
 
+=======
+>>>>>>> 01d267e753c999e2ad989d9bd919b132a96bbf3a
     setTimeout(() => {
       const items = this.state.items;
       items.forEach(item => {
@@ -99,7 +112,7 @@ class MyProfile extends React.Component {
   };
   setImages = async query => {
     await Axios.get(
-      `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=ladder&limit=1&offset=0&rating=G&lang=en`
+      `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${query}&limit=1&offset=0&rating=G&lang=en`
     )
       // await Axios.get(`https://api.pexels.com/v1/curated?per_page=1&page=1`, {
       //   headers: { Authorization: PEXELS_API_KEY }
@@ -134,6 +147,22 @@ class MyProfile extends React.Component {
   };
 
   displayProfile = () => {
+<<<<<<< HEAD
+=======
+    Root.get("profiles").then(res => {
+      let profiles = res.data;
+      let currentProfile = profiles.map(profile => {
+        console.log(profile.username);
+        if (
+          profile.username.toLowerCase() ===
+          window.localStorage["username"].toLowerCase()
+        )
+          return profile;
+      });
+      this.setState({ user: currentProfile });
+    });
+
+>>>>>>> 01d267e753c999e2ad989d9bd919b132a96bbf3a
     const {
       id: profileId,
       username,
@@ -216,7 +245,7 @@ class MyProfile extends React.Component {
                 <Button
                   className="add-item-button"
                   variant="primary"
-                  onClick={event => this.handleAddItem(event)}
+                  onClick={event => this.props.handleItem(event)}
                 >
                   Add Item
                 </Button>

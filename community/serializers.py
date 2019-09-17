@@ -13,7 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
-class GroupSerializer(serializers.Serializer):
+class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
         feilds = ["url", "name"]

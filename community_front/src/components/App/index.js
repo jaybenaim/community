@@ -25,7 +25,7 @@ class App extends React.Component {
     itemPrice: "price",
     allProfiles: [],
     displayed_form: "",
-    logged_in: localStorage.getItem("token") ? true : false,
+    logged_in: window.localStorage["token"] ? true : false,
     username: "",
     searchItem: null,
     profileSearched: "",
@@ -79,8 +79,13 @@ class App extends React.Component {
     this.setState({ show: true });
   };
 
-  getCreateProfileForm = () => {
-    Root.get("profiles/").then(res => {
+  getAllProfiles = () => {
+    Root.get("profiles/", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${window.localStorage["token"]}`
+      }
+    }).then(res => {
       let profiles = res.data;
       this.setState({ allProfiles: profiles });
       // console.log(this.state.allProfiles);
@@ -91,7 +96,7 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    this.getCreateProfileForm();
+    this.getAllProfiles();
     this.getProfileFromToken();
   }
 
@@ -105,33 +110,51 @@ class App extends React.Component {
       .then(res => {
         setTimeout(() => {
           this.getProfileFromToken();
-        }, 1000);
+        }, 2000);
       });
   };
 
   getProfileFromToken = () => {
     Root.get("profiles/").then(res => {
       let profiles = res.data;
-
       let matchedProfile = [];
+      let profileUser = [];
+
       profiles.map(profile => {
-        /////////////////
         console.log(profile.user);
         console.log(
           ` Profile: ${profile.username}` +
             `Storage: ${window.localStorage["username"]}`
         );
-        if (profile.username === window.localStorage["username"]) {
+        if (
+          //////   this is where the error for profile not displaying
+          profile.username.toLowerCase() ===
+          window.localStorage["username"].toLowerCase()
+        ) {
           matchedProfile.push(profile);
-          // console.log(this.state.userProfile);
+          matchedProfile.user = profile.user;
+          profileUser.push(profile.user);
+
+          console.log("profile set");
+        } else {
+          matchedProfile.push({
+            address: "null",
+            email: "null",
+            id: "null",
+            profile_name: "null",
+            user: [],
+            username: ""
+          });
         }
       });
       this.setState({
         userProfile: matchedProfile,
+        username: window.localStorage["username"],
+        profileId: this.state.userProfile.user,
         logged_in: true,
         displayed_form: ""
       });
-      // console.log(this.state.userProfile.username);
+      console.log(this.state.userProfile.user);
     });
   };
   handle_signup = (e, data) => {
@@ -201,6 +224,8 @@ class App extends React.Component {
   };
 
   render() {
+    // this.getProfileFromToken();
+
     return (
       <Router>
         <div className="App">
@@ -237,6 +262,10 @@ class App extends React.Component {
                   handleClose={this.handleClose}
                   show={this.show}
                   handleProfileFormClick={this.handleProfileFormClick}
+                  username={this.state.username}
+                  userProfile={this.state.userProfile}
+                  profileId={this.state.profileId}
+                  getProfileFromToken={this.getProfileFromToken}
                 />
               )}
             />
@@ -252,7 +281,7 @@ class App extends React.Component {
           <Switch>
             <Route
               exact
-              path="/profiles/:profileId"
+              path="/profiles/"
               render={props => (
                 <MyProfile
                   allProfiles={this.state.allProfiles}
