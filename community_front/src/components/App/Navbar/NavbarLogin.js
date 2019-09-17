@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./index.css";
-import LoginForm from "../LoginForm";
-import SignupForm from "../SignupForm";
+import LoginForm from "./LoginForm";
+import SignupForm from "./SignupForm";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 

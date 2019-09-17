@@ -8,8 +8,8 @@ import FormControl from "react-bootstrap/FormControl";
 // import { Helmet } from "react-helmet";
 import logo from "./logo/logo.png";
 import "./index.css";
-import NavbarLogin from "../Registration/Nav";
-import Root from "../../apis/root";
+import NavbarLogin from "./NavbarLogin";
+import Root from "../../../apis/root";
 import MyProfile from "../MyProfile";
 
 const NavBar = props => {

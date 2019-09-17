@@ -1,6 +1,6 @@
 import React from "react";
 import "./index.css";
-import Root from "../../apis/root";
+import Root from "../../../apis/root";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -12,11 +12,11 @@ import {
   GIPHY_API_KEY
   // PEXELS_API_KEY,
   // IMAGE_ACCESS_KEY
-} from "../../apis/keys";
-import ProfileItem from "../ProfileItem";
+} from "../../../apis/keys";
+import ProfileItem from "./ProfileItem";
 
 import Axios from "axios";
-import ItemForm from "../ItemForm";
+import ItemForm from "./ItemForm";
 
 class MyProfile extends React.Component {
   state = {
@@ -100,7 +100,7 @@ class MyProfile extends React.Component {
   };
   setImages = async query => {
     await Axios.get(
-      `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${query}&limit=1&offset=0&rating=G&lang=en`
+      `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=ladder&limit=1&offset=0&rating=G&lang=en`
     )
       // await Axios.get(`https://api.pexels.com/v1/curated?per_page=1&page=1`, {
       //   headers: { Authorization: PEXELS_API_KEY }
