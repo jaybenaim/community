@@ -41,11 +41,17 @@ class SimpleMap extends React.Component {
     // });
   };
   render() {
+    this.setState({ loading: true });
     const { allProfiles } = this.props;
     // const homeAddress = [];
 
     const profileMarkers = allProfiles.map((p, i) => {
-      Root.get("/profiles/").then(res => {
+      Root.get("/profiles/", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${window.localStorage["token"]}`
+        }
+      }).then(res => {
         let address = res.data[0].address;
 
         let lastIndex = address.indexOf(" ");
@@ -90,19 +96,19 @@ class SimpleMap extends React.Component {
         }
       );
     });
-    // const handleApiLoaded = (map, maps) => {
-    //   // Standard Markers
-    //   // new maps.Marker({
-    //   //   position: this.state,
-    //   //   map,
-    //   //   title: "Marker1"
-    //   // });
-    //   // new maps.Marker({
-    //   //   position: this.state,
-    //   //   map,
-    //   //   title: "Marker2"
-    //   // });
-    // };
+    const handleApiLoaded = (map, maps) => {
+      // Standard Markers
+      // new maps.Marker({
+      //   position: this.state,
+      //   map,
+      //   title: "Marker1"
+      // });
+      // new maps.Marker({
+      //   position: this.state,
+      //   map,
+      //   title: "Marker2"
+      // });
+    };
 
     return (
       <div className="map-container">

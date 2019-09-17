@@ -79,8 +79,13 @@ class App extends React.Component {
     this.setState({ show: true });
   };
 
-  getCreateProfileForm = () => {
-    Root.get("profiles/").then(res => {
+  getAllProfiles = () => {
+    Root.get("profiles/", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${window.localStorage["token"]}`
+      }
+    }).then(res => {
       let profiles = res.data;
       this.setState({ allProfiles: profiles });
       // console.log(this.state.allProfiles);
@@ -91,7 +96,7 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    this.getCreateProfileForm();
+    this.getAllProfiles();
     this.getProfileFromToken();
   }
 

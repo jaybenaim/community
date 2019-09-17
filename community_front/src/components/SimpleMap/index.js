@@ -16,7 +16,7 @@ class SimpleMap extends Component {
       geocodes: [],
       center: { lat: 43.99, lng: -79 },
       zoom: 10,
-      loading: true
+      loading: false
     };
   }
 
@@ -47,7 +47,7 @@ class SimpleMap extends Component {
   checkGeocodeLoading = index => {
     const { allProfiles } = this.props;
     if (index === allProfiles.length - 1 && parseInt(index) !== 0) {
-      this.setState({ loading: false });
+      this.setState({ loading: true });
     }
   };
 
