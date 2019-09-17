@@ -3,7 +3,7 @@ import "./index.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NavBar from "../Navbar";
 import Home from "../Home";
-import AllProfiles from "../AllProfiles";
+import CreateProfileForm from "../CreateProfileForm";
 import Root from "../../apis/root";
 import SimpleMap from "../SimpleMap";
 import MyProfile from "../MyProfile";
@@ -79,7 +79,7 @@ class App extends React.Component {
     this.setState({ show: true });
   };
 
-  getAllProfiles = () => {
+  getCreateProfileForm = () => {
     Root.get("profiles/").then(res => {
       let profiles = res.data;
       this.setState({ allProfiles: profiles });
@@ -91,7 +91,7 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    this.getAllProfiles();
+    this.getCreateProfileForm();
   }
 
   handle_login = (e, data) => {
@@ -117,8 +117,8 @@ class App extends React.Component {
         console.log(profile.username);
         if (profile.username === window.localStorage["username"]) {
           this.setState({ userProfile: profile });
-          console.log("Profile: " + profile);
-          console.log(this.state.userProfile);
+          // console.log("Profile: " + profile);
+          // console.log(this.state.userProfile);
         } else {
           console.log("Failed to find a profile with that name");
         }
@@ -217,7 +217,7 @@ class App extends React.Component {
             <Route
               path="/users/profiles/"
               render={props => (
-                <AllProfiles
+                <CreateProfileForm
                   allProfiles={this.state.allProfiles}
                   allItems={this.allItems}
                   handleProfileFormSubmit={this.handleProfileFormSubmit}

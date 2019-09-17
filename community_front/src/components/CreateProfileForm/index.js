@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import Root from "../../apis/root";
 import Container from "react-bootstrap/Container";
 import "./index.css";
-class AllProfiles extends Component {
+class CreateProfileForm extends Component {
   nameRef = React.createRef();
   emailRef = React.createRef();
   addressRef = React.createRef();
@@ -26,17 +26,26 @@ class AllProfiles extends Component {
     let email = this.emailRef.current.value;
     let address = this.addressRef.current.value;
 
-    Root.post("profiles/", {
-      username: profileName,
-      profile_name: profileName,
-      email,
-      address
-    })
+    Root.post(
+      "profiles/",
+      {
+        username: window.localStorage["username"],
+        profile_name: profileName,
+        email,
+        address
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${window.localStorage["token"]}`
+        }
+      }
+    )
       .then(res => {
         this.handleShow();
 
         handleProfileFormSubmit({
-          username: profileName,
+          username: window.localStorage["username"],
           profile_name: profileName,
           email,
           address
@@ -115,4 +124,4 @@ class AllProfiles extends Component {
   }
 }
 
-export default AllProfiles;
+export default CreateProfileForm;
