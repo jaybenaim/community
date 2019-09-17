@@ -10,8 +10,9 @@
   height: 600px;
   background: #eee;
   border: 2px gray outset;
-  display: flex;
-  justify-content: center;
+  margin-top: 80px;
+  padding: 40px;
+  padding-top: 100px;
 }
 .profile-image {
   border: 2px solid black;
@@ -20,12 +21,21 @@
   height: 240px;
   margin-top: 180px;
 }
+.profile-name,
+.profile-email,
+.profile-address {
+  margin: 0 auto;
+  font-size: 26px;
+}
+.bold {
+  font-weight: bold;
+}
 .profile-info {
-  margin-top: 100px;
+  margin-top: 180px;
 }
 .profile-items {
   margin-top: 80px;
-  overflow: auto;
+  /* overflow: auto; */
 }
 .add-item-button {
   margin-top: 40px;
@@ -44,7 +54,7 @@
   background: #eee;
   border: 2px outset #eee;
   max-height: 400px;
-  width: 600px;
+  width: 100%;
   padding-top: -40px;
   /* overflow: auto; */
 }
@@ -61,6 +71,7 @@
 .item-square {
   padding-bottom: 40px;
   max-height: 400px;
+  width: 100%;
 }
 .borrow-button {
   height: 50px;

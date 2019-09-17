@@ -24,27 +24,21 @@ class ProfileItem extends React.Component {
       <>
         <Row className="item-card">
           <div className="item-container">
-            <Container>
-              <Row className="item-square">
-                <Col>
-                  <img
-                    className="item-image"
-                    src={this.props.image}
-                    alt="item"
-                  />
-                </Col>
-                <Col className="item-content item-name">{this.props.name}</Col>
-                <Col className="item-content">{this.props.price}</Col>
-                <Button
-                  className="item-content borrow-button"
-                  variant={this.state.buttonClass}
-                  onClick={this.handleBorrow}
-                  disabled={this.state.isActive}
-                >
-                  Click to borrow{" "}
-                </Button>
-              </Row>
-            </Container>
+            <Row className="item-square">
+              <Col>
+                <img className="item-image" src={this.props.image} alt="item" />
+              </Col>
+              <Col className="item-content item-name">{this.props.name}</Col>
+              <Col className="item-content">{this.props.price}</Col>
+              <Button
+                className="item-content borrow-button"
+                variant={this.state.buttonClass}
+                onClick={this.handleBorrow}
+                disabled={this.state.isActive}
+              >
+                Click to borrow{" "}
+              </Button>
+            </Row>
           </div>
         </Row>
       </>

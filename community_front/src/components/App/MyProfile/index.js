@@ -42,24 +42,16 @@ class MyProfile extends React.Component {
     profile_id: this.props.profileId
   };
 
-  // todo get all items related to user
-  // getItems = () => {
-  //   Root.get("items/").then(res => {
-  //     const { name_of_item, price } = res.data[0];
-  //     this.setState({
-  //       query: name_of_item,
-  //       itemName: name_of_item,
-  //       itemPrice: price
-  //     });
-  //   });
-  //   setTimeout(() => {
-  //     this.setImages();
-  //   }, 1000);
-  // };
-
+  getProfile = () => {
+    // const { id } = this.props.userProfile[0];
+    // Root.get(`profiles/${id}/`).then(res => {
+    //   console.log(res.data);
+    //   this.setState({ user: res.data });
+    // });
+    this.setState({ user: this.props.userProfile[0] });
+  };
   getItems = () => {
-    console.log(this.props.userProfile[0]);
-
+    console.log(this.state.user);
     const {
       user,
       id: profileId,
@@ -124,46 +116,14 @@ class MyProfile extends React.Component {
   };
 
   componentDidMount = () => {
-    this.props.getProfileFromToken();
+    // this.props.getProfileFromToken();
 
     setTimeout(() => {
-      this.getItems();
-      this.displayProfile();
+      this.getProfile();
+      // this.getItems();
     }, 1500);
   };
 
-  displayProfile = () => {
-    Root.get("profiles").then(res => {
-      let profiles = res.data;
-      let currentProfile = profiles.map(profile => {
-        console.log(profile.username);
-        if (
-          profile.username.toLowerCase() ===
-          window.localStorage["username"].toLowerCase()
-        )
-          return profile;
-      });
-      this.setState({ user: currentProfile });
-    });
-
-    const {
-      id: profileId,
-      username,
-      profile_name: profileName,
-      email,
-      address
-    } = this.props.userProfile[0];
-
-    this.setState({
-      user: {
-        profileId,
-        username,
-        profileName,
-        email,
-        address
-      }
-    });
-  };
   render() {
     const { items, itemGif, image } = this.state;
 
@@ -182,7 +142,7 @@ class MyProfile extends React.Component {
     return (
       <Container>
         <Row>
-          <Col xs={12} md={6} className="con">
+          <Col xs={12} md={12} className="con">
             <section>
               <img
                 className="profile-image"
@@ -190,11 +150,31 @@ class MyProfile extends React.Component {
                 alt="profile"
                 onClick={this.get}
               />
-              <p className="profile-name">
-                {/* Name: {this.props.profileSearched.profile_name} */}
-                Name: {this.state.user.profileName}
-              </p>
+
               <p className="profile-details">
+                <Row>
+                  <p className="profile-name">
+                    {/* Name: {this.props.profileSearched.profile_name} */}
+                    <span className="bold"> Name:</span>{" "}
+                    {this.state.user.profile_name}
+                  </p>
+                </Row>
+                <br />
+                <Row>
+                  <p className="profile-email">
+                    <span className="bold"> Email:</span>{" "}
+                    {this.state.user.email}
+                  </p>
+                  <br />
+                </Row>
+                <Row>
+                  <p className="profile-address">
+                    <br />
+                    <span className="bold"> Address: </span>
+                    {this.state.user.address}
+                  </p>
+                </Row>
+
                 <Button
                   className="add-item-button"
                   variant="primary"
@@ -216,7 +196,9 @@ class MyProfile extends React.Component {
               />
             </section>
           </Col>
-          <Col className="profile-items">{itemElements}</Col>
+          <Col xs={12} md={12} lg={6} className="profile-items">
+            {itemElements}
+          </Col>
         </Row>
       </Container>
     );
