@@ -6,8 +6,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 // import ImageApi from "../../apis/images";
-import EditProfile from "./EditProfile";
-
 import {
   GIPHY_API_KEY
   // PEXELS_API_KEY,
@@ -41,8 +39,7 @@ class MyProfile extends React.Component {
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
     itemName: "",
     itemPrice: "",
-    profile_id: this.props.profileId,
-    showEditForm: false
+    profile_id: this.props.profileId
   };
 
   // todo get all items related to user
@@ -61,6 +58,14 @@ class MyProfile extends React.Component {
   // };
 
   getItems = () => {
+    const {
+      id: profileId,
+      username,
+      profile_name: profileName,
+      email,
+      address
+    } = this.props.userProfile[0];
+
     Root.get("items/").then(res => {
       let items = res.data;
       let newItems = [];
@@ -68,17 +73,17 @@ class MyProfile extends React.Component {
 
       // displays empty box if no item is in profile
       (items || []).map((item, i) => {
-        const { name, price, profile_id } = item;
-        // console.log(item.profile_id + " = " + profileId);
-        // if (item.profile_id === profileId) {
-        newItems.push(item);
-        queries.push(item.name);
-        this.setState(prevState => ({
-          query: queries,
-          items: newItems
-        }));
-        return item;
-        // }
+        // const { name, price, profile_id } = item;
+        console.log(item.profile_id + " = " + profileId);
+        if (item.profile_id === profileId) {
+          newItems.push(item);
+          queries.push(item.name);
+          this.setState(prevState => ({
+            query: queries,
+            items: newItems
+          }));
+          return item;
+        }
       });
     });
 
@@ -91,7 +96,7 @@ class MyProfile extends React.Component {
   };
   setImages = async query => {
     await Axios.get(
-      `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=ladder&limit=1&offset=0&rating=G&lang=en`
+      `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${query}&limit=1&offset=0&rating=G&lang=en`
     )
       // await Axios.get(`https://api.pexels.com/v1/curated?per_page=1&page=1`, {
       //   headers: { Authorization: PEXELS_API_KEY }
@@ -120,42 +125,30 @@ class MyProfile extends React.Component {
   componentDidMount = () => {
     this.props.getProfileFromToken();
     setTimeout(() => {
-      this.displayProfile();
       this.getItems();
-    }, 2000);
+      this.displayProfile();
+    }, 1000);
   };
 
   displayProfile = () => {
-    console.log(this.state.user);
-    // const {
-    //   id: profileId,
-    //   username,
-    //   profile_name: profileName,
-    //   email,
-    //   address
-    // } = this.props.userProfile[0];
+    const {
+      id: profileId,
+      username,
+      profile_name: profileName,
+      email,
+      address
+    } = this.props.userProfile[0];
 
-    // this.setState({
-    //   user: {
-    //     profileId,
-    //     username,
-    //     profileName,
-    //     email,
-    //     address
-    //   }
-    // });
+    this.setState({
+      user: {
+        profileId,
+        username,
+        profileName,
+        email,
+        address
+      }
+    });
   };
-
-  toggleEditForm = e => {
-    e.preventDefault();
-    console.log("clicked");
-    if (this.state.showEditForm === false) {
-      return this.setState({ showEditForm: true });
-    }
-
-    return this.setState({ showEditForm: false });
-  };
-
   render() {
     const { items, itemGif, image } = this.state;
 
@@ -173,25 +166,6 @@ class MyProfile extends React.Component {
     });
     return (
       <Container>
-        <Button
-          className="edit-profile-button"
-          variant="primary"
-          onClick={this.toggleEditForm}
-        >
-          Edit Profile
-        </Button>
-
-        {/*
-          
-          When Show Edit Form is false, this will not show on the page
-          When the toggleShowEditForm is clicked it will update the value of
-          showEditForm. if the value is false, it will hide the component
-          if the value is true it will show the form
-        */}
-        {this.state.showEditForm && (
-          <EditProfile toggleEditForm={this.toggleEditForm} />
-        )}
-
         <Row>
           <Col xs={12} md={6} className="con">
             <section>
