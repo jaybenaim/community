@@ -26,10 +26,12 @@ class CreateProfileForm extends Component {
     let email = this.emailRef.current.value;
     let address = this.addressRef.current.value;
     console.log(window.localStorage["token"]);
+    console.log(this.props.profileId);
     Root.post(
       "profiles/",
       {
-        username: window.localStorage["username"],
+        user: this.props.profileId[0].id,
+        username: this.props.username,
         profile_name: profileName,
         email,
         address
