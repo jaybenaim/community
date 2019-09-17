@@ -120,7 +120,7 @@ class MyProfile extends React.Component {
 
     setTimeout(() => {
       this.getProfile();
-      // this.getItems();
+      this.getItems();
     }, 1500);
   };
 
@@ -148,7 +148,6 @@ class MyProfile extends React.Component {
                 className="profile-image"
                 src={this.state.profileImage}
                 alt="profile"
-                onClick={this.get}
               />
 
               <p className="profile-details">
