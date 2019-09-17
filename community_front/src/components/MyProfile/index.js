@@ -196,6 +196,7 @@ class MyProfile extends React.Component {
                 handleFormSubmit={this.handleFormSubmit}
                 displayItemForm={this.displayItemForm}
                 handleItem={this.props.handleItem}
+                userProfile={this.props.userProfile}
               />
             </section>
           </Col>

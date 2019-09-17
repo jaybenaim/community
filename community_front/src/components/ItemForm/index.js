@@ -12,7 +12,8 @@ const Item = ({
   onChangeItemPrice,
   onChangeItemName,
   show,
-  handleItem
+  handleItem,
+  userProfile
 }) => {
   // create hook state for holding item and price temp
   const [item, setItem] = useState(null);
@@ -37,11 +38,21 @@ const Item = ({
     setTimeout(() => {
       handleItem(itemVal, priceVal);
     }, 1000);
-    Root.post("items/", {
-      profile_id: 14,
-      name_of_item: itemVal,
-      price: priceVal
-    })
+    Root.post(
+      "items/",
+      {
+        profile_id: userProfile[0].id,
+        name_of_item: itemVal,
+        price: priceVal
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${window.localStorage["token"]}`
+        }
+      }
+    )
+
       .then(res => {
         console.log("Success");
       })
