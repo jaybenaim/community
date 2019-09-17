@@ -17,12 +17,10 @@ class EditProfile extends Component {
     };
   }
 
-  handleEditProfileFormSubmit = event => {};
-
   submitEditForm = e => {
     console.log("sumbit form clicked, not implemented");
     this.props.toggleEditForm(e);
-    // root.post('/users')
+    root.patch("profiles/");
   };
 
   closeEditForm = e => {

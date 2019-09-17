@@ -61,14 +61,10 @@ class MyProfile extends React.Component {
   // };
 
   getItems = () => {
-<<<<<<< HEAD
-    const {
-=======
     console.log(this.props.userProfile[0]);
 
     const {
       user,
->>>>>>> 01d267e753c999e2ad989d9bd919b132a96bbf3a
       id: profileId,
       username,
       profile_name: profileName,
@@ -80,10 +76,6 @@ class MyProfile extends React.Component {
       let items = res.data;
       let newItems = [];
       let queries = [];
-<<<<<<< HEAD
-
-=======
->>>>>>> 01d267e753c999e2ad989d9bd919b132a96bbf3a
       // displays empty box if no item is in profile
       (items || []).map((item, i) => {
         // const { name, price, profile_id } = item;
@@ -99,10 +91,6 @@ class MyProfile extends React.Component {
         }
       });
     });
-<<<<<<< HEAD
-
-=======
->>>>>>> 01d267e753c999e2ad989d9bd919b132a96bbf3a
     setTimeout(() => {
       const items = this.state.items;
       items.forEach(item => {
@@ -147,8 +135,6 @@ class MyProfile extends React.Component {
   };
 
   displayProfile = () => {
-<<<<<<< HEAD
-=======
     Root.get("profiles").then(res => {
       let profiles = res.data;
       let currentProfile = profiles.map(profile => {
@@ -162,7 +148,6 @@ class MyProfile extends React.Component {
       this.setState({ user: currentProfile });
     });
 
->>>>>>> 01d267e753c999e2ad989d9bd919b132a96bbf3a
     const {
       id: profileId,
       username,

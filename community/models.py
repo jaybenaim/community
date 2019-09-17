@@ -34,18 +34,6 @@ class Item(models.Model):
         return self.name_of_item
 
 
-<<<<<<< HEAD
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
-=======
-
 # @receiver(post_save, sender=User)
 # def create_user_profile(sender, instance, created, **kwargs):
 #     if created:
@@ -54,7 +42,6 @@ def save_user_profile(sender, instance, **kwargs):
 # @receiver(post_save, sender=User)
 # def save_user_profile(sender, instance, **kwargs):
 #     instance.profile.save()
->>>>>>> 01d267e753c999e2ad989d9bd919b132a96bbf3a
 
 #  Automatically generate tokens
 
