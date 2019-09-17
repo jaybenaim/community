@@ -25,7 +25,7 @@ class App extends React.Component {
     itemPrice: "price",
     allProfiles: [],
     displayed_form: "",
-    logged_in: localStorage.getItem("token") ? true : false,
+    logged_in: window.localStorage["token"] ? true : false,
     username: "",
     searchItem: null,
     profileSearched: "",
@@ -131,6 +131,15 @@ class App extends React.Component {
         ) {
           matchedProfile.push(profile);
           console.log("profile set");
+        } else {
+          matchedProfile.push({
+            address: "null",
+            email: "null",
+            id: "null",
+            profile_name: "null",
+            user: [],
+            username: ""
+          });
         }
       });
       this.setState({

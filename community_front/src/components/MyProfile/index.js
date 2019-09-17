@@ -129,7 +129,19 @@ class MyProfile extends React.Component {
   };
 
   displayProfile = () => {
-    console.log(this.props.userProfile);
+    Root.get("profiles").then(res => {
+      let profiles = res.data;
+      let currentProfile = profiles.map(profile => {
+        console.log(profile.username);
+        if (
+          profile.username.toLowerCase() ===
+          window.localStorage["username"].toLowerCase()
+        )
+          return profile;
+      });
+      this.setState({ user: currentProfile });
+    });
+
     const {
       id: profileId,
       username,
