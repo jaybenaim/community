@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 // import ImageApi from "../../apis/images";
-import EditProfile from "../../components/EditProfile";
+import EditProfile from "../../EditProfile";
 
 import {
   GIPHY_API_KEY

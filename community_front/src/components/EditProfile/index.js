@@ -20,7 +20,15 @@ class EditProfile extends Component {
   submitEditForm = e => {
     console.log("sumbit form clicked, not implemented");
     this.props.toggleEditForm(e);
-    root.patch("profiles/");
+    root
+      .patch("profiles/2/", {
+        profile_name: "JOHNNY",
+        email: "changed@change.com",
+        address: "1000 Yonge St"
+      })
+      .then(res => {
+        console.log(res.data);
+      });
   };
 
   closeEditForm = e => {
@@ -39,15 +47,6 @@ class EditProfile extends Component {
 
             <Modal.Body>
               <Form>
-                <Form.Group controlId="formBasicName">
-                  <Form.Label>Username (optional)</Form.Label>
-                  <Form.Control
-                    name="item"
-                    type="text"
-                    // onChange={event => onChangeItemName(event.target.value)}
-                    placeholder="Modify your username"
-                  />
-                </Form.Group>
                 <Form.Group controlId="formBasicName">
                   <Form.Label>Profile Name (optional)</Form.Label>
                   <Form.Control
