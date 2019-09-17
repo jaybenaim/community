@@ -92,6 +92,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getCreateProfileForm();
+    this.getProfileFromToken();
   }
 
   handle_login = (e, data) => {
@@ -111,18 +112,20 @@ class App extends React.Component {
   getProfileFromToken = () => {
     Root.get("profiles/").then(res => {
       let profiles = res.data;
-      console.log(window.localStorage["username"]);
 
-      profiles.forEach(profile => {
-        console.log(profile.username);
+      let matchedProfile = [];
+      profiles.map(profile => {
         if (profile.username === window.localStorage["username"]) {
-          this.setState({ userProfile: profile });
-          // console.log("Profile: " + profile);
+          matchedProfile.push(profile);
           // console.log(this.state.userProfile);
-        } else {
-          console.log("Failed to find a profile with that name");
         }
       });
+      this.setState({
+        userProfile: matchedProfile,
+        logged_in: true,
+        displayed_form: ""
+      });
+      // console.log(this.state.userProfile.username);
     });
   };
   handle_signup = (e, data) => {
@@ -133,14 +136,14 @@ class App extends React.Component {
         "Content-Type": "application/json"
       }
     })
-      // .then(res => res.json())
-      .then(json => {
-        localStorage.setItem("token", json.token);
-        this.getProfileFromToken();
-        this.setState({
-          logged_in: true,
-          displayed_form: ""
-        });
+      .then(res => {
+        window.localStorage["token"] = res.data.token;
+        window.localStorage["username"] = data.username;
+      })
+      .then(res => {
+        setTimeout(() => {
+          this.getProfileFromToken();
+        }, 1000);
       });
   };
 
@@ -208,6 +211,7 @@ class App extends React.Component {
               handle_signup={this.handle_signup}
               getItems={this.getSearchQuery}
               getProfile={this.getSearchProfile}
+              userProfile={this.state.userProfile}
             />
           </Switch>
           <Switch>

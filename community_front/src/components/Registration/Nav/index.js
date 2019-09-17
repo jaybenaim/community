@@ -50,7 +50,7 @@ class NavbarNew extends React.Component {
       default:
         form = null;
     }
-
+    // console.log(this.state.user);
     return (
       <Container>
         <Row>
@@ -58,7 +58,7 @@ class NavbarNew extends React.Component {
           {form}
           <h3>
             {this.props.logged_in
-              ? `Hello, ${this.props.username}`
+              ? `Hello, ${window.localStorage["username"].toUpperCase()}`
               : "Please Log In"}
           </h3>
         </Row>

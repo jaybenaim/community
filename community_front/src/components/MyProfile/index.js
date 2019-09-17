@@ -14,7 +14,7 @@ import {
 import ProfileItem from "../ProfileItem";
 
 import Axios from "axios";
-import Item from "../Item";
+import ItemForm from "../ItemForm";
 
 class MyProfile extends React.Component {
   state = {
@@ -110,23 +110,10 @@ class MyProfile extends React.Component {
       });
   };
 
-  // get = () => {
-  //   Root.post("users/", {
-  //     data: {
-  //       username: "johnny",
-  //       password: "jbjbjbjbjb12$"
-  //     }
-  //   }).then(res => {
-  //     console.log(res);
-  //   });
-  // };
-
   componentDidMount = () => {
     // this.getItems();
   };
   render() {
-    // this.get();
-
     const { items, itemGif, image } = this.state;
 
     let itemElements = items.map((item, i) => {
@@ -164,7 +151,7 @@ class MyProfile extends React.Component {
                   Add Item
                 </Button>
               </p>
-              <Item
+              <ItemForm
                 itemName={this.state.itemName}
                 itemPrice={this.state.itemPrice}
                 handleItemClose={this.handleItemClose}
