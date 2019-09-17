@@ -23,7 +23,7 @@ router.register(r'profiles', ProfileViewSet)
 router.register(r'items', ItemViewSet)
 
 urlpatterns = [
-<< << << < HEAD
+
     path('', root),
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
@@ -32,7 +32,7 @@ urlpatterns = [
     url(r'^api/token/$', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     url(r'^api/token/refresh/$', TokenRefreshView.as_view(), name='token_refresh'),
     path('home/', home),
-<< << << < HEAD
+
     path('accounts/signup', signup, name='signup'),
     path('accounts/signup_create', signup_create, name='signup_create'),
     path('accounts/profile/', include('django.contrib.auth.urls')),
@@ -41,20 +41,17 @@ urlpatterns = [
     path('token-auth/', obtain_jwt_token),
     path('core/', include('core.urls'))
 ]
-== == == =
+
     path('accounts/signup', signup, name='signup'),
     path('accounts/signup_create', signup_create, name='signup_create'),
     path('accounts/profile/', include('django.contrib.auth.urls')),
     path('api/login', login),
     path('token-auth/', obtain_jwt_token),
     path('core/', include('core.urls')),
-== == == =
+
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     url('api-token-auth/', rest_framework_views.obtain_auth_token),
->>>>>> > ba9789dc65f02c6d28475145a94b5939e0c6cbdb
+
     url(r'^', FrontendAppView.as_view()),
     ]
-
-
->> >>>> > 81a95ba3eeea604105e310324f196165dba73805
