@@ -131,6 +131,7 @@ class MyProfile extends React.Component {
 
     let itemElements = items.map((item, i) => {
       const { name_of_item, price } = item;
+
       return (
         <ProfileItem
           key={i}
