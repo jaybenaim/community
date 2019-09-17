@@ -120,10 +120,13 @@ class App extends React.Component {
           ` Profile: ${profile.username}` +
             `Storage: ${window.localStorage["username"]}`
         );
-        // if (profile.username === window.localStorage["username"]) {
-        matchedProfile.push(profile);
-        // console.log(this.state.userProfile);
-        // }
+        if (
+          profile.username.toLowerCase() ===
+          window.localStorage["username"].toLowerCase()
+        ) {
+          matchedProfile.push(profile);
+          console.log("profile set");
+        }
       });
       this.setState({
         userProfile: matchedProfile,
@@ -243,6 +246,7 @@ class App extends React.Component {
                   username={this.state.username}
                   userProfile={this.state.userProfile}
                   profileId={this.state.profileId}
+                  getProfileFromToken={this.getProfileFromToken}
                 />
               )}
             />

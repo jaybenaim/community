@@ -30,7 +30,7 @@ class CreateProfileForm extends Component {
     Root.post(
       "profiles/",
       {
-        user: 1,
+        user: this.props.userProfile[0].user,
         username: this.props.username,
         profile_name: profileName,
         email,
@@ -57,6 +57,9 @@ class CreateProfileForm extends Component {
       .catch(err => {
         console.log("POST Status: " + err);
       });
+  };
+  componentDidMount = () => {
+    this.props.getProfileFromToken();
   };
   render() {
     const { allProfiles, allItems } = this.props;
