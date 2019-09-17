@@ -182,7 +182,7 @@ class MyProfile extends React.Component {
                 <Button
                   className="add-item-button"
                   variant="primary"
-                  onClick={event => this.handleAddItem(event)}
+                  onClick={event => this.props.handleItem(event)}
                 >
                   Add Item
                 </Button>
