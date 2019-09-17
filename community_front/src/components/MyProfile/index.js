@@ -58,41 +58,38 @@ class MyProfile extends React.Component {
   // };
 
   getItems = () => {
-    const {
-      id: profileId,
-      username,
-      profile_name: profileName,
-      email,
-      address
-    } = this.props.userProfile[0];
-
-    Root.get("items/").then(res => {
-      let items = res.data;
-      let newItems = [];
-      let queries = [];
-
-      // displays empty box if no item is in profile
-      (items || []).map((item, i) => {
-        // const { name, price, profile_id } = item;
-        console.log(item.profile_id + " = " + profileId);
-        if (item.profile_id === profileId) {
-          newItems.push(item);
-          queries.push(item.name);
-          this.setState(prevState => ({
-            query: queries,
-            items: newItems
-          }));
-          return item;
-        }
-      });
-    });
-
-    setTimeout(() => {
-      const items = this.state.items;
-      items.forEach(item => {
-        this.setImages(item.name);
-      });
-    }, 1000);
+    // const {
+    //   id: profileId,
+    //   username,
+    //   profile_name: profileName,
+    //   email,
+    //   address
+    // } = this.props.userProfile[0];
+    // Root.get("items/").then(res => {
+    //   let items = res.data;
+    //   let newItems = [];
+    //   let queries = [];
+    //   // displays empty box if no item is in profile
+    //   (items || []).map((item, i) => {
+    //     // const { name, price, profile_id } = item;
+    //     console.log(item.profile_id + " = " + profileId);
+    //     if (item.profile_id === profileId) {
+    //       newItems.push(item);
+    //       queries.push(item.name);
+    //       this.setState(prevState => ({
+    //         query: queries,
+    //         items: newItems
+    //       }));
+    //       return item;
+    //     }
+    //   });
+    // });
+    // setTimeout(() => {
+    //   const items = this.state.items;
+    //   items.forEach(item => {
+    //     this.setImages(item.name);
+    //   });
+    // }, 1000);
   };
   setImages = async query => {
     await Axios.get(
@@ -124,30 +121,32 @@ class MyProfile extends React.Component {
 
   componentDidMount = () => {
     this.props.getProfileFromToken();
+
     setTimeout(() => {
       this.getItems();
       this.displayProfile();
-    }, 1000);
+    }, 1500);
   };
 
   displayProfile = () => {
-    const {
-      id: profileId,
-      username,
-      profile_name: profileName,
-      email,
-      address
-    } = this.props.userProfile[0];
+    console.log(this.props.userProfile);
+    // const {
+    //   id: profileId,
+    //   username,
+    //   profile_name: profileName,
+    //   email,
+    //   address
+    // } = this.props.userProfile[0];
 
-    this.setState({
-      user: {
-        profileId,
-        username,
-        profileName,
-        email,
-        address
-      }
-    });
+    // this.setState({
+    //   user: {
+    //     profileId,
+    //     username,
+    //     profileName,
+    //     email,
+    //     address
+    //   }
+    // });
   };
   render() {
     const { items, itemGif, image } = this.state;

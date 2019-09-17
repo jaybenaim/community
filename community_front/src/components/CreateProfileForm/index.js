@@ -25,7 +25,7 @@ class CreateProfileForm extends Component {
     let profileName = this.nameRef.current.value;
     let email = this.emailRef.current.value;
     let address = this.addressRef.current.value;
-
+    console.log(window.localStorage["token"]);
     Root.post(
       "profiles/",
       {
@@ -36,7 +36,7 @@ class CreateProfileForm extends Component {
       },
       {
         headers: {
-          "Content-Type": "application/json",
+          // "Content-Type": "application/json",
           Authorization: `Token ${window.localStorage["token"]}`
         }
       }
