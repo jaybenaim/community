@@ -148,7 +148,8 @@ class App extends React.Component {
   };
 
   handle_logout = () => {
-    localStorage.removeItem("token");
+    window.localStorage["token"] = "";
+    window.localStorage["username"] = "";
     this.setState({ logged_in: false, username: "" });
   };
 
@@ -255,6 +256,8 @@ class App extends React.Component {
                   itemPrice={this.state.itemPrice}
                   handleItemCLose={this.handleItemClose}
                   handleItem={this.handleItem}
+                  userProfile={this.state.userProfile}
+                  getProfileFromToken={this.getProfileFromToken}
                 />
               )}
             />

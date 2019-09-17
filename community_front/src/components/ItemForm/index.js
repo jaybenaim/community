@@ -31,6 +31,8 @@ const Item = ({
     setItem(itemVal);
     setPrice(priceVal);
 
+    // const profile_id;  //
+
     // make post request
     setTimeout(() => {
       handleItem(itemVal, priceVal);
