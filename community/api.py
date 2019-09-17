@@ -4,7 +4,7 @@ from .serializers import *
 
 class ProfileViewSet(viewsets.ModelViewSet): 
     """ Api endpoint for profiles to be viewed or edited """ 
-    queryset = Profile.objects.all() 
+    queryset = Profile.objects.all().order_by('id')
     serializer_class = ProfileSerializer 
     permission_classes = [permissions.AllowAny, permissions.IsAuthenticated]
 
@@ -13,6 +13,10 @@ class ProfileViewSet(viewsets.ModelViewSet):
         if self.request.method == 'GET': 
             self.permission_classes = (permissions.AllowAny,)
         return super(ProfileViewSet, self).get_permissions() 
+        if self.request.method == 'POST':
+            self.permission_classes = (permissions.AllowAny,)
+        return super(ProfileViewSet, self).get_permissions()
+
 
 
 class ItemViewSet(viewsets.ModelViewSet): 
@@ -28,7 +32,7 @@ class ItemViewSet(viewsets.ModelViewSet):
 
 class UserViewSet(viewsets.ModelViewSet): 
     """ API endpoint that allows users to be viewed or edited """ 
-    queryset = User.objects.all().order_by('-date_joined')
+    queryset = User.objects.filter()
     serializer_class = UserSerializer 
     permission_classes = [permissions.AllowAny, permissions.IsAuthenticated]
 

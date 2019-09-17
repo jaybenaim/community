@@ -25,19 +25,25 @@ class CreateProfileForm extends Component {
     let profileName = this.nameRef.current.value;
     let email = this.emailRef.current.value;
     let address = this.addressRef.current.value;
-
+    console.log(window.localStorage["token"]);
+    console.log(this.props.profileId);
     Root.post(
       "profiles/",
       {
+<<<<<<< HEAD
         user: { username: "jay", password: "jbjb" },
         username: window.localStorage["username"],
+=======
+        user: this.props.userProfile[0].user,
+        username: this.props.username,
+>>>>>>> ed3b96d0d3dc15ae14b01cc68bb7aed25ee6fc50
         profile_name: profileName,
         email,
         address
       },
       {
         headers: {
-          "Content-Type": "application/json",
+          // "Content-Type": "application/json",
           Authorization: `Token ${window.localStorage["token"]}`
         }
       }
@@ -56,6 +62,9 @@ class CreateProfileForm extends Component {
       .catch(err => {
         console.log("POST Status: " + err);
       });
+  };
+  componentDidMount = () => {
+    this.props.getProfileFromToken();
   };
   render() {
     const { allProfiles, allItems } = this.props;

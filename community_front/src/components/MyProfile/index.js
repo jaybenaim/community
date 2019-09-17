@@ -65,12 +65,10 @@ class MyProfile extends React.Component {
       email,
       address
     } = this.props.userProfile[0];
-
     Root.get("items/").then(res => {
       let items = res.data;
       let newItems = [];
       let queries = [];
-
       // displays empty box if no item is in profile
       (items || []).map((item, i) => {
         // const { name, price, profile_id } = item;
@@ -86,7 +84,6 @@ class MyProfile extends React.Component {
         }
       });
     });
-
     setTimeout(() => {
       const items = this.state.items;
       items.forEach(item => {
@@ -124,13 +121,15 @@ class MyProfile extends React.Component {
 
   componentDidMount = () => {
     this.props.getProfileFromToken();
+
     setTimeout(() => {
       this.getItems();
       this.displayProfile();
-    }, 1000);
+    }, 1500);
   };
 
   displayProfile = () => {
+    console.log(this.props.userProfile);
     const {
       id: profileId,
       username,
@@ -154,6 +153,7 @@ class MyProfile extends React.Component {
 
     let itemElements = items.map((item, i) => {
       const { name_of_item, price } = item;
+
       return (
         <ProfileItem
           key={i}
@@ -182,7 +182,7 @@ class MyProfile extends React.Component {
                 <Button
                   className="add-item-button"
                   variant="primary"
-                  onClick={event => this.handleAddItem(event)}
+                  onClick={event => this.props.handleItem(event)}
                 >
                   Add Item
                 </Button>
