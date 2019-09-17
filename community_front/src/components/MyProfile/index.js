@@ -18,6 +18,7 @@ import ItemForm from "../ItemForm";
 
 class MyProfile extends React.Component {
   state = {
+    user: [],
     items: [
       {
         image: null,
@@ -57,24 +58,35 @@ class MyProfile extends React.Component {
   // };
 
   getItems = () => {
+    const {
+      id: profileId,
+      username,
+      profile_name: profileName,
+      email,
+      address
+    } = this.props.userProfile[0];
+
     Root.get("items/").then(res => {
       let items = res.data;
       let newItems = [];
       let queries = [];
+
+      // displays empty box if no item is in profile
       (items || []).map((item, i) => {
         // const { name, price, profile_id } = item;
-
-        // if (item.profile_id == this.props.profileId) {
-        newItems.push(item);
-        queries.push(item.name);
-        this.setState(prevState => ({
-          query: queries,
-          items: newItems
-        }));
-        return item;
-        // }
+        console.log(item.profile_id + " = " + profileId);
+        if (item.profile_id === profileId) {
+          newItems.push(item);
+          queries.push(item.name);
+          this.setState(prevState => ({
+            query: queries,
+            items: newItems
+          }));
+          return item;
+        }
       });
     });
+
     setTimeout(() => {
       const items = this.state.items;
       items.forEach(item => {
@@ -84,7 +96,7 @@ class MyProfile extends React.Component {
   };
   setImages = async query => {
     await Axios.get(
-      `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${query}&limit=1&offset=0&rating=G&lang=en`
+      `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=ladder&limit=1&offset=0&rating=G&lang=en`
     )
       // await Axios.get(`https://api.pexels.com/v1/curated?per_page=1&page=1`, {
       //   headers: { Authorization: PEXELS_API_KEY }
@@ -111,7 +123,31 @@ class MyProfile extends React.Component {
   };
 
   componentDidMount = () => {
-    // this.getItems();
+    this.props.getProfileFromToken();
+    setTimeout(() => {
+      this.getItems();
+      this.displayProfile();
+    }, 1000);
+  };
+
+  displayProfile = () => {
+    const {
+      id: profileId,
+      username,
+      profile_name: profileName,
+      email,
+      address
+    } = this.props.userProfile[0];
+
+    this.setState({
+      user: {
+        profileId,
+        username,
+        profileName,
+        email,
+        address
+      }
+    });
   };
   render() {
     const { items, itemGif, image } = this.state;
@@ -128,7 +164,6 @@ class MyProfile extends React.Component {
         />
       );
     });
-
     return (
       <Container>
         <Row>
@@ -141,7 +176,8 @@ class MyProfile extends React.Component {
                 onClick={this.get}
               />
               <p className="profile-name">
-                Name: {this.props.profileSearched.profile_name}
+                {/* Name: {this.props.profileSearched.profile_name} */}
+                Name: {this.state.user.profileName}
               </p>
               <p className="profile-details">
                 <Button
@@ -161,6 +197,7 @@ class MyProfile extends React.Component {
                 handleFormSubmit={this.handleFormSubmit}
                 displayItemForm={this.displayItemForm}
                 handleItem={this.props.handleItem}
+                userProfile={this.props.userProfile}
               />
             </section>
           </Col>
