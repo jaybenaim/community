@@ -9,7 +9,6 @@ import Map from "./Map";
 import MyProfile from "./MyProfile";
 import Axios from "axios";
 import PutTest from "../PutTest";
-import Profile from "../Profile";
 
 class App extends React.Component {
   state = {
@@ -295,9 +294,6 @@ class App extends React.Component {
                 />
               )}
             />
-          </Switch>
-          <Switch>
-            <Route path="/newnew" component={Profile}></Route>
           </Switch>
         </div>
       </Router>
