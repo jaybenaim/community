@@ -128,7 +128,6 @@ class App extends React.Component {
 
       profiles.map(profile => {
         if (
-          //////   this is where the error for profile not displaying
           profile.username.toLowerCase() ===
           window.localStorage["username"].toLowerCase()
         ) {
