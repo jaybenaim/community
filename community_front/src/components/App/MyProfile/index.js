@@ -19,7 +19,7 @@ import CreateProfileForm from "./CreateProfileForm";
 
 class MyProfile extends React.Component {
   state = {
-    user: [],
+    user: null,
     items: [
       {
         image: null,
@@ -44,11 +44,26 @@ class MyProfile extends React.Component {
   };
 
   getProfile = () => {
-    const { user } = this.props.userProfile;
-    Root.get(`profiles/${user}/`).then(res => {
-      console.log(res.data);
-      this.setState({ user: res.data });
-    });
+    // const user = window.localStorage["id"];
+    // console.log(this.props.userProfile[0].profile_name);
+    // Root.get(`profiles/${user}/`).then(res => {
+    //   console.log(res.data);
+    //   this.setState({ user: res.data });
+    // });
+    // console.log(this.state.user);
+    if (this.props.userProfile[0] !== undefined)
+      this.setState({ user: this.props.userProfile[0] });
+    // else
+    //   this.setState({
+    //     user: {
+    //       user: "null",
+    //       id: "null",
+    //       username: "null",
+    //       profile_name: "null",
+    //       email: "null",
+    //       address: "null"
+    //     }
+    //   });
   };
   getItems = () => {
     console.log(this.state.user);
@@ -121,11 +136,16 @@ class MyProfile extends React.Component {
   };
   componentDidMount = () => {
     this.props.getProfileFromToken();
+    console.log();
 
     setTimeout(() => {
       this.getProfile();
       // this.getItems();
-    }, 1500);
+      // console.log(this.state.user);
+    }, 1000);
+    setTimeout(() => {
+      console.log(this.state.user);
+    }, 2000);
   };
 
   render() {
@@ -146,11 +166,12 @@ class MyProfile extends React.Component {
     let createProfileForm;
     let profile;
     {
-      this.props.userProfile.user === undefined
+      !this.props.loggedIn
         ? (createProfileForm = (
             <CreateProfileForm
               loadProfile={this.props.getProfileFromToken}
               userProfile={this.props.userProfile}
+              getProfile={this.getProfile}
             />
           ))
         : (profile = (
