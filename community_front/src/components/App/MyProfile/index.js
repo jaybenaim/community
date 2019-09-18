@@ -151,6 +151,7 @@ class MyProfile extends React.Component {
             <CreateProfileForm
               loadProfile={this.props.getProfileFromToken}
               userProfile={this.props.userProfile}
+              getProfile={this.getProfile}
             />
           ))
         : (profile = (
