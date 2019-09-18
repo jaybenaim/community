@@ -6,8 +6,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 // import ImageApi from "../../apis/images";
-import EditProfile from "../../EditProfile";
-
 import {
   GIPHY_API_KEY
   // PEXELS_API_KEY,
@@ -18,6 +16,7 @@ import ProfileItem from "./ProfileItem";
 import Axios from "axios";
 import ItemForm from "./ItemForm";
 import CreateProfileForm from "./CreateProfileForm";
+import EditProfile from "../../EditProfile";
 
 class MyProfile extends React.Component {
   state = {
@@ -42,12 +41,11 @@ class MyProfile extends React.Component {
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
     itemName: "",
     itemPrice: "",
-    profile_id: this.props.profileId,
-    showEditForm: false
+    profile_id: this.props.profileId
   };
 
   getProfile = () => {
-    const { user } = this.props.userProfile;
+    const { user } = window.localStorage["id"];
     Root.get(`profiles/${user}/`).then(res => {
       console.log(res.data);
       this.setState({ user: res.data });
@@ -124,44 +122,12 @@ class MyProfile extends React.Component {
   };
   componentDidMount = () => {
     this.props.getProfileFromToken();
+
     setTimeout(() => {
-<<<<<<< HEAD
-      this.getItems();
-      this.displayProfile();
+      this.getProfile();
+
+      // this.getItems();
     }, 1000);
-  };
-
-  displayProfile = () => {
-    Root.get("profiles").then(res => {
-      let profiles = res.data;
-      let currentProfile = profiles.map(profile => {
-        console.log(profile.username);
-        if (
-          profile.username.toLowerCase() ===
-          window.localStorage["username"].toLowerCase()
-        )
-          return profile;
-      });
-      this.setState({ user: currentProfile });
-    });
-
-    const {
-      id: profileId,
-      username,
-      profile_name: profileName,
-      email,
-      address
-    } = this.props.userProfile[0];
-
-    this.setState({
-      user: {
-        profileId,
-        username,
-        profileName,
-        email,
-        address
-      }
-    });
   };
 
   toggleEditForm = e => {
@@ -174,14 +140,10 @@ class MyProfile extends React.Component {
     return this.setState({ showEditForm: false });
   };
 
-=======
-      this.getProfile();
-      // this.getItems();
-    }, 1500);
-  };
-
->>>>>>> 35557f78cad79a42599bbfc83e6198e5373f0b5f
   render() {
+    setTimeout(() => {
+      console.log(this.state.user);
+    }, 2000);
     const { items, itemGif, image } = this.state;
 
     let itemElements = items.map((item, i) => {
@@ -208,6 +170,25 @@ class MyProfile extends React.Component {
           ))
         : (profile = (
             <Container>
+              <Button
+                className="edit-profile-button"
+                variant="primary"
+                onClick={this.toggleEditForm}
+              >
+                          Edit Profile         
+              </Button>
+                      
+              {/*
+          
+                          When Show Edit Form is false, this will not show on the page
+                          When the toggleShowEditForm is clicked it will update the value of
+                          showEditForm. if the value is false, it will hide the component
+                          if the value is true it will show the form
+                        */}
+                      
+              {this.state.showEditForm && (
+                <EditProfile toggleEditForm={this.toggleEditForm} />
+              )}
               <Row>
                 <Col xs={12} md={12} lg={4} className="con">
                   <section>
@@ -272,73 +253,12 @@ class MyProfile extends React.Component {
     }
 
     return (
-<<<<<<< HEAD
-      <Container>
-        <Button
-          className="edit-profile-button"
-          variant="primary"
-          onClick={this.toggleEditForm}
-        >
-          Edit Profile
-        </Button>
-
-        {/*
-          
-          When Show Edit Form is false, this will not show on the page
-          When the toggleShowEditForm is clicked it will update the value of
-          showEditForm. if the value is false, it will hide the component
-          if the value is true it will show the form
-        */}
-        {this.state.showEditForm && (
-          <EditProfile toggleEditForm={this.toggleEditForm} />
-        )}
-
-        <Row>
-          <Col xs={12} md={6} className="con">
-            <section>
-              <img
-                className="profile-image"
-                src={this.state.profileImage}
-                alt="profile"
-                onClick={this.get}
-              />
-              <p className="profile-name">
-                {/* Name: {this.props.profileSearched.profile_name} */}
-                Name: {this.state.user.profileName}
-              </p>
-              <p className="profile-details">
-                <Button
-                  className="add-item-button"
-                  variant="primary"
-                  onClick={event => this.props.handleItem(event)}
-                >
-                  Add Item
-                </Button>
-              </p>
-              <ItemForm
-                itemName={this.state.itemName}
-                itemPrice={this.state.itemPrice}
-                handleItemClose={this.handleItemClose}
-                onChangeItemPrice={this.onChangeItemPrice}
-                onChangeItemName={this.onChangeItemName}
-                handleFormSubmit={this.handleFormSubmit}
-                displayItemForm={this.displayItemForm}
-                handleItem={this.props.handleItem}
-                userProfile={this.props.userProfile}
-              />
-            </section>
-          </Col>
-          <Col className="profile-items">{itemElements}</Col>
-        </Row>
-      </Container>
-=======
       <>
         <div>
           {createProfileForm}
           {profile}
         </div>
       </>
->>>>>>> 35557f78cad79a42599bbfc83e6198e5373f0b5f
     );
   }
 }
