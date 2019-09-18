@@ -20,7 +20,9 @@ import EditProfile from "../../EditProfile";
 
 class MyProfile extends React.Component {
   state = {
-    user: null,
+    user: [
+      { profile_name: "profile name", email: "email", address: "address" }
+    ],
     items: [
       {
         image: null,
@@ -47,8 +49,13 @@ class MyProfile extends React.Component {
   };
 
   getProfile = () => {
-    if (this.props.userProfile[0] !== undefined)
-      this.setState({ user: this.props.userProfile[0] });
+    Root.get("profiles/").then(res => {
+      let profiles = res.data;
+      let userProfile = profiles.map(profile => {
+        if ((profile.user = window.localStorage["id"])) return profile;
+      });
+      this.setState({ user: userProfile });
+    });
   };
 
   getItemsFromUser = () => {
@@ -139,11 +146,7 @@ class MyProfile extends React.Component {
   };
   componentDidMount = () => {
     // this.props.getProfileFromToken();
-
-    setTimeout(() => {
-      this.getProfile();
-    }, 1000);
-
+    this.getProfile();
     setTimeout(() => {
       this.getItemsFromUser();
     }, 1500);
@@ -229,14 +232,14 @@ class MyProfile extends React.Component {
                         <p className="profile-name">
                           {/* if searchActive &&  */}
                           {/* Name: {this.props.profileSearched.profile_name} */}
-                          {this.state.user.profile_name}
+                          {this.state.user[0].profile_name}
                         </p>
                       </Row>
                       <br />
                       <Row>
                         <p className="profile-email">
                           <span className="bold"> Email:</span>{" "}
-                          {this.state.user.email}
+                          {this.state.user[0].email}
                         </p>
                         <br />
                       </Row>
@@ -244,7 +247,7 @@ class MyProfile extends React.Component {
                         <p className="profile-address">
                           <br />
                           <span className="bold"> Address: </span>
-                          {this.state.user.address}
+                          {this.state.user[0].address}
                         </p>
                       </Row>
 

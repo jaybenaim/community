@@ -6,3 +6,11 @@
   margin-top: 100px;
   grid-column: 2;
 }
+.search-page {
+  margin-top: 200px;
+}
+form {
+  padding: 10%;
+  padding-top: 20%;
+  width: 100%;
+}

@@ -9,6 +9,7 @@ import Map from "./Map";
 import MyProfile from "./MyProfile";
 import Axios from "axios";
 import PutTest from "../PutTest";
+import SearchPage from "./MyCommunity";
 
 class App extends React.Component {
   state = {
@@ -83,8 +84,7 @@ class App extends React.Component {
   getAllProfiles = () => {
     Root.get("profiles/", {
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Token ${window.localStorage["token"]}`
+        "Content-Type": "application/json"
       }
     }).then(res => {
       let profiles = res.data;
@@ -98,7 +98,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getAllProfiles();
-    this.getProfileFromToken();
+    // this.getProfileFromToken();
   }
 
   handle_login = (e, data) => {
@@ -178,40 +178,40 @@ class App extends React.Component {
     });
   };
 
-  getSearchQuery = query => {
-    Root.get("items/").then(res => {
-      let items = res.data;
-      (items || []).map((item, i) => {
-        // const { name_of_item, price, profile_id } = item;
-        if (item.name_of_item.toLowerCase() === query.toLowerCase()) {
-          this.setState({
-            searchItem: { ...item },
-            profileId: item.profile_id
-          });
-        }
-        return item;
-      });
-    });
-    this.setState({ loading: true });
-    this.state.loading && this.getSearchProfile();
-  };
+  // getSearchQuery = query => {
+  //   Root.get("items/").then(res => {
+  //     let items = res.data;
+  //     (items || []).map((item, i) => {
+  //       // const { name_of_item, price, profile_id } = item;
+  //       if (item.name_of_item.toLowerCase() === query.toLowerCase()) {
+  //         this.setState({
+  //           searchItem: { ...item },
+  //           profileId: item.profile_id
+  //         });
+  //       }
+  //       return item;
+  //     });
+  //   });
+  //   this.setState({ loading: true });
+  //   this.state.loading && this.getSearchProfile();
+  // };
 
-  getSearchProfile = () => {
-    const { profileId } = this.state;
-    Root.get(`profiles/${profileId}/`).then(res => {
-      this.setState({ profileSearched: res.data });
-      console.log(res.data);
-    });
-  };
-  handleItem = (item, price) => {
-    let newItems = [];
-    newItems.push({ item, price });
-    this.setState(prevState => ({ items: newItems }));
+  // getSearchProfile = () => {
+  //   const { profileId } = this.state;
+  //   Root.get(`profiles/${profileId}/`).then(res => {
+  //     this.setState({ profileSearched: res.data });
+  //     console.log(res.data);
+  //   });
+  // };
+  // handleItem = (item, price) => {
+  //   let newItems = [];
+  //   newItems.push({ item, price });
+  //   this.setState(prevState => ({ items: newItems }));
 
-    setTimeout(() => {
-      console.log(this.state.items);
-    }, 1000);
-  };
+  //   setTimeout(() => {
+  //     console.log(this.state.items);
+  //   }, 1000);
+  // };
 
   render() {
     // this.getProfileFromToken();
@@ -240,22 +240,24 @@ class App extends React.Component {
           </Switch>
           <Switch>
             <Route
-              path="/users/profiles/"
+              path="/search/"
               render={props => (
-                <CreateProfileForm
-                  allProfiles={this.state.allProfiles}
-                  allItems={this.allItems}
-                  handleProfileFormSubmit={this.handleProfileFormSubmit}
-                  handleFormSubmit={this.handleFormSubmit}
-                  handleShow={this.handleShow}
-                  handleClose={this.handleClose}
-                  show={this.show}
-                  handleProfileFormClick={this.handleProfileFormClick}
-                  username={this.state.username}
-                  userProfile={this.state.userProfile}
-                  profileId={this.state.profileId}
-                  getProfileFromToken={this.getProfileFromToken}
-                />
+                // <CreateProfileForm
+                //   allProfiles={this.state.allProfiles}
+                //   allItems={this.allItems}
+                //   handleProfileFormSubmit={this.handleProfileFormSubmit}
+                //   handleFormSubmit={this.handleFormSubmit}
+                //   handleShow={this.handleShow}
+                //   handleClose={this.handleClose}
+                //   show={this.show}
+                //   handleProfileFormClick={this.handleProfileFormClick}
+                //   username={this.state.username}
+                //   userProfile={this.state.userProfile}
+                //   profileId={this.state.profileId}
+                //   getProfileFromToken={this.getProfileFromToken}
+                // />
+
+                <SearchPage logged_in={this.state.logged_in} />
               )}
             />
           </Switch>

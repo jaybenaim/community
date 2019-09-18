@@ -7,7 +7,6 @@ import Container from "react-bootstrap/Container";
 import "./index.css";
 
 class CreateProfileForm extends React.Component {
-  state = {};
   nameRef = React.createRef();
   emailRef = React.createRef();
   addressRef = React.createRef();
