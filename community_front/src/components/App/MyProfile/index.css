@@ -13,6 +13,7 @@
   margin-top: 80px;
   padding: 40px;
   padding-top: 100px;
+  border-radius: 10px;
 }
 .profile-image {
   border: 2px solid black;
@@ -36,6 +37,16 @@
 .profile-items {
   margin-top: 80px;
   /* overflow: auto; */
+  margin-left: 160px;
+}
+@media (max-width: 948px) {
+  .profile-items {
+    margin: 0;
+    padding: 40px;
+  }
+  .borrow-button {
+    margin: 10px;
+  }
 }
 .add-item-button {
   margin-top: 40px;
@@ -53,6 +64,7 @@
   margin-top: 40px;
   background: #eee;
   border: 2px outset #eee;
+  border-radius: 20px;
   max-height: 400px;
   width: 100%;
   padding-top: -40px;
@@ -67,6 +79,7 @@
 }
 .item-content {
   margin-top: 50px;
+  font-family: "Comfortaa", cursive;
 }
 .item-square {
   padding-bottom: 40px;
