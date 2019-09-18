@@ -140,12 +140,8 @@ class MyProfile extends React.Component {
 
     setTimeout(() => {
       this.getProfile();
-      // this.getItems();
-      // console.log(this.state.user);
+      this.getItems();
     }, 1000);
-    setTimeout(() => {
-      console.log(this.state.user);
-    }, 2000);
   };
 
   render() {
@@ -166,7 +162,7 @@ class MyProfile extends React.Component {
     let createProfileForm;
     let profile;
     {
-      !this.props.loggedIn
+      this.state.user === null
         ? (createProfileForm = (
             <CreateProfileForm
               loadProfile={this.props.getProfileFromToken}
