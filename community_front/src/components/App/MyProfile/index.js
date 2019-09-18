@@ -72,41 +72,6 @@ class MyProfile extends React.Component {
     });
   };
 
-  // Get a list of names in an array to pass each name as the query string
-  // in the gify api
-  setHeroImage = () => {
-    // this.getGify(item.name);
-  };
-
-  // GIPHY API CALL
-  getGify = async query => {
-    await Axios.get(
-      `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${query}&limit=1&offset=0&rating=G&lang=en`
-    )
-      // await Axios.get(`https://api.pexels.com/v1/curated?per_page=1&page=1`, {
-      //   headers: { Authorization: PEXELS_API_KEY }
-      // })
-      // await Axios.get(`https://api.pexels.com/v1/curated?per_page=1&page=1`, {
-      //   headers: { Authorization: PEXELS_API_KEY }
-      // })
-
-      .then(res => {
-        let img = res.data.data[0].images.fixed_height.url;
-        const { url } = res.data.data[0].images.fixed_height_still;
-
-        let urls = [];
-        urls.push(img);
-        this.setState(prevState => ({
-          image: url,
-          itemGif: img,
-          urls: urls
-        }));
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-
   changeImage = () => {
     let url = prompt("Enter a url");
     this.setState({ profileImage: url });
