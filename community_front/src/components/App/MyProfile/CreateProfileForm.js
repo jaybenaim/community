@@ -32,7 +32,7 @@ class CreateProfileForm extends React.Component {
     Root.post(
       "profiles/",
       {
-        user: Number(window.localStorage["id"]),
+        user: Number(window.localStorage["token"]),
         username: window.localStorage["username"],
         profile_name: profileName,
         email,
