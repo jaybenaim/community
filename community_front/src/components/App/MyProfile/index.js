@@ -51,40 +51,38 @@ class MyProfile extends React.Component {
       this.setState({ user: this.props.userProfile[0] });
   };
 
+  // Fetches all the items that users have created
   getItemsFromUser = () => {
-    const { user } = this.state;
     const { userProfile } = this.props;
-    let newItems = [];
-    let queries = [];
+
     Root.get("items/").then(res => {
-      let items = res.data;
-      items.map((item, i) => {
-        if (userProfile[0] !== undefined) {
-          if (item.profile_id === userProfile[0].id) {
-            newItems.push(item);
-            queries.push(item.name);
-            this.setState(prevState => ({
-              query: queries,
-              items: newItems
-            }));
-            setTimeout(() => {
-              this.setImages(item.name);
-            }, 1000);
+      const items = res.data;
+
+      // the below statement sets an obj in state
+      // sst({items: [{query: "ItemName", item: {...properties}}, ]})
+      this.setState({
+        items: items.filter((item, i) => {
+          if (userProfile) {
+            if (item.profile_id === window.localStorage["id"]) {
+              return item;
+            }
           }
-        }
-        return item;
+        })
       });
     });
   };
+
+  // Get a list of names in an array to pass each name as the query string
+  // in the gify api
   getItems = () => {
     const { profileId } = this.state.user;
 
     Root.get("items/").then(res => {
-      let items = res.data;
+      let items = res.data || [];
       let newItems = [];
       let queries = [];
       // displays empty box if no item is in profile
-      (items || []).map((item, i) => {
+      items.map((item, i) => {
         // const { name, price, profile_id } = item;
         console.log(item.profile_id + " = " + profileId);
         if (item.profile_id === profileId) {
@@ -105,6 +103,7 @@ class MyProfile extends React.Component {
       });
     }, 1000);
   };
+
   setImages = async query => {
     await Axios.get(
       `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=ladder&limit=1&offset=0&rating=G&lang=en`
@@ -195,13 +194,6 @@ class MyProfile extends React.Component {
           ))
         : (profile = (
             <Container>
-              <Button
-                className="edit-profile-button"
-                variant="primary"
-                onClick={this.toggleEditForm}
-              >
-                          Edit Profile         
-              </Button>
                       
               {/*
           
@@ -211,9 +203,6 @@ class MyProfile extends React.Component {
                           if the value is true it will show the form
                         */}
                       
-              {this.state.showEditForm && (
-                <EditProfile toggleEditForm={this.toggleEditForm} />
-              )}
               <Row>
                 <Col xs={12} md={12} lg={4} className="con">
                   <section>
@@ -276,6 +265,16 @@ class MyProfile extends React.Component {
                   {itemElements}
                 </Col>
               </Row>
+              <Button
+                className="edit-profile-button"
+                variant="primary"
+                onClick={this.toggleEditForm}
+              >
+                          Edit Profile         
+              </Button>
+              {this.state.showEditForm && (
+                <EditProfile toggleEditForm={this.toggleEditForm} />
+              )}
             </Container>
           ));
     }
