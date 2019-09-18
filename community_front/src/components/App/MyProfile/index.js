@@ -57,34 +57,24 @@ class MyProfile extends React.Component {
     let newItems = [];
     let queries = [];
     Root.get("items/").then(res => {
-      // console.log(this.props.profileId);
-
       let items = res.data;
-      items.map(item => {
-        // console.log(userProfile[0]);
-        console.log(userProfile[0].id);
-        console.log(item.profile_id);
-        if (item.profile_id === userProfile[0].id) {
-          newItems.push(item);
-          queries.push(item.name);
-          this.setState(prevState => ({
-            query: queries,
-            items: newItems
-          }));
-          setTimeout(() => {
-            this.setImages(item.name);
-          }, 1000);
+      items.map((item, i) => {
+        if (userProfile[0] !== undefined) {
+          if (item.profile_id === userProfile[0].id) {
+            newItems.push(item);
+            queries.push(item.name);
+            this.setState(prevState => ({
+              query: queries,
+              items: newItems
+            }));
+            setTimeout(() => {
+              this.setImages(item.name);
+            }, 1000);
+          }
         }
-
         return item;
       });
     });
-    // setTimeout(() => {
-    //   const items = this.state.items;
-    //   items.forEach(item => {
-    //     this.setImages(item.name);
-    //   });
-    // }, 1000);
   };
   getItems = () => {
     const { profileId } = this.state.user;
