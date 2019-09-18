@@ -26,9 +26,9 @@ class CreateProfileForm extends React.Component {
     let profileName = this.nameRef.current.value;
     let email = this.emailRef.current.value;
     let address = this.addressRef.current.value;
-    console.log(this.props.userProfile[0].user[0]);
-    console.log(this.props.userProfile[0].username);
-    console.log(window.localStorage["id"]);
+    // console.log(this.props.userProfile[0].user[0]);
+    // console.log(this.props.userProfile[0].username);
+    console.log(window.localStorage["token"]);
     Root.post(
       "profiles/",
       {
@@ -47,13 +47,6 @@ class CreateProfileForm extends React.Component {
     )
       .then(res => {
         this.handleShow();
-
-        handleProfileFormSubmit({
-          username: window.localStorage["username"],
-          profile_name: profileName,
-          email,
-          address
-        });
         console.log("POST Status: " + res.statusText);
       })
       .catch(err => {

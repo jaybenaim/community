@@ -132,22 +132,10 @@ class App extends React.Component {
           profile.username.toLowerCase() ===
           window.localStorage["username"].toLowerCase()
         ) {
-          matchedProfile.pop(0);
           matchedProfile.push(profile);
-          matchedProfile.user = window.localStorage["id"];
-          profileUser.push(profile.user);
-          console.log("profile set");
-        } else {
-          matchedProfile.push({
-            address: "null",
-            email: "null",
-            id: "null",
-            profile_name: "null",
-            user: [],
-            username: ""
-          });
         }
       });
+
       this.setState({
         // user: window.localStorage["id"],
         userProfile: matchedProfile,
@@ -169,6 +157,7 @@ class App extends React.Component {
       .then(res => {
         window.localStorage["token"] = res.data.token;
         window.localStorage["username"] = data.username;
+        window.localStorage["id"] = res.data.id;
       })
       .then(res => {
         setTimeout(() => {
@@ -227,7 +216,6 @@ class App extends React.Component {
 
   render() {
     // this.getProfileFromToken();
-
     return (
       <Router>
         <div className="App">
@@ -293,6 +281,7 @@ class App extends React.Component {
                   handleItem={this.handleItem}
                   userProfile={this.state.userProfile}
                   getProfileFromToken={this.getProfileFromToken}
+                  loggedIn={this.state.loggedIn}
                 />
               )}
             />
