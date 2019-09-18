@@ -47,37 +47,15 @@ class MyProfile extends React.Component {
   };
 
   getProfile = () => {
-<<<<<<< HEAD
+    if (this.props.userProfile[0] !== undefined)
+      this.setState({ user: this.props.userProfile[0] });
     // const user = window.localStorage["id"];
-    // console.log(this.props.userProfile[0].profile_name);
     // Root.get(`profiles/${user}/`).then(res => {
     //   console.log(res.data);
     //   this.setState({ user: res.data });
     // });
-    // console.log(this.state.user);
-    if (this.props.userProfile[0] !== undefined)
-      this.setState({ user: this.props.userProfile[0] });
-    // else
-    //   this.setState({
-    //     user: {
-    //       user: "null",
-    //       id: "null",
-    //       username: "null",
-    //       profile_name: "null",
-    //       email: "null",
-    //       address: "null"
-    //     }
-    //   });
-=======
-    const { user } = window.localStorage["id"];
-    Root.get(`profiles/${user}/`).then(res => {
-      console.log(res.data);
-      this.setState({ user: res.data });
-    });
->>>>>>> afe97b7db35c43d28951d48b21b6b42d77408430
   };
   getItems = () => {
-    // console.log(this.state.user);
     const {
       user,
       id: profileId,
@@ -151,11 +129,6 @@ class MyProfile extends React.Component {
 
     setTimeout(() => {
       this.getProfile();
-<<<<<<< HEAD
-      this.getItems();
-    }, 1000);
-=======
-
       // this.getItems();
     }, 1000);
   };
@@ -178,13 +151,9 @@ class MyProfile extends React.Component {
       return this.setState({ showAddItemForm: !this.state.showAddItemForm });
     }
     return this.setState({ showAddItemForm: !this.state.showAddItemForm });
->>>>>>> afe97b7db35c43d28951d48b21b6b42d77408430
   };
 
   render() {
-    setTimeout(() => {
-      console.log(this.state.user);
-    }, 2000);
     const { items, itemGif, image } = this.state;
 
     let itemElements = items.map((item, i) => {
