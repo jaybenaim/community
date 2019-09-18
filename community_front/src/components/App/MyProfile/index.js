@@ -63,7 +63,7 @@ class MyProfile extends React.Component {
       this.setState({
         items: items.filter((item, i) => {
           if (userProfile) {
-            if (item.profile_id === window.localStorage["id"]) {
+            if (userProfile[0].user === parseInt(window.localStorage["id"])) {
               return item;
             }
           }
@@ -74,39 +74,14 @@ class MyProfile extends React.Component {
 
   // Get a list of names in an array to pass each name as the query string
   // in the gify api
-  getItems = () => {
-    const { profileId } = this.state.user;
-
-    Root.get("items/").then(res => {
-      let items = res.data || [];
-      let newItems = [];
-      let queries = [];
-      // displays empty box if no item is in profile
-      items.map((item, i) => {
-        // const { name, price, profile_id } = item;
-        console.log(item.profile_id + " = " + profileId);
-        if (item.profile_id === profileId) {
-          newItems.push(item);
-          queries.push(item.name);
-          this.setState(prevState => ({
-            query: queries,
-            items: newItems
-          }));
-          return item;
-        }
-      });
-    });
-    setTimeout(() => {
-      const items = this.state.items;
-      items.forEach(item => {
-        this.setImages(item.name);
-      });
-    }, 1000);
+  setHeroImage = () => {
+    // this.getGify(item.name);
   };
 
-  setImages = async query => {
+  // GIPHY API CALL
+  getGify = async query => {
     await Axios.get(
-      `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=ladder&limit=1&offset=0&rating=G&lang=en`
+      `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${query}&limit=1&offset=0&rating=G&lang=en`
     )
       // await Axios.get(`https://api.pexels.com/v1/curated?per_page=1&page=1`, {
       //   headers: { Authorization: PEXELS_API_KEY }
