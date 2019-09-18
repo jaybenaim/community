@@ -36,13 +36,14 @@
 }
 .profile-items {
   margin-top: 80px;
-  /* overflow: auto; */
+  overflow: auto;
   margin-left: 160px;
 }
 @media (max-width: 948px) {
   .profile-items {
     margin: 0;
     padding: 40px;
+    overflow: auto;
   }
   .borrow-button {
     margin: 10px;

@@ -42,7 +42,7 @@ const Item = ({
     Root.post(
       "items/",
       {
-        profile_id: userProfile[0].id,
+        profile_id: userProfile[0].id, /////// not getting value here to create item so not sshowing on profile
         name_of_item: itemVal,
         price: priceVal
       },

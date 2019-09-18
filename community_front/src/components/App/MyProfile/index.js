@@ -49,21 +49,45 @@ class MyProfile extends React.Component {
   getProfile = () => {
     if (this.props.userProfile[0] !== undefined)
       this.setState({ user: this.props.userProfile[0] });
-    // const user = window.localStorage["id"];
-    // Root.get(`profiles/${user}/`).then(res => {
-    //   console.log(res.data);
-    //   this.setState({ user: res.data });
-    // });
+  };
+
+  getItemsFromUser = () => {
+    const { user } = this.state;
+    const { userProfile } = this.props;
+    let newItems = [];
+    let queries = [];
+    Root.get("items/").then(res => {
+      // console.log(this.props.profileId);
+
+      let items = res.data;
+      items.map(item => {
+        // console.log(userProfile[0]);
+        console.log(userProfile[0].id);
+        console.log(item.profile_id);
+        if (item.profile_id === userProfile[0].id) {
+          newItems.push(item);
+          queries.push(item.name);
+          this.setState(prevState => ({
+            query: queries,
+            items: newItems
+          }));
+          setTimeout(() => {
+            this.setImages(item.name);
+          }, 1000);
+        }
+
+        return item;
+      });
+    });
+    // setTimeout(() => {
+    //   const items = this.state.items;
+    //   items.forEach(item => {
+    //     this.setImages(item.name);
+    //   });
+    // }, 1000);
   };
   getItems = () => {
-    const {
-      user,
-      id: profileId,
-      username,
-      profile_name: profileName,
-      email,
-      address
-    } = this.props.userProfile[0];
+    const { profileId } = this.state.user;
 
     Root.get("items/").then(res => {
       let items = res.data;
@@ -124,13 +148,15 @@ class MyProfile extends React.Component {
     this.setState({ profileImage: url });
   };
   componentDidMount = () => {
-    this.props.getProfileFromToken();
-    console.log();
+    // this.props.getProfileFromToken();
 
     setTimeout(() => {
       this.getProfile();
-      // this.getItems();
     }, 1000);
+
+    setTimeout(() => {
+      this.getItemsFromUser();
+    }, 1500);
   };
 
   toggleEditForm = e => {
@@ -139,13 +165,11 @@ class MyProfile extends React.Component {
     if (this.state.showEditForm === false) {
       return this.setState({ showEditForm: true });
     }
-
     return this.setState({ showEditForm: false });
   };
 
   toggleAddItemForm = event => {
     event.preventDefault();
-    // this.setState({ showAddItemForm: !this.state.showAddItemForm });
     console.log("Add Item Form Clicked!");
     if (this.state.showEditForm === false) {
       return this.setState({ showAddItemForm: !this.state.showAddItemForm });
