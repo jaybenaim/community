@@ -22,8 +22,30 @@ class CreateProfileForm extends Component {
   // handleProfileFormClick = event => {
   //   const { handleProfileFormSubmit } = this.props;
 
-  //   event.preventDefault();
   //   let profileName = this.nameRef.current.value;
+  //   let email = this.emailRef.current.value;
+  //   let address = this.addressRef.current.value;
+  //   console.log(window.localStorage["token"]);
+  //   // console.log(this.props.profileId[0].user);
+  //   Root.post(
+  //     "profiles/",
+  //     {
+  //       user: this.props.profileId[0].user,
+  //       username: this.props.username,
+  //       profile_name: profileName,
+  //       email,
+  //       address
+  //     },
+  //     {
+  //       headers: {
+  //         // "Content-Type": "application/json",
+  //         Authorization: `Token ${window.localStorage["token"]}`
+  //       }
+  //     }
+  //   )
+  // .then(res => {
+  //   this.handleShow();
+  //   event.preventDefault();
   //   let email = this.emailRef.current.value;
   //   let address = this.addressRef.current.value;
   //   console.log(window.localStorage["token"]);
@@ -48,7 +70,6 @@ class CreateProfileForm extends Component {
   //       this.handleShow();
 
   //       handleProfileFormSubmit({
-  //         username: window.localStorage["username"],
   //         profile_name: profileName,
   //         email,
   //         address
