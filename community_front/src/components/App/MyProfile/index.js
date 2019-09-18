@@ -115,6 +115,10 @@ class MyProfile extends React.Component {
       });
   };
 
+  changeImage = () => {
+    let url = prompt("Enter a url");
+    this.setState({ profileImage: url });
+  };
   componentDidMount = () => {
     // this.props.getProfileFromToken();
 
@@ -125,29 +129,30 @@ class MyProfile extends React.Component {
   };
 
   render() {
-    const { items, itemGif, image } = this.state;
+    // const { items, itemGif, image } = this.state;
 
-    let itemElements = items.map((item, i) => {
-      const { name_of_item, price } = item;
+    // let itemElements = items.map((item, i) => {
+    //   const { name_of_item, price } = item;
 
-      return (
-        <ProfileItem
-          key={i}
-          image={itemGif || image}
-          name={name_of_item}
-          price={price}
-        />
-      );
-    });
+    //   return (
+    //     <ProfileItem
+    //       key={i}
+    //       image={itemGif || image}
+    //       name={name_of_item}
+    //       price={price}
+    //     />
+    //   );
+    // });
     return (
       <Container>
         <Row>
-          <Col xs={12} md={12} className="con">
+          <Col xs={12} md={12} lg={4} className="con">
             <section>
               <img
                 className="profile-image"
                 src={this.state.profileImage}
                 alt="profile"
+                onClick={this.changeImage}
               />
 
               <p className="profile-details">
@@ -196,7 +201,7 @@ class MyProfile extends React.Component {
             </section>
           </Col>
           <Col xs={12} md={12} lg={6} className="profile-items">
-            {itemElements}
+            {/* {itemElements} */}
           </Col>
         </Row>
       </Container>
