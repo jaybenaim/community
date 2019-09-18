@@ -11,13 +11,14 @@ const Item = ({
   itemPrice,
   onChangeItemPrice,
   onChangeItemName,
-  show,
   handleItem,
-  userProfile
+  userProfile,
+  toggleAddItemForm
 }) => {
   // create hook state for holding item and price temp
   const [item, setItem] = useState(null);
   const [price, setPrice] = useState(null);
+  const [show, setShow] = useState(true);
 
   // create ref here for input values
   const itemRef = React.createRef();
@@ -69,13 +70,15 @@ const Item = ({
   /// define a function that will set state in app to itemname with itemval
   //// one function that takes params to do both
   // define another function that does the same for price
-
+  const handleClose = event => {
+    toggleAddItemForm(event);
+  };
   return (
     <>
       <div>
         <Modal.Dialog>
-          <Modal.Header closeButton={true} onHide={handleItemClose}>
-            <Modal.Title>Modal title</Modal.Title>
+          <Modal.Header>
+            <Modal.Title>Item Form</Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
@@ -104,7 +107,7 @@ const Item = ({
           </Modal.Body>
 
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleItemClose}>
+            <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
             <Button variant="primary" onClick={handleItemForm}>

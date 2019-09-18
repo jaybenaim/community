@@ -14,7 +14,7 @@ import {
 import ProfileItem from "./ProfileItem";
 
 import Axios from "axios";
-import ItemForm from "./ItemForm";
+import Item from "./ItemForm";
 import CreateProfileForm from "./CreateProfileForm";
 import EditProfile from "../../EditProfile";
 
@@ -41,7 +41,9 @@ class MyProfile extends React.Component {
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
     itemName: "",
     itemPrice: "",
-    profile_id: this.props.profileId
+    profile_id: this.props.profileId,
+    showEditForm: false,
+    showAddItemForm: false
   };
 
   getProfile = () => {
@@ -52,7 +54,7 @@ class MyProfile extends React.Component {
     });
   };
   getItems = () => {
-    console.log(this.state.user);
+    // console.log(this.state.user);
     const {
       user,
       id: profileId,
@@ -138,6 +140,16 @@ class MyProfile extends React.Component {
     }
 
     return this.setState({ showEditForm: false });
+  };
+
+  toggleAddItemForm = event => {
+    event.preventDefault();
+    // this.setState({ showAddItemForm: !this.state.showAddItemForm });
+    console.log("Add Item Form Clicked!");
+    if (this.state.showEditForm === false) {
+      return this.setState({ showAddItemForm: !this.state.showAddItemForm });
+    }
+    return this.setState({ showAddItemForm: !this.state.showAddItemForm });
   };
 
   render() {
@@ -226,22 +238,25 @@ class MyProfile extends React.Component {
                       <Button
                         className="add-item-button"
                         variant="primary"
-                        onClick={event => this.props.handleItem(event)}
+                        onClick={this.toggleAddItemForm}
                       >
                         Add Item
                       </Button>
                     </div>
-                    <ItemForm
-                      itemName={this.state.itemName}
-                      itemPrice={this.state.itemPrice}
-                      handleItemClose={this.handleItemClose}
-                      onChangeItemPrice={this.onChangeItemPrice}
-                      onChangeItemName={this.onChangeItemName}
-                      handleFormSubmit={this.handleFormSubmit}
-                      displayItemForm={this.displayItemForm}
-                      handleItem={this.props.handleItem}
-                      userProfile={this.props.userProfile}
-                    />
+                    {this.state.showAddItemForm && (
+                      <Item
+                        toggleAddItemForm={this.toggleAddItemForm}
+                        itemName={this.state.itemName}
+                        itemPrice={this.state.itemPrice}
+                        handleItemClose={this.handleItemClose}
+                        onChangeItemPrice={this.onChangeItemPrice}
+                        onChangeItemName={this.onChangeItemName}
+                        handleFormSubmit={this.handleFormSubmit}
+                        displayItemForm={this.displayItemForm}
+                        handleItem={this.props.handleItem}
+                        userProfile={this.props.userProfile}
+                      />
+                    )}
                   </section>
                 </Col>
                 <Col xs={12} md={12} lg={6} className="profile-items">
