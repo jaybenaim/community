@@ -17,6 +17,7 @@ import ProfileItem from "./ProfileItem";
 
 import Axios from "axios";
 import ItemForm from "./ItemForm";
+import CreateProfileForm from "./CreateProfileForm";
 
 class MyProfile extends React.Component {
   state = {
@@ -45,24 +46,15 @@ class MyProfile extends React.Component {
     showEditForm: false
   };
 
-  // todo get all items related to user
-  // getItems = () => {
-  //   Root.get("items/").then(res => {
-  //     const { name_of_item, price } = res.data[0];
-  //     this.setState({
-  //       query: name_of_item,
-  //       itemName: name_of_item,
-  //       itemPrice: price
-  //     });
-  //   });
-  //   setTimeout(() => {
-  //     this.setImages();
-  //   }, 1000);
-  // };
-
+  getProfile = () => {
+    const { user } = this.props.userProfile;
+    Root.get(`profiles/${user}/`).then(res => {
+      console.log(res.data);
+      this.setState({ user: res.data });
+    });
+  };
   getItems = () => {
-    console.log(this.props.userProfile[0]);
-
+    console.log(this.state.user);
     const {
       user,
       id: profileId,
@@ -126,9 +118,14 @@ class MyProfile extends React.Component {
       });
   };
 
+  changeImage = () => {
+    let url = prompt("Enter a url");
+    this.setState({ profileImage: url });
+  };
   componentDidMount = () => {
     this.props.getProfileFromToken();
     setTimeout(() => {
+<<<<<<< HEAD
       this.getItems();
       this.displayProfile();
     }, 1000);
@@ -177,6 +174,13 @@ class MyProfile extends React.Component {
     return this.setState({ showEditForm: false });
   };
 
+=======
+      this.getProfile();
+      // this.getItems();
+    }, 1500);
+  };
+
+>>>>>>> 35557f78cad79a42599bbfc83e6198e5373f0b5f
   render() {
     const { items, itemGif, image } = this.state;
 
@@ -192,7 +196,83 @@ class MyProfile extends React.Component {
         />
       );
     });
+    let createProfileForm;
+    let profile;
+    {
+      this.props.userProfile.user === undefined
+        ? (createProfileForm = (
+            <CreateProfileForm
+              loadProfile={this.props.getProfileFromToken}
+              userProfile={this.props.userProfile}
+            />
+          ))
+        : (profile = (
+            <Container>
+              <Row>
+                <Col xs={12} md={12} lg={4} className="con">
+                  <section>
+                    <img
+                      className="profile-image"
+                      src={this.state.profileImage}
+                      alt="profile"
+                      onClick={this.changeImage}
+                    />
+
+                    <div className="profile-details">
+                      <Row>
+                        <p className="profile-name">
+                          {/* if searchActive &&  */}
+                          {/* Name: {this.props.profileSearched.profile_name} */}
+                          {this.state.user.profile_name}
+                        </p>
+                      </Row>
+                      <br />
+                      <Row>
+                        <p className="profile-email">
+                          <span className="bold"> Email:</span>{" "}
+                          {this.state.user.email}
+                        </p>
+                        <br />
+                      </Row>
+                      <Row>
+                        <p className="profile-address">
+                          <br />
+                          <span className="bold"> Address: </span>
+                          {this.state.user.address}
+                        </p>
+                      </Row>
+
+                      <Button
+                        className="add-item-button"
+                        variant="primary"
+                        onClick={event => this.props.handleItem(event)}
+                      >
+                        Add Item
+                      </Button>
+                    </div>
+                    <ItemForm
+                      itemName={this.state.itemName}
+                      itemPrice={this.state.itemPrice}
+                      handleItemClose={this.handleItemClose}
+                      onChangeItemPrice={this.onChangeItemPrice}
+                      onChangeItemName={this.onChangeItemName}
+                      handleFormSubmit={this.handleFormSubmit}
+                      displayItemForm={this.displayItemForm}
+                      handleItem={this.props.handleItem}
+                      userProfile={this.props.userProfile}
+                    />
+                  </section>
+                </Col>
+                <Col xs={12} md={12} lg={6} className="profile-items">
+                  {itemElements}
+                </Col>
+              </Row>
+            </Container>
+          ));
+    }
+
     return (
+<<<<<<< HEAD
       <Container>
         <Button
           className="edit-profile-button"
@@ -251,6 +331,14 @@ class MyProfile extends React.Component {
           <Col className="profile-items">{itemElements}</Col>
         </Row>
       </Container>
+=======
+      <>
+        <div>
+          {createProfileForm}
+          {profile}
+        </div>
+      </>
+>>>>>>> 35557f78cad79a42599bbfc83e6198e5373f0b5f
     );
   }
 }

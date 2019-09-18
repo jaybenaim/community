@@ -20,6 +20,7 @@ class EditProfile extends Component {
   submitEditForm = e => {
     console.log("sumbit form clicked, not implemented");
     this.props.toggleEditForm(e);
+<<<<<<< HEAD
     root
       .patch("profiles/2/", {
         profile_name: "JOHNNY",
@@ -29,6 +30,17 @@ class EditProfile extends Component {
       .then(res => {
         console.log(res.data);
       });
+=======
+    // root
+    //   .patch("profiles/2/", {
+    //     profile_name: "JOHNNY",
+    //     email: "changed@change.com",
+    //     address: "1000 Yonge St"
+    //   })
+    //   .then(res => {
+    //     console.log(res.data);
+    //   });
+>>>>>>> 35557f78cad79a42599bbfc83e6198e5373f0b5f
   };
 
   closeEditForm = e => {

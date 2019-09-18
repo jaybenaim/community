@@ -35,7 +35,7 @@ class PutTest extends Component {
 
   updateItem = () => {
     // const { profile_id, name_of_item, price } = this.state;
-    Root.put("items/2/", {
+    Root.patch("items/2/", {
       profile_id: 14,
       name_of_item: "ladder",
       price: "mow the lawn"
