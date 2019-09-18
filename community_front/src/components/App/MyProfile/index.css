@@ -20,7 +20,8 @@
   border-radius: 50%;
   width: 240px;
   height: 240px;
-  margin-top: 180px;
+  margin-top: 120px;
+  cursor: pointer;
 }
 .profile-name,
 .profile-email,
@@ -46,7 +47,7 @@
     overflow: auto;
   }
   .borrow-button {
-    margin: 10px;
+    margin: 30px;
   }
 }
 .add-item-button {
@@ -90,7 +91,7 @@
 .borrow-button {
   height: 50px;
   margin-right: 10px;
-  margin-left: 10px;
+  margin-left: 35px;
 }
 
 /* ProfileCard */
