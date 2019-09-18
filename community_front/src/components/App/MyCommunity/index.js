@@ -7,82 +7,7 @@ import Root from "../../../apis/root";
 import Container from "react-bootstrap/Container";
 import "./index.css";
 
-class CreateProfileForm extends Component {
-  // nameRef = React.createRef();
-  // emailRef = React.createRef();
-  // addressRef = React.createRef();
-  // state = {
-  //   show: false
-  // };
-
-  // handleShow = () => {
-  //   this.setState({ show: !this.state.show });
-  // };
-
-  // handleProfileFormClick = event => {
-  //   const { handleProfileFormSubmit } = this.props;
-
-  //   let profileName = this.nameRef.current.value;
-  //   let email = this.emailRef.current.value;
-  //   let address = this.addressRef.current.value;
-  //   console.log(window.localStorage["token"]);
-  //   // console.log(this.props.profileId[0].user);
-  //   Root.post(
-  //     "profiles/",
-  //     {
-  //       user: this.props.profileId[0].user,
-  //       username: this.props.username,
-  //       profile_name: profileName,
-  //       email,
-  //       address
-  //     },
-  //     {
-  //       headers: {
-  //         // "Content-Type": "application/json",
-  //         Authorization: `Token ${window.localStorage["token"]}`
-  //       }
-  //     }
-  //   )
-  // .then(res => {
-  //   this.handleShow();
-  //   event.preventDefault();
-  //   let email = this.emailRef.current.value;
-  //   let address = this.addressRef.current.value;
-  //   console.log(window.localStorage["token"]);
-  //   console.log(this.props.profileId[0].user);
-  //   Root.post(
-  //     "profiles/",
-  //     {
-  //       user: this.props.profileId[0].user,
-  //       username: this.props.username,
-  //       profile_name: profileName,
-  //       email,
-  //       address
-  //     },
-  //     {
-  //       headers: {
-  //         // "Content-Type": "application/json",
-  //         Authorization: `Token ${window.localStorage["token"]}`
-  //       }
-  //     }
-  //   )
-  //     .then(res => {
-  //       this.handleShow();
-
-  //       handleProfileFormSubmit({
-  //         profile_name: profileName,
-  //         email,
-  //         address
-  //       });
-  //       console.log("POST Status: " + res.statusText);
-  //     })
-  //     .catch(err => {
-  //       console.log("POST Status: " + err);
-  //     });
-  // };
-  // componentDidMount = () => {
-  //   this.props.getProfileFromToken();
-  // };
+class SearchPage extends Component {
   render() {
     const { allProfiles, allItems } = this.props;
 
@@ -100,4 +25,4 @@ class CreateProfileForm extends Component {
   }
 }
 
-export default CreateProfileForm;
+export default SearchPage;
