@@ -26,20 +26,21 @@ class CreateProfileForm extends React.Component {
     let profileName = this.nameRef.current.value;
     let email = this.emailRef.current.value;
     let address = this.addressRef.current.value;
-    console.log(window.localStorage["token"]);
-    console.log(this.props.profileId[0].user);
+    console.log(this.props.userProfile[0].user[0]);
+    console.log(this.props.userProfile[0].username);
+    console.log(window.localStorage["id"]);
     Root.post(
       "profiles/",
       {
-        user: this.props.profileId[0].user,
-        username: this.props.username,
+        user: Number(window.localStorage["id"]),
+        username: window.localStorage["username"],
         profile_name: profileName,
         email,
         address
       },
       {
         headers: {
-          // "Content-Type": "application/json",
+          "Content-Type": "application/json",
           Authorization: `Token ${window.localStorage["token"]}`
         }
       }
@@ -56,12 +57,14 @@ class CreateProfileForm extends React.Component {
         console.log("POST Status: " + res.statusText);
       })
       .catch(err => {
+        alert("Something went wrong, try signing up or loggin in first.");
         console.log("POST Status: " + err);
       });
   };
   componentDidMount = () => {
-    // this.props.getProfileFromToken();
+    this.props.loadProfile();
   };
+
   render() {
     return (
       <Container className="grid-container">

@@ -12,6 +12,7 @@ import PutTest from "../PutTest";
 
 class App extends React.Component {
   state = {
+    user: [],
     userProfile: [],
     items: [],
     profileName: "",
@@ -102,10 +103,12 @@ class App extends React.Component {
 
   handle_login = (e, data) => {
     e.preventDefault();
-    Axios.post("http://localhost:8000/api-token-auth/", data)
+    Axios.post("http://localhost:8000/authenticate/", data)
       .then(res => {
+        console.log(res.data);
         window.localStorage["token"] = res.data.token;
         window.localStorage["username"] = data.username;
+        window.localStorage["id"] = res.data.id;
       })
       .then(res => {
         setTimeout(() => {
@@ -116,25 +119,23 @@ class App extends React.Component {
 
   getProfileFromToken = () => {
     Root.get("profiles/").then(res => {
+      /// //// // /
+
+      //// if profile.user = window.localStorage["id"]
       let profiles = res.data;
       let matchedProfile = [];
       let profileUser = [];
 
       profiles.map(profile => {
-        console.log(profile.user);
-        console.log(
-          ` Profile: ${profile.username}` +
-            `Storage: ${window.localStorage["username"]}`
-        );
         if (
           //////   this is where the error for profile not displaying
           profile.username.toLowerCase() ===
           window.localStorage["username"].toLowerCase()
         ) {
+          matchedProfile.pop(0);
           matchedProfile.push(profile);
-          matchedProfile.user = profile.user;
+          matchedProfile.user = window.localStorage["id"];
           profileUser.push(profile.user);
-
           console.log("profile set");
         } else {
           matchedProfile.push({
@@ -148,13 +149,13 @@ class App extends React.Component {
         }
       });
       this.setState({
+        // user: window.localStorage["id"],
         userProfile: matchedProfile,
         username: window.localStorage["username"],
         profileId: this.state.userProfile.user,
         logged_in: true,
         displayed_form: ""
       });
-      console.log(this.state.userProfile.user);
     });
   };
   handle_signup = (e, data) => {
@@ -179,6 +180,7 @@ class App extends React.Component {
   handle_logout = () => {
     window.localStorage["token"] = "";
     window.localStorage["username"] = "";
+    window.localStorage["id"] = "";
     this.setState({ logged_in: false, username: "" });
   };
 

@@ -44,12 +44,11 @@ class MyProfile extends React.Component {
   };
 
   getProfile = () => {
-    // const { id } = this.props.userProfile[0];
-    // Root.get(`profiles/${id}/`).then(res => {
-    //   console.log(res.data);
-    //   this.setState({ user: res.data });
-    // });
-    this.setState({ user: this.props.userProfile[0] });
+    const { user } = this.props.userProfile;
+    Root.get(`profiles/${user}/`).then(res => {
+      console.log(res.data);
+      this.setState({ user: res.data });
+    });
   };
   getItems = () => {
     console.log(this.state.user);
@@ -121,11 +120,11 @@ class MyProfile extends React.Component {
     this.setState({ profileImage: url });
   };
   componentDidMount = () => {
-    // this.props.getProfileFromToken();
+    this.props.getProfileFromToken();
 
     setTimeout(() => {
       this.getProfile();
-      this.getItems();
+      // this.getItems();
     }, 1500);
   };
 
@@ -147,8 +146,13 @@ class MyProfile extends React.Component {
     let createProfileForm;
     let profile;
     {
-      this.state.user.profile_name === "null"
-        ? (createProfileForm = <CreateProfileForm />)
+      this.props.userProfile.user === undefined
+        ? (createProfileForm = (
+            <CreateProfileForm
+              loadProfile={this.props.getProfileFromToken}
+              userProfile={this.props.userProfile}
+            />
+          ))
         : (profile = (
             <Container>
               <Row>
@@ -161,11 +165,11 @@ class MyProfile extends React.Component {
                       onClick={this.changeImage}
                     />
 
-                    <p className="profile-details">
+                    <div className="profile-details">
                       <Row>
                         <p className="profile-name">
+                          {/* if searchActive &&  */}
                           {/* Name: {this.props.profileSearched.profile_name} */}
-                          <span className="bold"> Name:</span>{" "}
                           {this.state.user.profile_name}
                         </p>
                       </Row>
@@ -192,7 +196,7 @@ class MyProfile extends React.Component {
                       >
                         Add Item
                       </Button>
-                    </p>
+                    </div>
                     <ItemForm
                       itemName={this.state.itemName}
                       itemPrice={this.state.itemPrice}
@@ -216,8 +220,10 @@ class MyProfile extends React.Component {
 
     return (
       <>
-        {createProfileForm}
-        {profile}
+        <div>
+          {createProfileForm}
+          {profile}
+        </div>
       </>
     );
   }
