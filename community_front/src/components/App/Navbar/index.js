@@ -76,7 +76,7 @@ class NavBar extends React.Component {
     } = this.props;
 
     return (
-      <Navbar className={navClass} navbar expand="lg">
+      <Navbar className={navClass} expand="lg">
         <Navbar.Brand href="/">
           <img className="logo" src={logo} alt="logo" />
           <span className="company-name">&nbsp; COMMUNITY</span>
