@@ -97,6 +97,7 @@ class SimpleMap extends Component {
     return this.state.geocodes.map((geocode, index) => {
       return (
         <Marker
+          className="hammer"
           key={index}
           id={index}
           position={{ lat: geocode.lat, lng: geocode.lng }}
@@ -143,7 +144,7 @@ class SimpleMap extends Component {
             style={this.mapStyles}
             initialCenter={this.state.center}
           >
-            {this.displayMarkers}
+            {this.displayMarkers()}
           </Map>
         </section>
       );
