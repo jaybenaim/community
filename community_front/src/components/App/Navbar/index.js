@@ -69,7 +69,7 @@ const NavBar = props => {
     <Navbar className="nav navbar" expand="lg">
       <Navbar.Brand href="/">
         <img className="logo" src={logo} alt="logo" />
-        &nbsp; Community
+        <span className="company-name">&nbsp; COMMUNITY</span>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
 

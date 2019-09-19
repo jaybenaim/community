@@ -32,7 +32,7 @@ li:hover {
   height: 80px;
   width: 100%;
   z-index: 2;
-  background-color: lightgray;
+  background-color: lightsteelblue;
 }
 /* .navbar-nav :nth-child(n + 2) {
   color: white !important;
@@ -46,9 +46,9 @@ li:hover {
   height: 20px;
   zoom: 3;
   margin-left: 5px;
-  margin-top: -8px;
+  margin-top: -3px;
   margin-bottom: -10px;
-  position: relative;
+  position: fixed;
   z-index: 2;
 }
 
