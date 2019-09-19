@@ -15,18 +15,12 @@ import NavbarLogin from "./NavbarLogin";
 import Root from "../../../apis/root";
 import MyProfile from "../MyProfile";
 
-const NavBar = props => {
-  const [items, setItems] = useState([]);
-  const [profileId, setProfileId] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [redirect, setRedirect] = useState(false);
-  const searchRef = React.createRef();
-
-  const searchByNameOfItem = e => {
-    e.preventDefault();
-    let query = searchRef.current.value;
-    props.getItems(query);
-  };
+class NavBar extends React.Component {
+  // const searchByNameOfItem = e => {
+  //   e.preventDefault();
+  //   let query = searchRef.current.value;
+  //   props.getItems(query);
+  // };
 
   // const getItems = query => {
   //   Root.get("items/").then(res => {
@@ -52,75 +46,73 @@ const NavBar = props => {
   //   renderRedirect();
   // };
 
-  const renderRedirect = () => {
-    console.log(redirect);
-    if (redirect)
-      return (
-        <BrowserRouter>
-          <Route
-            path="profiles/"
-            render={props => <MyProfile {...props} profileId={profileId} />}
-          />
-        </BrowserRouter>
-      );
+  // const renderRedirect = () => {
+  //   console.log(redirect);
+  //   if (redirect)
+  //     return (
+  //       <BrowserRouter>
+  //         <Route
+  //           path="profiles/"
+  //           render={props => <MyProfile {...props} profileId={profileId} />}
+  //         />
+  //       </BrowserRouter>
+  //     );
+
+  // };
+  componentDidMount = () => {
+    // this.props.handleNavClassChange();
   };
+  render() {
+    const {
+      navClass,
+      loggedIn,
+      display_form,
+      handle_logout,
+      username,
+      displayed_form,
+      handle_login,
+      handle_signup,
+      userProfile
+    } = this.props;
 
-  return (
-    <Navbar className="nav navbar" expand="lg">
-      <Navbar.Brand href="/">
-        <img className="logo" src={logo} alt="logo" />
-        <span className="company-name">&nbsp; COMMUNITY</span>
-      </Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+    return (
+      <Navbar className={navClass} navbar expand="lg">
+        <Navbar.Brand href="/">
+          <img className="logo" src={logo} alt="logo" />
+          <span className="company-name">&nbsp; COMMUNITY</span>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="nav-toggle" />
 
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mr-auto">
-          <Nav.Link href="/">Home</Nav.Link>
-          <Nav.Link href="/map">Map</Nav.Link>
-          <Nav.Link href="/profiles/myprofile">My Profile</Nav.Link>
-          <Nav.Link href="/profiles/search">My Community</Nav.Link>
-          <Container>
-            <Row>
-              <Col sm={6} md={6} lg={6}>
-                <div className="login-display">
-                  <NavbarLogin
-                    loggedIn={props.loggedIn}
-                    display_form={props.display_form}
-                    handle_logout={props.handle_logout}
-                    username={props.username}
-                    displayed_form={props.displayed_form}
-                    handle_login={props.handle_login}
-                    handle_signup={props.handle_signup}
-                    userProfile={props.userProfile}
-                  />
-                </div>
-              </Col>
-              <Col sm={6} md={6} lg={6} className="nav-search">
-                <div className="nav-search">
-                  <Form inline>
-                    <FormControl
-                      type="text"
-                      placeholder="Search"
-                      className="mr-sm-2"
-                      ref={searchRef}
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/map">Map</Nav.Link>
+            <Nav.Link href="/profiles/myprofile">My Profile</Nav.Link>
+            <Nav.Link href="/profiles/search">My Community</Nav.Link>
+            <Container>
+              <Row>
+                <Col sm={6} md={6} lg={6}>
+                  <div className="login-display">
+                    <NavbarLogin
+                      loggedIn={loggedIn}
+                      display_form={display_form}
+                      handle_logout={handle_logout}
+                      username={username}
+                      displayed_form={displayed_form}
+                      handle_login={handle_login}
+                      handle_signup={handle_signup}
+                      userProfile={userProfile}
                     />
-                  </Form>
-                  <Button
-                    className="search-button"
-                    variant="primary"
-                    onClick={searchByNameOfItem}
-                  >
-                    Search
-                  </Button>
-                </div>
-              </Col>
-            </Row>
-          </Container>
-        </Nav>
-        {/* make component or render the mycommpounity page here  */}
-      </Navbar.Collapse>
-    </Navbar>
-  );
-};
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          </Nav>
+          {/* make component or render the mycommpounity page here  */}
+        </Navbar.Collapse>
+      </Navbar>
+    );
+  }
+}
 
 export default NavBar;

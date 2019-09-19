@@ -88,6 +88,8 @@ class MyProfile extends React.Component {
     this.setState({ profileImage: url });
   };
   componentDidMount = () => {
+    this.props.handleNavClassChange();
+
     // this.props.getProfileFromToken();
     this.getProfile();
     setTimeout(() => {

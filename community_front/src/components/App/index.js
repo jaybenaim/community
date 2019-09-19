@@ -37,10 +37,14 @@ class App extends React.Component {
     username: "",
     searchItem: null,
     profileSearched: "",
+    navClass: "nav navbar-light",
     loading: false
   };
 
   // Handlers
+  handleNavClassChange = () => {
+    this.setState({ navClass: "nav navbar-dark" });
+  };
   handleAddItemName = event => {
     let itemName = event.target.value;
     this.setState({ itemName: itemName });
@@ -238,6 +242,8 @@ class App extends React.Component {
               getItems={this.getSearchQuery}
               getProfile={this.getSearchProfile}
               userProfile={this.state.userProfile}
+              handleNavClassChange={this.handleNavClassChange}
+              navClass={this.state.navClass}
             />
           </Switch>
           <Switch>
@@ -262,14 +268,22 @@ class App extends React.Component {
                 //   getProfileFromToken={this.getProfileFromToken}
                 // />
 
-                <SearchPage loggedIn={this.state.loggedIn} />
+                <SearchPage
+                  loggedIn={this.state.loggedIn}
+                  handleNavClassChange={this.handleNavClassChange}
+                />
               )}
             />
           </Switch>
           <Switch>
             <Route
               path="/map"
-              render={props => <Map allProfiles={this.state.allProfiles} />}
+              render={props => (
+                <Map
+                  allProfiles={this.state.allProfiles}
+                  handleNavClassChange={this.handleNavClassChange}
+                />
+              )}
             />
           </Switch>
           <Switch>
@@ -288,6 +302,7 @@ class App extends React.Component {
                   userProfile={this.state.userProfile}
                   getProfileFromToken={this.getProfileFromToken}
                   loggedIn={this.state.loggedIn}
+                  handleNavClassChange={this.handleNavClassChange}
                 />
               )}
             />

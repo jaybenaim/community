@@ -73,7 +73,9 @@ class SearchPage extends Component {
       alert("No Item Found");
     }
   };
-
+  componentDidMount = () => {
+    this.props.handleNavClassChange();
+  };
   render() {
     ///todooo render card with correct profile from search
 

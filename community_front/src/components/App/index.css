@@ -27,20 +27,41 @@ li:hover {
   position: absolute;
   z-index: 1;
 }
-.navbar {
+.navbar-light {
   position: fixed;
   height: 80px;
   width: 100%;
   z-index: 2;
   /* background-color: white; */
 }
-.navbar-nav :nth-child(n + 1) {
+.navbar-light :nth-child(n + 1) {
   /* border: 2px solid black; */
   color: white !important;
   font-size: 18px;
   font-weight: 700;
 }
-
+.navbar-dark {
+  position: fixed;
+  height: 80px;
+  width: 100%;
+  z-index: 2;
+  /* background-color: white; */
+}
+.navbar-dark :nth-child(n + 1) {
+  /* border: 2px solid black; */
+  color: black !important;
+  /* font-size: 18px;
+  font-weight: 700; */
+}
+.navbar-dark .navbar-toggler {
+  border: 2px solid black;
+  color: black;
+}
+.navbar-toggler-icon {
+  color: black;
+  border: 2px solid black;
+  background: #007bff;
+}
 /* .navbar-nav :nth-child(n + 2) {
   color: white !important;
   /* background: rgba(33, 33, 33, 0.5); 
@@ -48,6 +69,7 @@ li:hover {
 /* .navbar-nav :first-child {
   color: white !important;
 } */
+
 .logo {
   height: 20px;
   zoom: 3.5;

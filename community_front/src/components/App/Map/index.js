@@ -83,7 +83,9 @@ class Map extends Component {
       this.setState({ geocodes: [...geocodes, { lat, lng }] });
     });
   };
-
+  componentDidMount = () => {
+    this.props.handleNavClassChange();
+  };
   render() {
     // Setup the Render variables
     const { allProfiles } = this.props;
