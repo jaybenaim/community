@@ -66,10 +66,10 @@ const NavBar = props => {
   };
 
   return (
-    <Navbar className="nav " bg="light" expand="lg">
+    <Navbar className="nav navbar" expand="lg">
       <Navbar.Brand href="/">
         <img className="logo" src={logo} alt="logo" />
-        Community
+        &nbsp; Community
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
@@ -81,7 +81,7 @@ const NavBar = props => {
           <Nav.Link href="/profiles/search">My Community</Nav.Link>
           <Container>
             <Row>
-              <Col md={12} lg={6}>
+              <Col sm={6} md={6} lg={6}>
                 <div className="login-display">
                   <NavbarLogin
                     loggedIn={props.loggedIn}
@@ -95,7 +95,7 @@ const NavBar = props => {
                   />
                 </div>
               </Col>
-              <Col md={12} lg={6} className="nav-search">
+              <Col sm={6} md={6} lg={6} className="nav-search">
                 <div className="nav-search">
                   <Form inline>
                     <FormControl
