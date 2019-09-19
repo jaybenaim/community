@@ -147,6 +147,10 @@ li:hover {
   background-image: url(https://images.unsplash.com/photo-1462536943532-57a629f6cc60?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2252&q=80);
   animation-delay: 30s;
 }
+.slideshow li:nth-child(5) {
+  background-image: url(https://images.unsplash.com/photo-1474649107449-ea4f014b7e9f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80);
+  animation-delay: 40s;
+}
 
 @keyframes imageAnimation {
   0% {
