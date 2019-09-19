@@ -78,7 +78,6 @@ li:hover {
   margin-bottom: -10px;
   position: fixed;
   z-index: 2;
-  display: none;
 }
 
 .basic-navbar-nav {

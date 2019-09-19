@@ -64,6 +64,8 @@
   color: white;
   letter-spacing: 2px;
   margin-left: 200px;
+  /* position: relative;
+  z-index: 2; */
 }
 /* .navbar-brand {
   width: 10%;

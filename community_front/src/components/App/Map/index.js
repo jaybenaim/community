@@ -23,10 +23,11 @@ class SimpleMap extends Component {
   }
 
   componentDidMount() {
-    // this.props.handleNavClassChange();
+    this.initializeGeocode(); // when we load this component, we neeed to populate geocode state object // so that the markers are ready to render // allProfiles.forEach(({ address }, index) => { //   this.getGeocodeFromAddress(address); //   this.checkGeocodeLoading(index); // });
+
+    this.props.handleNavClassChange();
     // this.getProfileAddresses();
     // const { allProfiles } = this.props;
-    this.initializeGeocode(); // when we load this component, we neeed to populate geocode state object // so that the markers are ready to render // allProfiles.forEach(({ address }, index) => { //   this.getGeocodeFromAddress(address); //   this.checkGeocodeLoading(index); // });
     // this.getProfileAddresses();
     const { allProfiles } = this.props;
     // if (prevProps.allProfiles !== newProfileList) {
@@ -97,7 +98,6 @@ class SimpleMap extends Component {
     return this.state.geocodes.map((geocode, index) => {
       return (
         <Marker
-          className="hammer"
           key={index}
           id={index}
           position={{ lat: geocode.lat, lng: geocode.lng }}
