@@ -5,6 +5,7 @@ import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import Button from "react-bootstrap/Button";
 
 class NavbarNew extends React.Component {
   logged_out_nav = (
@@ -27,16 +28,9 @@ class NavbarNew extends React.Component {
     </div>
   );
   logged_in_nav = (
-    <div className="center">
-      <ul>
-        <li
-          className="btn btn-primary logout"
-          onClick={this.props.handle_logout}
-        >
-          logout
-        </li>
-      </ul>
-    </div>
+    <Button className="logout-btn" onClick={this.props.handle_logout} size="sm">
+      logout
+    </Button>
   );
   render() {
     let form;

@@ -147,7 +147,7 @@ class MyProfile extends React.Component {
             />
           ))
         : (profile = (
-            <Container>
+            <Container className="cont">
                       
               {/*
           

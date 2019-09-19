@@ -26,9 +26,7 @@
   margin-bottom: -10px;
 } */
 .login,
-.logout {
-  margin: auto 0;
-}
+.logout,
 .signup {
   float: right;
   margin-right: 20px;
@@ -68,4 +66,7 @@
 .mr-auto {
   font-family: "Spinnaker", sans-serif;
   margin-top: 50px;
+}
+.logout-btn {
+  margin-right: 400px;
 }

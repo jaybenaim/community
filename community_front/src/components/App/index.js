@@ -246,9 +246,7 @@ class App extends React.Component {
               navClass={this.state.navClass}
             />
           </Switch>
-          <Switch>
-            <Route exact path="/puttest" component={PutTest} />
-          </Switch>
+
           <Switch>
             <Route
               path="/profiles/search"

@@ -81,7 +81,7 @@
 }
 .item-content {
   margin-top: 50px;
-  font-family: "Comfortaa", cursive;
+  font-family: "Spinnaker", sans-serif;
 }
 .item-square {
   padding-bottom: 40px;
@@ -103,4 +103,11 @@
 .show-grid {
   margin-top: 100px;
   grid-column: 2;
+}
+
+.add-item-button {
+  font-family: "Spinnaker", sans-serif;
+}
+.cont {
+  font-family: "Spinnaker", sans-serif;
 }
