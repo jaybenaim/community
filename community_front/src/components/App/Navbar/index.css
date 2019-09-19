@@ -36,12 +36,15 @@
   float: right;
 }
 .navbar-nav {
-  background-color: beige;
+  background-color: transparent;
   border-radius: 10px;
   color: black;
 }
 .login-display {
   float: left;
+}
+.btn-primary {
+  background: rgb(0%, 63%, 100%);
 }
 .nav-search {
   float: right;
@@ -55,8 +58,8 @@
   margin-left: 220px;
   margin-right: 60px;
   font-family: "Spinnaker", sans-serif;
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 900;
-  color: rgb(71, 97, 79);
+  color: white;
   letter-spacing: 2px;
 }

@@ -13,7 +13,12 @@ import EditProfile from "../../EditProfile";
 class MyProfile extends React.Component {
   state = {
     user: [
-      { profile_name: "profile name", email: "email", address: "address" }
+      {
+        id: 2,
+        profile_name: "profile name",
+        email: "email",
+        address: "address"
+      }
     ],
     items: [
       {
@@ -33,7 +38,7 @@ class MyProfile extends React.Component {
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
     itemName: "",
     itemPrice: "",
-    profile_id: this.props.profileId,
+    // profile_id: this.props.profileId,
     showEditForm: false,
     showAddItemForm: false
   };
@@ -61,7 +66,7 @@ class MyProfile extends React.Component {
       this.setState({
         items: items.filter((item, i) => {
           if (userProfile) {
-            if (item.profile_id === userProfile[0].id) {
+            if (item.profile_id === this.state.user.id) {
               return item;
             }
           }
@@ -75,7 +80,7 @@ class MyProfile extends React.Component {
     this.setState({ profileImage: url });
   };
   componentDidMount = () => {
-    this.props.getProfileFromToken();
+    // this.props.getProfileFromToken();
     this.getProfile();
     setTimeout(() => {
       this.getItemsFromUser();
@@ -102,12 +107,14 @@ class MyProfile extends React.Component {
 
   render() {
     const { items, itemGif, image } = this.state;
+
     const { userProfile } = this.props;
 
     let itemElements = items.map((item, i) => {
       const { name_of_item, price } = item;
       //////// getting all items / /// /
-      if (item.profile_id === userProfile[0].id) {
+
+      if (item.profile_id === this.state.user.id) {
         return (
           <ProfileItem
             key={i}
