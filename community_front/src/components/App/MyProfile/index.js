@@ -5,15 +5,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-// import ImageApi from "../../apis/images";
-import {
-  GIPHY_API_KEY
-  // PEXELS_API_KEY,
-  // IMAGE_ACCESS_KEY
-} from "../../../apis/keys";
 import ProfileItem from "./ProfileItem";
-
-import Axios from "axios";
 import Item from "./ItemForm";
 import CreateProfileForm from "./CreateProfileForm";
 import EditProfile from "../../EditProfile";
@@ -37,8 +29,6 @@ class MyProfile extends React.Component {
     profileImage:
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
     itemGif: "",
-    query: [],
-    query2: "",
     image:
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
     itemName: "",
@@ -71,8 +61,8 @@ class MyProfile extends React.Component {
       this.setState({
         items: items.filter((item, i) => {
           if (userProfile) {
-            console.log(item.profile_id + ` USer : ${userProfile[0].user}`);
-            if (item.profile_id === userProfile[0].user) {
+            console.log(item.profile_id + ` User : ${userProfile[0].id}`);
+            if (item.profile_id === userProfile[0].id) {
               return item;
             }
           }
@@ -118,16 +108,16 @@ class MyProfile extends React.Component {
     let itemElements = items.map((item, i) => {
       const { name_of_item, price } = item;
       //////// getting all items / /// /
-      // if (item.profile_id === userProfile[0].id) {
-      return (
-        <ProfileItem
-          key={i}
-          image={itemGif || image}
-          name={name_of_item}
-          price={price}
-        />
-      );
-      // }
+      if (item.profile_id === userProfile[0].id) {
+        return (
+          <ProfileItem
+            key={i}
+            image={itemGif || image}
+            name={name_of_item}
+            price={price}
+          />
+        );
+      }
     });
     let createProfileForm;
     let profile;
