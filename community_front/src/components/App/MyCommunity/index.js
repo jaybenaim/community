@@ -15,7 +15,7 @@ import Card from "react-bootstrap/Card";
 class SearchPage extends Component {
   state = {
     profileSearched: {
-      profileName: "None",
+      profileName: "User",
       email: "Email",
       address: "Address"
     },
@@ -99,6 +99,7 @@ class SearchPage extends Component {
         ) : (
           <Container className="grid-container">
             <Form inline>
+              <Form.Label>Search for an item&nbsp;</Form.Label>
               <FormControl
                 type="text"
                 placeholder="Search"
@@ -129,7 +130,8 @@ class SearchPage extends Component {
                       {this.state.profileSearched.address}
                     </Card.Text>
                     <Button variant="primary" onClick={this.allItems}>
-                      Click to see more
+                      Click to see {this.state.profileSearched.profileName}'s
+                      profile
                     </Button>
                   </Card.Body>
                 </Card>
