@@ -14,7 +14,7 @@ class SimpleMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      geocodes: [{ lat: 43.99, lng: -79 }],
+      geocodes: [],
       center: { lat: 43.671593898745726, lng: -79.37341993487492 },
       zoom: 10,
       loading: false,
@@ -23,33 +23,47 @@ class SimpleMap extends Component {
   }
 
   componentDidMount() {
-    this.props.handleNavClassChange();
-
+    // this.props.handleNavClassChange();
+    // this.getProfileAddresses();
     // const { allProfiles } = this.props;
     this.initializeGeocode(); // when we load this component, we neeed to populate geocode state object // so that the markers are ready to render // allProfiles.forEach(({ address }, index) => { //   this.getGeocodeFromAddress(address); //   this.checkGeocodeLoading(index); // });
     // this.getProfileAddresses();
+    const { allProfiles } = this.props;
+    // if (prevProps.allProfiles !== newProfileList) {
+    // when we load this component, we neeed to populate geocode state object
+    // so that the markers are ready to render
+    allProfiles.forEach(({ address }, index) => {
+      this.getGeocodeFromAddress(address);
+      this.checkGeocodeLoading(index);
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { users: newProfileList } = this.state;
-    if (prevProps.allProfiles !== newProfileList) {
-      // when we load this component, we neeed to populate geocode state object
-      // so that the markers are ready to render
-      newProfileList.forEach(({ address }, index) => {
-        this.getGeocodeFromAddress(address);
-        this.checkGeocodeLoading(index);
-      });
-    }
+    // const { users: newProfileList } = prevProps;
+    // const { allProfiles } = this.props;
+    // // if (prevProps.allProfiles !== newProfileList) {
+    // // when we load this component, we neeed to populate geocode state object
+    // // so that the markers are ready to render
+    // allProfiles.forEach(({ address }, index) => {
+    //   debugger;
+    //   this.getGeocodeFromAddress(address);
+    //   this.checkGeocodeLoading(index);
+    // });
+    // }
   }
   getProfileAddresses = () => {
     Root.get("profiles/").then(res => {
-      this.setState({ users: res.data });
+      if (res.data.length < res.data.length - 1)
+        this.setState({ users: res.data });
     });
   };
 
   checkGeocodeLoading = index => {
     const { allProfiles } = this.props;
-    if (
+    console.log(index + allProfiles.length);
+    if (index === allProfiles.length - 1) {
+      this.setState({ loading: false });
+    } else if (
       index === allProfiles.length - 1 &&
       parseInt(index) !== 0 &&
       index !== 1
@@ -63,13 +77,6 @@ class SimpleMap extends Component {
     setApiKey(MAP_API_KEY);
     enableDebug();
   }; // MAKE THE MARKERS !!!!
-
-  covertProfileMarkers = () => {
-    const { allProfiles } = this.props; // removes the numbers from the address
-    allProfiles.map(({ address }) =>
-      address.substring(address.indexOf(" "), address.length)
-    );
-  }; // Get Geocodes For Markers
 
   getGeocodeFromAddress = address => {
     Geocode.fromAddress(address.toString()).then(res => {
@@ -86,18 +93,30 @@ class SimpleMap extends Component {
     height: "100%"
   };
 
+  displayMarkers = () => {
+    return this.state.geocodes.map((geocode, index) => {
+      return (
+        <Marker
+          key={index}
+          id={index}
+          position={{ lat: geocode.lat, lng: geocode.lng }}
+        />
+      );
+    });
+  };
+
   render() {
     // Setup the Render variables
     const { allProfiles } = this.props;
     const { geocodes, center, zoom, loading } = this.state;
 
-    let markers = allProfiles.map((profile, index) => {
-      const { id } = profile; // Grab the lat, lng from the object inside the geocode array from state
-      const { lat, lng } = geocodes[index] || {};
+    // let markers = allProfiles.map((profile, index) => {
+    //   const { id } = profile; // Grab the lat, lng from the object inside the geocode array from state
+    //   const { lat, lng } = geocodes[index] || {};
 
-      // return <MapMarker key={id} {...profile} lat={lat} lng={lng} />;
-      return <Marker position={{ lat, lng }} />;
-    });
+    //   // return <MapMarker key={id} {...profile} lat={lat} lng={lng} />;
+    //   return <Marker position={{ lat, lng }} />;
+    // });
 
     if (!loading) {
       return (
@@ -124,7 +143,7 @@ class SimpleMap extends Component {
             style={this.mapStyles}
             initialCenter={this.state.center}
           >
-            {markers}
+            {this.displayMarkers}
           </Map>
         </section>
       );
