@@ -16,7 +16,7 @@ class Map extends Component {
       geocodes: [],
       center: { lat: 43.99, lng: -79 },
       zoom: 10,
-      loading: true
+      loading: false
     };
   }
 
@@ -51,7 +51,7 @@ class Map extends Component {
       parseInt(index) !== 0 &&
       index !== 1
     ) {
-      this.setState({ loading: false });
+      this.setState({ loading: true });
     }
   };
 
