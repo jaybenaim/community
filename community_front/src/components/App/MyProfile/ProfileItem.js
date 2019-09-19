@@ -25,12 +25,16 @@ class ProfileItem extends React.Component {
     this.setHeroImage();
   }
 
-  handleBorrow = () => {
+  handleBorrowButton = () => {
     this.setState({
       itemAvailable: false,
       isActive: true,
       buttonClass: "danger"
     });
+  };
+
+  handleItemAvailableButton = () => {
+    this.setState({});
   };
 
   // Get a list of names in an array to pass each name as the query string
@@ -75,10 +79,10 @@ class ProfileItem extends React.Component {
             <Button
               className="item-content borrow-button"
               variant={this.state.buttonClass}
-              onClick={this.handleBorrow}
+              onClick={this.handleBorrowButton}
               disabled={this.state.isActive}
             >
-              Click to borrow{" "}
+              Item Available{" "}
             </Button>
           </Row>
         </div>
