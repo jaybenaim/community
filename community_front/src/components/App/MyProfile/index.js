@@ -67,10 +67,12 @@ class MyProfile extends React.Component {
 
       // the below statement sets an obj in state
       // sst({items: [{query: "ItemName", item: {...properties}}, ]})
+
       this.setState({
         items: items.filter((item, i) => {
           if (userProfile) {
-            if (userProfile[0].user === parseInt(window.localStorage["id"])) {
+            console.log(item.profile_id + ` USer : ${userProfile[0].user}`);
+            if (item.profile_id === userProfile[0].user) {
               return item;
             }
           }
@@ -84,7 +86,7 @@ class MyProfile extends React.Component {
     this.setState({ profileImage: url });
   };
   componentDidMount = () => {
-    // this.props.getProfileFromToken();
+    this.props.getProfileFromToken();
     this.getProfile();
     setTimeout(() => {
       this.getItemsFromUser();
@@ -111,10 +113,12 @@ class MyProfile extends React.Component {
 
   render() {
     const { items, itemGif, image } = this.state;
+    const { userProfile } = this.props;
 
     let itemElements = items.map((item, i) => {
       const { name_of_item, price } = item;
-
+      //////// getting all items / /// /
+      // if (item.profile_id === userProfile[0].id) {
       return (
         <ProfileItem
           key={i}
@@ -123,6 +127,7 @@ class MyProfile extends React.Component {
           price={price}
         />
       );
+      // }
     });
     let createProfileForm;
     let profile;
@@ -155,7 +160,6 @@ class MyProfile extends React.Component {
                       alt="profile"
                       onClick={this.changeImage}
                     />
-
                     <div className="profile-details">
                       <Row>
                         <p className="profile-name">

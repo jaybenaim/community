@@ -30,35 +30,45 @@ class SearchPage extends Component {
   handleSearchQuery = () => {
     let query = this.searchRef.current.value;
 
-    Root.get("items/").then(res => {
-      let items = res.data || [];
+    Root.get("items/")
+      .then(res => {
+        let items = res.data || [];
 
-      this.setState({
-        searchResults: items.filter((item, i) => {
-          if (item.name_of_item.toLowerCase() === query.toLowerCase()) {
-            return item;
-          }
-        })
+        this.setState({
+          searchResults: items.filter((item, i) => {
+            if (item.name_of_item.toLowerCase() === query.toLowerCase()) {
+              return item.profile_id;
+            }
+          })
+        });
+      })
+      .then(res => {
+        setTimeout(() => {
+          this.getSearchProfile();
+        }, 1000);
       });
-    });
   };
 
   getSearchProfile = () => {
     // const userId = window.localStorage["id"];
-    const { profileId } = this.state;
+    // const { profileId } = this.state;
+    //searchresults profile id
+
+    const profileId = this.state.searchResults[0].profile_id;
     const userProfile = [];
     Root.get(`profiles/${profileId}/`)
       .then(res => {
+        console.log(res.data);
         userProfile.push(res.data);
+        console.log(userProfile[0].profile_name);
       })
-      .then(() => {
+      .then(res => {
         this.setState({
           profileSearched: {
             profileName: userProfile[0].profile_name,
             email: userProfile[0].email,
             address: userProfile[0].address
-          },
-          loaded: true
+          }
         });
       })
       .catch(err => {
@@ -67,6 +77,8 @@ class SearchPage extends Component {
   };
 
   render() {
+    ///todooo render card with correct profile from search
+
     // const { allProfiles, allItems } = this.props;
     // const { profileName, email, address } = this.state.profileSearched;
     // const profileElements = allProfiles.map((p, i) => (
@@ -74,7 +86,7 @@ class SearchPage extends Component {
     // ));
     return (
       <>
-        {!this.state.loaded ? (
+        {!this.state.profileSearched ? (
           <Form inline>
             <FormControl
               type="text"
@@ -88,6 +100,20 @@ class SearchPage extends Component {
           </Form>
         ) : (
           <Container className="grid-container">
+            <Form inline>
+              <FormControl
+                type="text"
+                placeholder="Search"
+                className="mr-sm-2"
+                ref={this.searchRef}
+              />
+              <Button
+                variant="outline-primary"
+                onClick={this.handleSearchQuery}
+              >
+                Search
+              </Button>
+            </Form>
             <Row className="show-grid">
               <Col xs={12} md={4} lg={3}>
                 <Card style={{ width: "18rem" }}>

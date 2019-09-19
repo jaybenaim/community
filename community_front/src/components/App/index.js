@@ -14,7 +14,14 @@ import SearchPage from "./MyCommunity";
 class App extends React.Component {
   state = {
     user: [],
-    userProfile: [],
+    userProfile: [
+      {
+        user: "user",
+        profile_name: "profile name",
+        email: "email",
+        address: "address"
+      }
+    ],
     items: [],
     profileName: "",
     profileId: null,
@@ -27,7 +34,7 @@ class App extends React.Component {
     itemPrice: "price",
     allProfiles: [],
     displayed_form: "",
-    logged_in: window.localStorage["token"] ? true : false,
+    loggedIn: window.localStorage["token"] ? true : false,
     username: "",
     searchItem: null,
     profileSearched: "",
@@ -98,7 +105,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getAllProfiles();
-    // this.getProfileFromToken();
+    this.getProfileFromToken();
   }
 
   handle_login = (e, data) => {
@@ -140,7 +147,7 @@ class App extends React.Component {
         userProfile: matchedProfile,
         username: window.localStorage["username"],
         profileId: this.state.userProfile.user,
-        logged_in: true,
+        loggedIn: true,
         displayed_form: ""
       });
     });
@@ -169,7 +176,7 @@ class App extends React.Component {
     window.localStorage["token"] = "";
     window.localStorage["username"] = "";
     window.localStorage["id"] = "";
-    this.setState({ logged_in: false, username: "" });
+    this.setState({ loggedIn: false, username: "" });
   };
 
   display_form = form => {
@@ -203,18 +210,17 @@ class App extends React.Component {
   //     console.log(res.data);
   //   });
   // };
-  // handleItem = (item, price) => {
-  //   let newItems = [];
-  //   newItems.push({ item, price });
-  //   this.setState(prevState => ({ items: newItems }));
+  handleItem = (item, price) => {
+    let newItems = [];
+    newItems.push({ item, price });
+    this.setState(prevState => ({ items: newItems }));
 
-  //   setTimeout(() => {
-  //     console.log(this.state.items);
-  //   }, 1000);
-  // };
+    setTimeout(() => {
+      console.log(this.state.items);
+    }, 1000);
+  };
 
   render() {
-    // this.getProfileFromToken();
     return (
       <Router>
         <div className="App">
@@ -223,7 +229,7 @@ class App extends React.Component {
           </Switch>
           <Switch>
             <NavBar
-              logged_in={this.state.logged_in}
+              loggedIn={this.state.loggedIn}
               display_form={this.display_form}
               handle_logout={this.handle_logout}
               username={this.state.username}
@@ -240,7 +246,7 @@ class App extends React.Component {
           </Switch>
           <Switch>
             <Route
-              path="/search/"
+              path="/profiles/search"
               render={props => (
                 // <CreateProfileForm
                 //   allProfiles={this.state.allProfiles}
@@ -257,7 +263,7 @@ class App extends React.Component {
                 //   getProfileFromToken={this.getProfileFromToken}
                 // />
 
-                <SearchPage logged_in={this.state.logged_in} />
+                <SearchPage loggedIn={this.state.loggedIn} />
               )}
             />
           </Switch>
@@ -270,7 +276,7 @@ class App extends React.Component {
           <Switch>
             <Route
               exact
-              path="/profiles/"
+              path="/profiles/myprofile"
               render={props => (
                 <MyProfile
                   allProfiles={this.state.allProfiles}

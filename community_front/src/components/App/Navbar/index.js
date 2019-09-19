@@ -55,7 +55,7 @@ const NavBar = props => {
       return (
         <BrowserRouter>
           <Route
-            path="profiles/:profileId"
+            path="profiles/"
             render={props => <MyProfile {...props} profileId={profileId} />}
           />
         </BrowserRouter>
@@ -74,11 +74,11 @@ const NavBar = props => {
         <Nav className="mr-auto">
           <Nav.Link href="/">Home</Nav.Link>
           <Nav.Link href="/map">Map</Nav.Link>
-          <Nav.Link href="/profiles">My Profile</Nav.Link>
-          <Nav.Link href="/search">My Community</Nav.Link>
+          <Nav.Link href="/profiles/myprofile">My Profile</Nav.Link>
+          <Nav.Link href="/profiles/search">My Community</Nav.Link>
 
           <NavbarLogin
-            logged_in={props.logged_in}
+            loggedIn={props.loggedIn}
             display_form={props.display_form}
             handle_logout={props.handle_logout}
             username={props.username}
