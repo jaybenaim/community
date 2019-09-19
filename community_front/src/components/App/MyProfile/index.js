@@ -5,22 +5,16 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-// import ImageApi from "../../apis/images";
-import {
-  GIPHY_API_KEY
-  // PEXELS_API_KEY,
-  // IMAGE_ACCESS_KEY
-} from "../../../apis/keys";
 import ProfileItem from "./ProfileItem";
-
-import Axios from "axios";
 import Item from "./ItemForm";
 import CreateProfileForm from "./CreateProfileForm";
 import EditProfile from "../../EditProfile";
 
 class MyProfile extends React.Component {
   state = {
-    user: null,
+    user: [
+      { profile_name: "profile name", email: "email", address: "address" }
+    ],
     items: [
       {
         image: null,
@@ -35,8 +29,6 @@ class MyProfile extends React.Component {
     profileImage:
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
     itemGif: "",
-    query: [],
-    query2: "",
     image:
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
     itemName: "",
@@ -47,8 +39,13 @@ class MyProfile extends React.Component {
   };
 
   getProfile = () => {
-    if (this.props.userProfile[0] !== undefined)
-      this.setState({ user: this.props.userProfile[0] });
+    Root.get("profiles/").then(res => {
+      let profiles = res.data;
+      let userProfile = profiles.map(profile => {
+        if ((profile.user = window.localStorage["id"])) return profile;
+      });
+      this.setState({ user: userProfile });
+    });
   };
 
   // Fetches all the items that users have created
@@ -60,10 +57,12 @@ class MyProfile extends React.Component {
 
       // the below statement sets an obj in state
       // sst({items: [{query: "ItemName", item: {...properties}}, ]})
+
       this.setState({
         items: items.filter((item, i) => {
           if (userProfile) {
-            if (userProfile[0].user === parseInt(window.localStorage["id"])) {
+            console.log(item.profile_id + ` User : ${userProfile[0].id}`);
+            if (item.profile_id === userProfile[0].id) {
               return item;
             }
           }
@@ -77,12 +76,8 @@ class MyProfile extends React.Component {
     this.setState({ profileImage: url });
   };
   componentDidMount = () => {
-    // this.props.getProfileFromToken();
-
-    setTimeout(() => {
-      this.getProfile();
-    }, 1000);
-
+    this.props.getProfileFromToken();
+    this.getProfile();
     setTimeout(() => {
       this.getItemsFromUser();
     }, 1500);
@@ -108,18 +103,21 @@ class MyProfile extends React.Component {
 
   render() {
     const { items, itemGif, image } = this.state;
+    const { userProfile } = this.props;
 
     let itemElements = items.map((item, i) => {
       const { name_of_item, price } = item;
-
-      return (
-        <ProfileItem
-          key={i}
-          image={itemGif || image}
-          name={name_of_item}
-          price={price}
-        />
-      );
+      //////// getting all items / /// /
+      if (item.profile_id === userProfile[0].id) {
+        return (
+          <ProfileItem
+            key={i}
+            image={itemGif || image}
+            name={name_of_item}
+            price={price}
+          />
+        );
+      }
     });
     let createProfileForm;
     let profile;
@@ -152,20 +150,19 @@ class MyProfile extends React.Component {
                       alt="profile"
                       onClick={this.changeImage}
                     />
-
                     <div className="profile-details">
                       <Row>
                         <p className="profile-name">
                           {/* if searchActive &&  */}
                           {/* Name: {this.props.profileSearched.profile_name} */}
-                          {this.state.user.profile_name}
+                          {this.state.user[0].profile_name}
                         </p>
                       </Row>
                       <br />
                       <Row>
                         <p className="profile-email">
                           <span className="bold"> Email:</span>{" "}
-                          {this.state.user.email}
+                          {this.state.user[0].email}
                         </p>
                         <br />
                       </Row>
@@ -173,7 +170,7 @@ class MyProfile extends React.Component {
                         <p className="profile-address">
                           <br />
                           <span className="bold"> Address: </span>
-                          {this.state.user.address}
+                          {this.state.user[0].address}
                         </p>
                       </Row>
 

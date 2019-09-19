@@ -54,10 +54,10 @@ class NavbarNew extends React.Component {
     return (
       <Container>
         <Row>
-          {this.props.logged_in ? this.logged_in_nav : this.logged_out_nav}
+          {this.props.loggedIn ? this.loggedIn_nav : this.logged_out_nav}
           {form}
           <h3>
-            {this.props.logged_in
+            {this.props.loggedIn
               ? `Hello, ${window.localStorage["username"] &&
                   window.localStorage["username"].toUpperCase()}`
               : "Please Log In"}
@@ -70,7 +70,7 @@ class NavbarNew extends React.Component {
 export default NavbarNew;
 
 NavbarNew.propTypes = {
-  logged_in: PropTypes.bool.isRequired,
+  loggedIn: PropTypes.bool.isRequired,
   display_form: PropTypes.func.isRequired,
   handle_logout: PropTypes.func.isRequired
 };

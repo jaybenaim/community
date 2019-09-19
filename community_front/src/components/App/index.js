@@ -9,11 +9,19 @@ import Map from "./Map";
 import MyProfile from "./MyProfile";
 import Axios from "axios";
 import PutTest from "../PutTest";
+import SearchPage from "./MyCommunity";
 
 class App extends React.Component {
   state = {
     user: [],
-    userProfile: [],
+    userProfile: [
+      {
+        user: "user",
+        profile_name: "profile name",
+        email: "email",
+        address: "address"
+      }
+    ],
     items: [],
     profileName: "",
     profileId: null,
@@ -26,7 +34,7 @@ class App extends React.Component {
     itemPrice: "price",
     allProfiles: [],
     displayed_form: "",
-    logged_in: window.localStorage["token"] ? true : false,
+    loggedIn: window.localStorage["token"] ? true : false,
     username: "",
     searchItem: null,
     profileSearched: "",
@@ -83,8 +91,7 @@ class App extends React.Component {
   getAllProfiles = () => {
     Root.get("profiles/", {
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Token ${window.localStorage["token"]}`
+        "Content-Type": "application/json"
       }
     }).then(res => {
       let profiles = res.data;
@@ -140,7 +147,7 @@ class App extends React.Component {
         userProfile: matchedProfile,
         username: window.localStorage["username"],
         profileId: this.state.userProfile.user,
-        logged_in: true,
+        loggedIn: true,
         displayed_form: ""
       });
     });
@@ -169,7 +176,7 @@ class App extends React.Component {
     window.localStorage["token"] = "";
     window.localStorage["username"] = "";
     window.localStorage["id"] = "";
-    this.setState({ logged_in: false, username: "" });
+    this.setState({ loggedIn: false, username: "" });
   };
 
   display_form = form => {
@@ -178,31 +185,31 @@ class App extends React.Component {
     });
   };
 
-  getSearchQuery = query => {
-    Root.get("items/").then(res => {
-      let items = res.data;
-      (items || []).map((item, i) => {
-        // const { name_of_item, price, profile_id } = item;
-        if (item.name_of_item.toLowerCase() === query.toLowerCase()) {
-          this.setState({
-            searchItem: { ...item },
-            profileId: item.profile_id
-          });
-        }
-        return item;
-      });
-    });
-    this.setState({ loading: true });
-    this.state.loading && this.getSearchProfile();
-  };
+  // getSearchQuery = query => {
+  //   Root.get("items/").then(res => {
+  //     let items = res.data;
+  //     (items || []).map((item, i) => {
+  //       // const { name_of_item, price, profile_id } = item;
+  //       if (item.name_of_item.toLowerCase() === query.toLowerCase()) {
+  //         this.setState({
+  //           searchItem: { ...item },
+  //           profileId: item.profile_id
+  //         });
+  //       }
+  //       return item;
+  //     });
+  //   });
+  //   this.setState({ loading: true });
+  //   this.state.loading && this.getSearchProfile();
+  // };
 
-  getSearchProfile = () => {
-    const { profileId } = this.state;
-    Root.get(`profiles/${profileId}/`).then(res => {
-      this.setState({ profileSearched: res.data });
-      console.log(res.data);
-    });
-  };
+  // getSearchProfile = () => {
+  //   const { profileId } = this.state;
+  //   Root.get(`profiles/${profileId}/`).then(res => {
+  //     this.setState({ profileSearched: res.data });
+  //     console.log(res.data);
+  //   });
+  // };
   handleItem = (item, price) => {
     let newItems = [];
     newItems.push({ item, price });
@@ -214,7 +221,6 @@ class App extends React.Component {
   };
 
   render() {
-    // this.getProfileFromToken();
     return (
       <Router>
         <div className="App">
@@ -223,7 +229,7 @@ class App extends React.Component {
           </Switch>
           <Switch>
             <NavBar
-              logged_in={this.state.logged_in}
+              loggedIn={this.state.loggedIn}
               display_form={this.display_form}
               handle_logout={this.handle_logout}
               username={this.state.username}
@@ -240,22 +246,24 @@ class App extends React.Component {
           </Switch>
           <Switch>
             <Route
-              path="/users/profiles/"
+              path="/profiles/search"
               render={props => (
-                <CreateProfileForm
-                  allProfiles={this.state.allProfiles}
-                  allItems={this.allItems}
-                  handleProfileFormSubmit={this.handleProfileFormSubmit}
-                  handleFormSubmit={this.handleFormSubmit}
-                  handleShow={this.handleShow}
-                  handleClose={this.handleClose}
-                  show={this.show}
-                  handleProfileFormClick={this.handleProfileFormClick}
-                  username={this.state.username}
-                  userProfile={this.state.userProfile}
-                  profileId={this.state.profileId}
-                  getProfileFromToken={this.getProfileFromToken}
-                />
+                // <CreateProfileForm
+                //   allProfiles={this.state.allProfiles}
+                //   allItems={this.allItems}
+                //   handleProfileFormSubmit={this.handleProfileFormSubmit}
+                //   handleFormSubmit={this.handleFormSubmit}
+                //   handleShow={this.handleShow}
+                //   handleClose={this.handleClose}
+                //   show={this.show}
+                //   handleProfileFormClick={this.handleProfileFormClick}
+                //   username={this.state.username}
+                //   userProfile={this.state.userProfile}
+                //   profileId={this.state.profileId}
+                //   getProfileFromToken={this.getProfileFromToken}
+                // />
+
+                <SearchPage loggedIn={this.state.loggedIn} />
               )}
             />
           </Switch>
@@ -268,7 +276,7 @@ class App extends React.Component {
           <Switch>
             <Route
               exact
-              path="/profiles/"
+              path="/profiles/myprofile"
               render={props => (
                 <MyProfile
                   allProfiles={this.state.allProfiles}
