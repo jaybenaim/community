@@ -46,10 +46,18 @@ class MyProfile extends React.Component {
   getProfile = () => {
     Root.get("profiles/").then(res => {
       let profiles = res.data;
-      let userProfile = profiles.map(profile => {
-        if ((profile.user = window.localStorage["id"])) return profile;
+      const userProfile = profiles.map(profile => {
+        if (profile.username === window.localStorage["username"]) {
+          return profile;
+        }
       });
-      this.setState({ user: userProfile });
+      console.log(userProfile);
+      if (!userProfile[0]) {
+        this.setState({ user: this.state.user });
+      } else {
+        this.setState({ user: userProfile });
+      }
+      console.log(this.state.user);
     });
   };
 
@@ -128,7 +136,7 @@ class MyProfile extends React.Component {
     let createProfileForm;
     let profile;
     {
-      this.state.user === null
+      this.state.user[0].email === "email"
         ? (createProfileForm = (
             <CreateProfileForm
               loadProfile={this.props.getProfileFromToken}
