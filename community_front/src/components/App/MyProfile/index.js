@@ -74,7 +74,7 @@ class MyProfile extends React.Component {
       this.setState({
         items: items.filter((item, i) => {
           if (userProfile) {
-            if (item.profile_id === this.state.user.id) {
+            if (item.profile_id === this.state.user[0].id) {
               return item;
             }
           }
@@ -122,7 +122,7 @@ class MyProfile extends React.Component {
       const { name_of_item, price } = item;
       //////// getting all items / /// /
 
-      if (item.profile_id === this.state.user.id) {
+      if (item.profile_id === this.state.user[0].id) {
         return (
           <ProfileItem
             key={i}
