@@ -84,7 +84,6 @@ class ProfileItem extends React.Component {
             >
               Item Available{" "}
             </Button>
-            <Button>Borrowed</Button>
           </Row>
         </div>
       </Row>
