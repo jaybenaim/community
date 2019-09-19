@@ -33,7 +33,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
 
 class ItemViewSet(viewsets.ModelViewSet): 
     """ Api endpoint for items to be viewed or edited """ 
-    queryset = Item.objects.all().order_by('id')[:6]
+    queryset = Item.objects.all()
     serializer_class = ItemSerializer
     permission_classes = [permissions.AllowAny, permissions.IsAuthenticated]
 
