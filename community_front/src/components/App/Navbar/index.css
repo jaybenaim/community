@@ -36,7 +36,7 @@
   float: right;
 }
 .navbar-nav {
-  background: lightgray;
+  background-color: beige;
   border-radius: 10px;
   color: black;
 }
@@ -50,4 +50,13 @@
 }
 .search-button {
   margin-bottom: 40px;
+}
+.company-name {
+  margin-left: 220px;
+  margin-right: 60px;
+  font-family: "Spinnaker", sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  color: rgb(71, 97, 79);
+  letter-spacing: 2px;
 }

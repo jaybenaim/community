@@ -15,7 +15,7 @@ import Card from "react-bootstrap/Card";
 class SearchPage extends Component {
   state = {
     profileSearched: {
-      profileName: "None",
+      profileName: "User",
       email: "Email",
       address: "Address"
     },
@@ -54,10 +54,10 @@ class SearchPage extends Component {
     // const { profileId } = this.state;
     //searchresults profile id
 
-    const profileId = this.state.searchResults[0].profile_id;
-    const userProfile = [];
-    Root.get(`profiles/${profileId}/`)
-      .then(res => {
+    try {
+      const profileId = this.state.searchResults[0].profile_id;
+      const userProfile = [];
+      Root.get(`profiles/${profileId}/`).then(res => {
         console.log(res.data);
         userProfile.push(res.data);
         console.log(userProfile[0].profile_name);
@@ -68,11 +68,10 @@ class SearchPage extends Component {
             address: userProfile[0].address
           }
         });
-      })
-
-      .catch(err => {
-        alert("No Item Found");
       });
+    } catch (error) {
+      alert("No Item Found");
+    }
   };
 
   render() {
@@ -100,6 +99,7 @@ class SearchPage extends Component {
         ) : (
           <Container className="grid-container">
             <Form inline>
+              <Form.Label>Search for an item&nbsp;</Form.Label>
               <FormControl
                 type="text"
                 placeholder="Search"
@@ -130,7 +130,8 @@ class SearchPage extends Component {
                       {this.state.profileSearched.address}
                     </Card.Text>
                     <Button variant="primary" onClick={this.allItems}>
-                      Click to see more
+                      Click to see {this.state.profileSearched.profileName}'s
+                      profile
                     </Button>
                   </Card.Body>
                 </Card>

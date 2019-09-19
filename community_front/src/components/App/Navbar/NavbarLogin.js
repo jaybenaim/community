@@ -54,7 +54,7 @@ class NavbarNew extends React.Component {
     return (
       <Container>
         <Row>
-          {this.props.loggedIn ? this.loggedIn_nav : this.logged_out_nav}
+          {this.props.loggedIn ? this.logged_in_nav : this.logged_out_nav}
           {form}
           <h3>
             {this.props.loggedIn
