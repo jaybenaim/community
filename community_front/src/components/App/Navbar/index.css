@@ -7,8 +7,9 @@
   height: 80px;
   width: 100%;
   z-index: 2;
-}
 
+} */
+/* 
 /* .navbar-nav :nth-child(n + 2) {
   color: white !important;
   background: rgba(33, 33, 33, 0.5);
@@ -29,8 +30,24 @@
 .signup {
   float: right;
   margin-right: 20px;
-  color: white;
+  color: black;
 }
 .center {
   float: right;
+}
+.navbar-nav {
+  background: lightgray;
+  border-radius: 10px;
+  color: black;
+}
+.login-display {
+  float: left;
+}
+.nav-search {
+  float: right;
+  margin-top: -100px;
+  margin-left: 350px;
+}
+.search-button {
+  margin-bottom: 40px;
 }

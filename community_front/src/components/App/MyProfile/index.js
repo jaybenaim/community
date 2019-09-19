@@ -61,7 +61,6 @@ class MyProfile extends React.Component {
       this.setState({
         items: items.filter((item, i) => {
           if (userProfile) {
-            console.log(item.profile_id + ` User : ${userProfile[0].id}`);
             if (item.profile_id === userProfile[0].id) {
               return item;
             }

@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Redirect, Route, BrowserRouter } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Nav from "react-bootstrap/Nav";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
@@ -63,10 +66,10 @@ const NavBar = props => {
   };
 
   return (
-    <Navbar className="nav" bg="light" expand="lg">
+    <Navbar className="nav navbar" expand="lg">
       <Navbar.Brand href="/">
         <img className="logo" src={logo} alt="logo" />
-        Community
+        &nbsp; Community
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
@@ -76,29 +79,45 @@ const NavBar = props => {
           <Nav.Link href="/map">Map</Nav.Link>
           <Nav.Link href="/profiles/myprofile">My Profile</Nav.Link>
           <Nav.Link href="/profiles/search">My Community</Nav.Link>
-
-          <NavbarLogin
-            loggedIn={props.loggedIn}
-            display_form={props.display_form}
-            handle_logout={props.handle_logout}
-            username={props.username}
-            displayed_form={props.displayed_form}
-            handle_login={props.handle_login}
-            handle_signup={props.handle_signup}
-            userProfile={props.userProfile}
-          />
+          <Container>
+            <Row>
+              <Col sm={6} md={6} lg={6}>
+                <div className="login-display">
+                  <NavbarLogin
+                    loggedIn={props.loggedIn}
+                    display_form={props.display_form}
+                    handle_logout={props.handle_logout}
+                    username={props.username}
+                    displayed_form={props.displayed_form}
+                    handle_login={props.handle_login}
+                    handle_signup={props.handle_signup}
+                    userProfile={props.userProfile}
+                  />
+                </div>
+              </Col>
+              <Col sm={6} md={6} lg={6} className="nav-search">
+                <div className="nav-search">
+                  <Form inline>
+                    <FormControl
+                      type="text"
+                      placeholder="Search"
+                      className="mr-sm-2"
+                      ref={searchRef}
+                    />
+                  </Form>
+                  <Button
+                    className="search-button"
+                    variant="primary"
+                    onClick={searchByNameOfItem}
+                  >
+                    Search
+                  </Button>
+                </div>
+              </Col>
+            </Row>
+          </Container>
         </Nav>
-        <Form inline>
-          <FormControl
-            type="text"
-            placeholder="Search"
-            className="mr-sm-2"
-            ref={searchRef}
-          />
-          <Button variant="outline-primary" onClick={searchByNameOfItem}>
-            Search
-          </Button>
-        </Form>
+        {/* make component or render the mycommpounity page here  */}
       </Navbar.Collapse>
     </Navbar>
   );
