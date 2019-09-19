@@ -61,8 +61,6 @@ class SearchPage extends Component {
         console.log(res.data);
         userProfile.push(res.data);
         console.log(userProfile[0].profile_name);
-      })
-      .then(res => {
         this.setState({
           profileSearched: {
             profileName: userProfile[0].profile_name,
@@ -71,6 +69,7 @@ class SearchPage extends Component {
           }
         });
       })
+
       .catch(err => {
         alert("No Item Found");
       });

@@ -34,3 +34,24 @@
 .center {
   float: right;
 }
+.navbar-nav {
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.5),
+    20%,
+    rgba(0, 0, 0, 0.3)
+  );
+  border-radius: 10px;
+  color: white;
+}
+.login-display {
+  float: left;
+}
+.nav-search {
+  float: right;
+  margin-top: -100px;
+  margin-left: 40px;
+}
+.search-button {
+  margin-bottom: 40px;
+}

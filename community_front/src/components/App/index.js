@@ -25,8 +25,6 @@ class App extends React.Component {
     items: [],
     profileName: "",
     profileId: null,
-    email: "",
-    address: "",
     show: "false",
     showProfile: false,
     displayItemForm: false,
