@@ -186,7 +186,7 @@ class MyProfile extends React.Component {
                         <p className="profile-address">
                           <br />
                           <span className="bold"> Address: </span>
-                          {this.state.user[0].address}
+                          <a href="/map"> {this.state.user[0].address}</a>
                         </p>
                       </Row>
 

@@ -99,19 +99,15 @@ class SearchPage extends Component {
             </Button>
           </Form>
         ) : (
-          <Container className="grid-container">
+          <Container fluid={true} className="grid-container">
             <Form inline>
-              <Form.Label>Search for an item&nbsp;</Form.Label>
               <FormControl
                 type="text"
-                placeholder="Search"
+                placeholder="Search for an item"
                 className="mr-sm-2"
                 ref={this.searchRef}
               />
-              <Button
-                variant="outline-primary"
-                onClick={this.handleSearchQuery}
-              >
+              <Button variant="primary" onClick={this.handleSearchQuery}>
                 Search
               </Button>
             </Form>

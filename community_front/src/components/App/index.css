@@ -50,6 +50,7 @@ li:hover {
 .navbar-dark :nth-child(n + 1) {
   /* border: 2px solid black; */
   color: black !important;
+  padding-bottom: 5px;
   /* font-size: 18px;
   font-weight: 700; */
 }
@@ -69,6 +70,9 @@ li:hover {
 /* .navbar-nav :first-child {
   color: white !important;
 } */
+/* a.nav-link {
+  margin-left: 10px;
+} */
 
 .logo {
   height: 20px;
@@ -80,10 +84,6 @@ li:hover {
   z-index: 2;
 }
 
-.basic-navbar-nav {
-  position: relative;
-  z-index: 2;
-}
 /*  Home Page Slideshow */
 
 .body {
