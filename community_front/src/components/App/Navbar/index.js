@@ -77,10 +77,6 @@ class NavBar extends React.Component {
 
     return (
       <Navbar className={navClass} expand="lg">
-        <Navbar.Brand href="/">
-          <img className="logo" src={logo} alt="logo" />
-          <span className="company-name">&nbsp; COMMUNITY</span>
-        </Navbar.Brand>
         <Navbar.Toggle aria-controls="nav-toggle" />
 
         <Navbar.Collapse id="basic-navbar-nav">
@@ -110,6 +106,10 @@ class NavBar extends React.Component {
           </Nav>
           {/* make component or render the mycommpounity page here  */}
         </Navbar.Collapse>
+        <Navbar.Brand href="/">
+          <img className="logo" src={logo} alt="logo" />
+          <span className="company-name">&nbsp; COMMUNITY</span>
+        </Navbar.Brand>
       </Navbar>
     );
   }

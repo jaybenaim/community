@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "../index.css";
-import GoogleMapReact from "google-map-react";
+import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
 import { MAP_API_KEY } from "../../../apis/keys";
 import Geocode from "react-geocode";
 import MapMarker from "./MapMarker";
@@ -10,12 +10,12 @@ import Root from "../../../apis/root";
  *@prop [allProfiles] array required
  */
 
-class Map extends Component {
+class SimpleMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
       geocodes: [],
-      center: { lat: 43.99, lng: -79 },
+      center: { lat: 43.671593898745726, lng: -79.37341993487492 },
       zoom: 10,
       loading: false,
       users: []
@@ -23,30 +23,47 @@ class Map extends Component {
   }
 
   componentDidMount() {
+    // this.props.handleNavClassChange();
+    // this.getProfileAddresses();
     // const { allProfiles } = this.props;
     this.initializeGeocode(); // when we load this component, we neeed to populate geocode state object // so that the markers are ready to render // allProfiles.forEach(({ address }, index) => { //   this.getGeocodeFromAddress(address); //   this.checkGeocodeLoading(index); // });
+    // this.getProfileAddresses();
+    const { allProfiles } = this.props;
+    // if (prevProps.allProfiles !== newProfileList) {
+    // when we load this component, we neeed to populate geocode state object
+    // so that the markers are ready to render
+    allProfiles.forEach(({ address }, index) => {
+      this.getGeocodeFromAddress(address);
+      this.checkGeocodeLoading(index);
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { allProfiles: newProfileList } = this.props;
-    if (prevProps.allProfiles !== newProfileList) {
-      // when we load this component, we neeed to populate geocode state object
-      // so that the markers are ready to render
-      newProfileList.forEach(({ address }, index) => {
-        this.getGeocodeFromAddress(address);
-        this.checkGeocodeLoading(index);
-      });
-    }
+    // const { users: newProfileList } = prevProps;
+    // const { allProfiles } = this.props;
+    // // if (prevProps.allProfiles !== newProfileList) {
+    // // when we load this component, we neeed to populate geocode state object
+    // // so that the markers are ready to render
+    // allProfiles.forEach(({ address }, index) => {
+    //   debugger;
+    //   this.getGeocodeFromAddress(address);
+    //   this.checkGeocodeLoading(index);
+    // });
+    // }
   }
   getProfileAddresses = () => {
     Root.get("profiles/").then(res => {
-      this.setState({ users: res.data });
+      if (res.data.length < res.data.length - 1)
+        this.setState({ users: res.data });
     });
   };
 
   checkGeocodeLoading = index => {
     const { allProfiles } = this.props;
-    if (
+    console.log(index + allProfiles.length);
+    if (index === allProfiles.length - 1) {
+      this.setState({ loading: false });
+    } else if (
       index === allProfiles.length - 1 &&
       parseInt(index) !== 0 &&
       index !== 1
@@ -61,13 +78,6 @@ class Map extends Component {
     enableDebug();
   }; // MAKE THE MARKERS !!!!
 
-  covertProfileMarkers = () => {
-    const { allProfiles } = this.props; // removes the numbers from the address
-    allProfiles.map(({ address }) =>
-      address.substring(address.indexOf(" "), address.length)
-    );
-  }; // Get Geocodes For Markers
-
   getGeocodeFromAddress = address => {
     Geocode.fromAddress(address.toString()).then(res => {
       // grab the lat lng values from the geocode api
@@ -78,32 +88,64 @@ class Map extends Component {
       this.setState({ geocodes: [...geocodes, { lat, lng }] });
     });
   };
+  mapStyles = {
+    width: "100%",
+    height: "100%"
+  };
+
+  displayMarkers = () => {
+    return this.state.geocodes.map((geocode, index) => {
+      return (
+        <Marker
+          className="hammer"
+          key={index}
+          id={index}
+          position={{ lat: geocode.lat, lng: geocode.lng }}
+        />
+      );
+    });
+  };
 
   render() {
     // Setup the Render variables
     const { allProfiles } = this.props;
     const { geocodes, center, zoom, loading } = this.state;
 
+    // let markers = allProfiles.map((profile, index) => {
+    //   const { id } = profile; // Grab the lat, lng from the object inside the geocode array from state
+    //   const { lat, lng } = geocodes[index] || {};
+
+    //   // return <MapMarker key={id} {...profile} lat={lat} lng={lng} />;
+    //   return <Marker position={{ lat, lng }} />;
+    // });
+
     if (!loading) {
       return (
         <section style={{ height: "100vh", width: "100%" }}>
-                    
+          {/*
           <GoogleMapReact
             bootstrapURLKeys={{ key: MAP_API_KEY }}
             defaultCenter={center}
             defaultZoom={zoom}
             yesIWantToUseGoogleMapApiInternals
           >
-                        
+
             {allProfiles.map((profile, index) => {
               const { id } = profile; // Grab the lat, lng from the object inside the geocode array from state
               const { lat, lng } = geocodes[index] || {};
 
               return <MapMarker key={id} {...profile} lat={lat} lng={lng} />;
             })}
-                      
-          </GoogleMapReact>
-                  
+
+          </GoogleMapReact> */}
+          <Map
+            google={this.props.google}
+            zoom={13}
+            style={this.mapStyles}
+            initialCenter={this.state.center}
+          >
+            {this.displayMarkers()}
+          </Map>
         </section>
       );
     }
@@ -112,4 +154,6 @@ class Map extends Component {
   }
 }
 
-export default Map;
+export default GoogleApiWrapper({
+  apiKey: MAP_API_KEY
+})(SimpleMap);
