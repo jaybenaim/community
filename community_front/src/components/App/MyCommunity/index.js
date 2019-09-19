@@ -54,10 +54,10 @@ class SearchPage extends Component {
     // const { profileId } = this.state;
     //searchresults profile id
 
-    const profileId = this.state.searchResults[0].profile_id;
-    const userProfile = [];
-    Root.get(`profiles/${profileId}/`)
-      .then(res => {
+    try {
+      const profileId = this.state.searchResults[0].profile_id;
+      const userProfile = [];
+      Root.get(`profiles/${profileId}/`).then(res => {
         console.log(res.data);
         userProfile.push(res.data);
         console.log(userProfile[0].profile_name);
@@ -68,11 +68,10 @@ class SearchPage extends Component {
             address: userProfile[0].address
           }
         });
-      })
-
-      .catch(err => {
-        alert("No Item Found");
       });
+    } catch (error) {
+      alert("No Item Found");
+    }
   };
 
   render() {
