@@ -117,6 +117,7 @@ class App extends React.Component {
       window.localStorage["token"] = res.data.token;
       window.localStorage["username"] = data.username;
       window.localStorage["id"] = res.data.id;
+      console.log(window.localStorage["token"]);
     });
   };
 
@@ -139,7 +140,6 @@ class App extends React.Component {
     window.localStorage["username"] = "";
     window.localStorage["id"] = "";
     this.setState({ loggedIn: false, username: "" });
-    console.log(window.localStorage["token"]);
   };
 
   display_form = form => {

@@ -50,13 +50,11 @@ class MyProfile extends React.Component {
           return profile;
         }
       });
-      console.log(userProfile);
       if (!userProfile[0]) {
         this.setState({ user: this.state.user });
       } else {
         this.setState({ user: userProfile });
       }
-      console.log(this.state.user);
     });
   };
 
@@ -88,8 +86,6 @@ class MyProfile extends React.Component {
   };
   componentDidMount = () => {
     this.props.handleNavClassChange();
-
-    // this.props.getProfileFromToken();
     this.getProfile();
     setTimeout(() => {
       this.getItemsFromUser();
@@ -235,7 +231,7 @@ class MyProfile extends React.Component {
         <div>
           {createProfileForm}
           {profile}
-          {window.localStorage["username"]}
+          {window.localStorage["token"]}
         </div>
       </>
     );
