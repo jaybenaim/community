@@ -4,17 +4,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Root from "../../../apis/root";
 
-const Item = ({
-  handleFormSubmit,
-  handleItemClose,
-  itemName,
-  itemPrice,
-  onChangeItemPrice,
-  onChangeItemName,
-  handleItem,
-  userProfile,
-  toggleAddItemForm
-}) => {
+const Item = ({ handleItem, userProfile, toggleAddItemForm }) => {
   // create hook state for holding item and price temp
   const [item, setItem] = useState(null);
   const [price, setPrice] = useState(null);
@@ -89,7 +79,6 @@ const Item = ({
                   name="item"
                   type="text"
                   ref={itemRef}
-                  // onChange={event => onChangeItemName(event.target.value)}
                   placeholder="Enter An Item Name"
                 />
               </Form.Group>
@@ -99,7 +88,6 @@ const Item = ({
                   name="price"
                   type="text"
                   ref={priceRef}
-                  // onChange={event => onChangeItemPrice(event.target.value)}
                   placeholder="Enter An Item Price"
                 />
               </Form.Group>

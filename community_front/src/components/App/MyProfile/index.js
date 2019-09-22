@@ -37,8 +37,7 @@ class MyProfile extends React.Component {
     image:
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
     itemName: "",
-    itemPrice: "",
-    // profile_id: this.props.profileId,
+
     showEditForm: false,
     showAddItemForm: false
   };
@@ -116,6 +115,7 @@ class MyProfile extends React.Component {
   };
 
   render() {
+    console.log(this.props.userProfile);
     const { items, itemGif, image } = this.state;
 
     const { userProfile } = this.props;
@@ -170,7 +170,6 @@ class MyProfile extends React.Component {
                       <Row>
                         <p className="profile-name">
                           {/* if searchActive &&  */}
-                          {/* Name: {this.props.profileSearched.profile_name} */}
                           {this.state.user[0].profile_name}
                         </p>
                       </Row>
@@ -202,7 +201,6 @@ class MyProfile extends React.Component {
                       <Item
                         toggleAddItemForm={this.toggleAddItemForm}
                         itemName={this.state.itemName}
-                        itemPrice={this.state.itemPrice}
                         handleItemClose={this.handleItemClose}
                         onChangeItemPrice={this.onChangeItemPrice}
                         onChangeItemName={this.onChangeItemName}
@@ -237,6 +235,7 @@ class MyProfile extends React.Component {
         <div>
           {createProfileForm}
           {profile}
+          {window.localStorage["username"]}
         </div>
       </>
     );

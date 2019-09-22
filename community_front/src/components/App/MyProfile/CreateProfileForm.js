@@ -60,11 +60,7 @@ class CreateProfileForm extends React.Component {
   render() {
     return (
       <Container className="grid-container">
-        <Button
-          className="butoon"
-          variant="outline-primary"
-          onClick={this.handleShow}
-        >
+        <Button className="butoon" variant="primary" onClick={this.handleShow}>
           Create a Profile
         </Button>
         <Modal className="modal-form" show={this.state.show}>
