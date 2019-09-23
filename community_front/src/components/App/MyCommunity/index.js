@@ -11,10 +11,12 @@ import Container from "react-bootstrap/Container";
 import { Redirect, Route, BrowserRouter } from "react-router-dom";
 import "./index.css";
 import Card from "react-bootstrap/Card";
+import MyProfile from "../MyProfile";
 
 class SearchPage extends Component {
   state = {
     profileSearched: {
+      idUrl: null,
       profileName: "User",
       email: "Email",
       address: "Address"
@@ -23,7 +25,8 @@ class SearchPage extends Component {
     searchResults: [],
     loading: false,
     redirect: false,
-    loaded: false
+    loaded: false,
+    showSearchedProfile: false
   };
   searchRef = React.createRef();
 
@@ -58,11 +61,10 @@ class SearchPage extends Component {
       const profileId = this.state.searchResults[0].profile_id;
       const userProfile = [];
       Root.get(`profiles/${profileId}/`).then(res => {
-        console.log(res.data);
         userProfile.push(res.data);
-        console.log(userProfile[0].profile_name);
         this.setState({
           profileSearched: {
+            idUrl: `profiles/${userProfile[0].id}/`,
             profileName: userProfile[0].profile_name,
             email: userProfile[0].email,
             address: userProfile[0].address
@@ -72,6 +74,9 @@ class SearchPage extends Component {
     } catch (error) {
       alert("No Item Found");
     }
+  };
+  showProfilePageForSearchedUser = () => {
+    this.setState({ showSearchedProfile: true });
   };
   componentDidMount = () => {
     this.props.handleNavClassChange();
@@ -86,18 +91,8 @@ class SearchPage extends Component {
     // ));
     return (
       <>
-        {!this.state.profileSearched ? (
-          <Form inline>
-            <FormControl
-              type="text"
-              placeholder="Search"
-              className="mr-sm-2"
-              ref={this.searchRef}
-            />
-            <Button variant="outline-primary" onClick={this.handleSearchQuery}>
-              Search
-            </Button>
-          </Form>
+        {this.showSearchedProfile ? (
+          <MyProfile userProfile={this.state.profileSearched} />
         ) : (
           <Container fluid={true} className="grid-container">
             <Form inline>
@@ -127,9 +122,14 @@ class SearchPage extends Component {
                       <br />
                       {this.state.profileSearched.address}
                     </Card.Text>
-                    <Button variant="primary" onClick={this.allItems}>
+                    <Button
+                      variant="primary"
+                      onClick={this.showProfilePageForSearchedUser}
+                    >
+                      {/* <a href={this.state.profileSearched.idUrl}> */}
                       Click to see {this.state.profileSearched.profileName}'s
                       profile
+                      {/* </a> */}
                     </Button>
                   </Card.Body>
                 </Card>

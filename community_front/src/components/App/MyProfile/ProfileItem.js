@@ -33,10 +33,6 @@ class ProfileItem extends React.Component {
     });
   };
 
-  handleItemAvailableButton = () => {
-    this.setState({});
-  };
-
   // Get a list of names in an array to pass each name as the query string
   // in the gify api
   setHeroImage = () => {
@@ -71,11 +67,18 @@ class ProfileItem extends React.Component {
       <Row className="item-card">
         <div className="item-container">
           <Row className="item-square">
-            <Col>
+            <Col className="gif-container">
               <img className="item-image" src={this.state.image} alt="item" />
             </Col>
-            <Col className="item-content item-name">{this.props.name}</Col>
-            <Col className="item-content">{this.props.price}</Col>
+
+            <Col className="item-content item-name">
+              <label htmlFor="item name">Item Name</label>
+              <div> {this.props.name} </div>
+            </Col>
+            <Col className="item-content item-price">
+              <label htmlFor="item price">Item Price</label>
+              <div> {this.props.price}</div>
+            </Col>
             <Button
               className="item-content borrow-button"
               variant={this.state.buttonClass}
