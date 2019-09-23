@@ -14,15 +14,7 @@ import SearchPage from "./MyCommunity";
 class App extends React.Component {
   state = {
     user: [],
-    userProfile: [
-      {
-        id: window.localStorage["id"],
-        user: window.localStorage["id"],
-        profile_name: window.localStorage["username"],
-        email: "email",
-        address: "address"
-      }
-    ],
+    userProfile: [],
     items: [],
     show: "false",
     showProfile: false,
@@ -52,7 +44,8 @@ class App extends React.Component {
     this.setState({ itemPrice: itemPrice });
   };
 
-  handleItemFormSubmit = () => {
+  handleItemFormSubmit = e => {
+    e.preventDefault();
     Root.post("items/", {
       name_of_item: this.state.itemName.itemName,
       price: this.state.itemPrice.itemPrice
@@ -94,22 +87,45 @@ class App extends React.Component {
       headers: {
         "Content-Type": "application/json"
       }
-    }).then(res => {
-      let profiles = res.data;
-      this.setState({ allProfiles: profiles });
-      // console.log(this.state.allProfiles);
-    });
+    })
+      .then(res => {
+        let profiles = res.data;
+        this.setState({ allProfiles: profiles });
+
+        // console.log(this.state.allProfiles);
+      })
+      .then(res => {
+        this.getProfileId();
+      });
   };
   getAllItems = () => {
     return null;
   };
+  getProfileId = () => {
+    let profiles = this.state.allProfiles;
+
+    this.setState({
+      userProfile: profiles.filter(profile => {
+        console.log(profile.user);
+        if (profile.user === Number(window.localStorage["id"])) {
+          return profile;
+        }
+      })
+    });
+  };
+
+  // this.setState({ userProfile: res.data, loading: false });
+
+  // this.setState({ userProfile: this.state.userProfile });
 
   componentDidMount() {
     this.getAllProfiles();
-
-    console.log(this.state.userProfile[0].id);
+    this.getProfileId();
+    // console.log(this.state.userProfile[0].id);
   }
-
+  componentDidUpdate = () => {
+    // this.getProfile(this.state.userProfile[0].id);
+  };
   handle_login = (e, data) => {
     e.preventDefault();
     Axios.post("http://localhost:8000/authenticate/", data).then(res => {
@@ -239,6 +255,7 @@ class App extends React.Component {
                   userProfile={this.state.userProfile}
                   loggedIn={this.state.loggedIn}
                   handleNavClassChange={this.handleNavClassChange}
+                  getProfileId={this.getProfileId}
                 />
               )}
             />

@@ -12,14 +12,7 @@ import EditProfile from "../../EditProfile";
 
 class MyProfile extends React.Component {
   state = {
-    user: [
-      {
-        id: 2,
-        profile_name: "profile name",
-        email: "email",
-        address: "address"
-      }
-    ],
+    user: [],
     items: [
       {
         image: null,
@@ -39,24 +32,16 @@ class MyProfile extends React.Component {
     itemName: "",
 
     showEditForm: false,
-    showAddItemForm: false
+    showAddItemForm: false,
+    loading: true
   };
 
-  getProfile = () => {
-    Root.get("profiles/").then(res => {
-      let profiles = res.data;
-      const userProfile = profiles.map(profile => {
-        if (profile.username === window.localStorage["username"]) {
-          return profile;
-        }
-      });
-      if (!userProfile[0]) {
-        this.setState({ user: this.state.user });
-      } else {
-        this.setState({ user: userProfile });
-      }
-    });
-  };
+  // getProfile = () => {
+  //   const { id } = this.props.userProfile[0];
+  //   let profileId = Root.get(`profiles/${id}/`).then(res => {
+  //     this.setState({ user: res.data, loading: false });
+  //   });
+  // };
 
   // Fetches all the items that users have created
   getItemsFromUser = () => {
@@ -64,14 +49,10 @@ class MyProfile extends React.Component {
 
     Root.get("items/").then(res => {
       const items = res.data;
-
-      // the below statement sets an obj in state
-      // sst({items: [{query: "ItemName", item: {...properties}}, ]})
-
       this.setState({
         items: items.filter((item, i) => {
           if (userProfile) {
-            if (item.profile_id === this.state.user[0].id) {
+            if (item.profile_id === this.state.user.id) {
               return item;
             }
           }
@@ -86,7 +67,7 @@ class MyProfile extends React.Component {
   };
   componentDidMount = () => {
     this.props.handleNavClassChange();
-    this.getProfile();
+    // this.getProfile();
     setTimeout(() => {
       this.getItemsFromUser();
     }, 1500);
@@ -111,16 +92,14 @@ class MyProfile extends React.Component {
   };
 
   render() {
-    console.log(this.props.userProfile);
-    const { items, itemGif, image } = this.state;
+    const { items, itemGif, image, loading } = this.state;
 
     const { userProfile } = this.props;
 
     let itemElements = items.map((item, i) => {
       const { name_of_item, price } = item;
-      //////// getting all items / /// /
 
-      if (item.profile_id === this.state.user[0].id) {
+      if (item.profile_id === userProfile) {
         return (
           <ProfileItem
             key={i}
@@ -131,10 +110,11 @@ class MyProfile extends React.Component {
         );
       }
     });
+
     let createProfileForm;
     let profile;
     {
-      this.state.user[0].email === "email"
+      this.props.userProfile.length < 1
         ? (createProfileForm = (
             <CreateProfileForm
               loadProfile={this.props.getProfileFromToken}
@@ -166,14 +146,14 @@ class MyProfile extends React.Component {
                       <Row>
                         <p className="profile-name">
                           {/* if searchActive &&  */}
-                          {this.state.user[0].profile_name}
+                          {userProfile[0].profile_name}
                         </p>
                       </Row>
                       <br />
                       <Row>
                         <p className="profile-email">
                           <span className="bold"> Email:</span>{" "}
-                          {this.state.user[0].email}
+                          {userProfile[0].email}
                         </p>
                         <br />
                       </Row>
@@ -181,7 +161,7 @@ class MyProfile extends React.Component {
                         <p className="profile-address">
                           <br />
                           <span className="bold"> Address: </span>
-                          <a href="/map"> {this.state.user[0].address}</a>
+                          <a href="/map"> {userProfile[0].address}</a>
                         </p>
                       </Row>
 
@@ -231,7 +211,7 @@ class MyProfile extends React.Component {
         <div>
           {createProfileForm}
           {profile}
-          {window.localStorage["token"]}
+          {window.localStorage["username"]}
         </div>
       </>
     );

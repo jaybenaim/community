@@ -54,7 +54,7 @@ class CreateProfileForm extends React.Component {
   };
   componentDidMount = () => {
     console.log(window.localStorage["token"]);
-    this.props.getProfile();
+    // this.props.getProfile();
   };
 
   render() {
