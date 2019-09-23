@@ -44,7 +44,6 @@ class NavbarNew extends React.Component {
       default:
         form = null;
     }
-    // console.log(this.state.user);
     return (
       <Container>
         <Row>

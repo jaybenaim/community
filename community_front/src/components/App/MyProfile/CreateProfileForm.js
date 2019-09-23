@@ -25,8 +25,7 @@ class CreateProfileForm extends React.Component {
     let profileName = this.nameRef.current.value;
     let email = this.emailRef.current.value;
     let address = this.addressRef.current.value;
-    // console.log(this.props.userProfile[0].user[0]);
-    // console.log(this.props.userProfile[0].username);
+
     console.log(window.localStorage["token"]);
     Root.post(
       "profiles/",
@@ -54,17 +53,14 @@ class CreateProfileForm extends React.Component {
       });
   };
   componentDidMount = () => {
-    this.props.getProfile();
+    console.log(window.localStorage["token"]);
+    // this.props.getProfile();
   };
 
   render() {
     return (
       <Container className="grid-container">
-        <Button
-          className="butoon"
-          variant="outline-primary"
-          onClick={this.handleShow}
-        >
+        <Button className="butoon" variant="primary" onClick={this.handleShow}>
           Create a Profile
         </Button>
         <Modal className="modal-form" show={this.state.show}>
