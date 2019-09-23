@@ -103,30 +103,25 @@ class App extends React.Component {
   };
   getProfileId = () => {
     let profiles = this.state.allProfiles;
-
     this.setState({
       userProfile: profiles.filter(profile => {
-        console.log(profile.user);
         if (profile.user === Number(window.localStorage["id"])) {
           return profile;
+        } else {
+          return { id: 0 };
         }
       })
     });
   };
 
-  // this.setState({ userProfile: res.data, loading: false });
-
-  // this.setState({ userProfile: this.state.userProfile });
-
   handle_login = (e, data) => {
     e.preventDefault();
     Axios.post("http://localhost:8000/authenticate/", data).then(res => {
-      console.log(res.data);
       window.localStorage["token"] = res.data.token;
       window.localStorage["username"] = data.username;
       window.localStorage["id"] = res.data.id;
-      console.log(window.localStorage["token"]);
     });
+    this.getProfileId();
   };
 
   handle_signup = (e, data) => {
@@ -141,6 +136,7 @@ class App extends React.Component {
       window.localStorage["username"] = data.username;
       window.localStorage["id"] = res.data.id;
     });
+    this.getProfileId();
   };
 
   handle_logout = e => {
@@ -157,31 +153,6 @@ class App extends React.Component {
     });
   };
 
-  // getSearchQuery = query => {
-  //   Root.get("items/").then(res => {
-  //     let items = res.data;
-  //     (items || []).map((item, i) => {
-  //       // const { name_of_item, price, profile_id } = item;
-  //       if (item.name_of_item.toLowerCase() === query.toLowerCase()) {
-  //         this.setState({
-  //           searchItem: { ...item },
-  //           profileId: item.profile_id
-  //         });
-  //       }
-  //       return item;
-  //     });
-  //   });
-  //   this.setState({ loading: true });
-  //   this.state.loading && this.getSearchProfile();
-  // };
-
-  // getSearchProfile = () => {
-  //   const { profileId } = this.state;
-  //   Root.get(`profiles/${profileId}/`).then(res => {
-  //     this.setState({ profileSearched: res.data });
-  //     console.log(res.data);
-  //   });
-  // };
   handleItem = (item, price) => {
     let newItems = [];
     newItems.push({ item, price });

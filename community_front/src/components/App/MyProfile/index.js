@@ -47,17 +47,18 @@ class MyProfile extends React.Component {
   getItemsFromUser = () => {
     const { userProfile } = this.props;
 
+    console.log(userProfile);
     Root.get("items/").then(res => {
       const items = res.data;
-      this.setState({
-        items: items.filter(item => {
-          if (userProfile.length > 1) {
+      if (userProfile !== undefined) {
+        this.setState({
+          items: items.filter(item => {
             if (item.profile_id === userProfile[0].id) {
               return item;
             }
-          }
-        })
-      });
+          })
+        });
+      }
     });
   };
 
@@ -70,7 +71,7 @@ class MyProfile extends React.Component {
     // this.getProfile();
     setTimeout(() => {
       this.getItemsFromUser();
-    }, 1500);
+    }, 1000);
   };
 
   toggleEditForm = e => {
