@@ -26,10 +26,12 @@ class SimpleMap extends Component {
     this.initializeGeocode();
     this.props.handleNavClassChange();
     const { allProfiles } = this.props;
-    allProfiles.forEach(({ address }, index) => {
-      this.getGeocodeFromAddress(address);
-      this.checkGeocodeLoading(index);
-    });
+    setTimeout(() => {
+      allProfiles.forEach(({ address }, index) => {
+        this.getGeocodeFromAddress(address);
+        this.checkGeocodeLoading(index);
+      });
+    }, 1000);
   }
 
   getProfileAddresses = () => {
