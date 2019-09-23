@@ -50,11 +50,9 @@ class MyProfile extends React.Component {
     Root.get("items/").then(res => {
       const items = res.data;
       this.setState({
-        items: items.filter((item, i) => {
-          if (userProfile) {
-            if (item.profile_id === this.state.user.id) {
-              return item;
-            }
+        items: items.filter(item => {
+          if (item.profile_id === userProfile[0].id) {
+            return item;
           }
         })
       });
@@ -99,16 +97,14 @@ class MyProfile extends React.Component {
     let itemElements = items.map((item, i) => {
       const { name_of_item, price } = item;
 
-      if (item.profile_id === userProfile) {
-        return (
-          <ProfileItem
-            key={i}
-            image={itemGif || image}
-            name={name_of_item}
-            price={price}
-          />
-        );
-      }
+      return (
+        <ProfileItem
+          key={i}
+          image={itemGif || image}
+          name={name_of_item}
+          price={price}
+        />
+      );
     });
 
     let createProfileForm;
