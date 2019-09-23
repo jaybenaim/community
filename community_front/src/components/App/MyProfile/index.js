@@ -13,16 +13,7 @@ import EditProfile from "../../EditProfile";
 class MyProfile extends React.Component {
   state = {
     user: [],
-    items: [
-      {
-        image: null,
-        itemGif: null,
-        name: null,
-        price: null,
-        profile_id: null,
-        id: null
-      }
-    ],
+    items: [],
     urls: [],
     profileImage:
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
@@ -35,13 +26,6 @@ class MyProfile extends React.Component {
     showAddItemForm: false,
     loading: true
   };
-
-  // getProfile = () => {
-  //   const { id } = this.props.userProfile[0];
-  //   let profileId = Root.get(`profiles/${id}/`).then(res => {
-  //     this.setState({ user: res.data, loading: false });
-  //   });
-  // };
 
   // Fetches all the items that users have created
   getItemsFromUser = () => {
@@ -68,7 +52,6 @@ class MyProfile extends React.Component {
   };
   componentDidMount = () => {
     this.props.handleNavClassChange();
-    // this.getProfile();
     setTimeout(() => {
       this.getItemsFromUser();
     }, 1000);
@@ -123,15 +106,7 @@ class MyProfile extends React.Component {
           ))
         : (profile = (
             <Container className="cont">
-                      
-              {/*
-          
-                          When Show Edit Form is false, this will not show on the page
-                          When the toggleShowEditForm is clicked it will update the value of
-                          showEditForm. if the value is false, it will hide the component
-                          if the value is true it will show the form
-                        */}
-                      
+                     
               <Row>
                 <Col xs={12} md={12} lg={4} className="con">
                   <section>
@@ -210,7 +185,6 @@ class MyProfile extends React.Component {
         <div>
           {createProfileForm}
           {profile}
-          {window.localStorage["username"]}
         </div>
       </>
     );
