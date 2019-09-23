@@ -51,8 +51,10 @@ class MyProfile extends React.Component {
       const items = res.data;
       this.setState({
         items: items.filter(item => {
-          if (item.profile_id === userProfile[0].id) {
-            return item;
+          if (userProfile.length > 1) {
+            if (item.profile_id === userProfile[0].id) {
+              return item;
+            }
           }
         })
       });
@@ -90,7 +92,7 @@ class MyProfile extends React.Component {
   };
 
   render() {
-    const { items, itemGif, image, loading } = this.state;
+    const { items, itemGif, image } = this.state;
 
     const { userProfile } = this.props;
 

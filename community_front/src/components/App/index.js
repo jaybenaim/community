@@ -118,14 +118,6 @@ class App extends React.Component {
 
   // this.setState({ userProfile: this.state.userProfile });
 
-  componentDidMount() {
-    this.getAllProfiles();
-    this.getProfileId();
-    // console.log(this.state.userProfile[0].id);
-  }
-  componentDidUpdate = () => {
-    // this.getProfile(this.state.userProfile[0].id);
-  };
   handle_login = (e, data) => {
     e.preventDefault();
     Axios.post("http://localhost:8000/authenticate/", data).then(res => {
@@ -151,11 +143,12 @@ class App extends React.Component {
     });
   };
 
-  handle_logout = () => {
+  handle_logout = e => {
+    e.preventDefault();
     window.localStorage["token"] = "";
     window.localStorage["username"] = "";
     window.localStorage["id"] = "";
-    this.setState({ loggedIn: false, username: "" });
+    this.setState({ loggedIn: false });
   };
 
   display_form = form => {
@@ -199,6 +192,14 @@ class App extends React.Component {
     }, 1000);
   };
 
+  componentDidMount() {
+    this.getAllProfiles();
+    this.getProfileId();
+    // console.log(this.state.userProfile[0].id);
+  }
+  componentDidUpdate = () => {
+    // this.getProfile(this.state.userProfile[0].id);
+  };
   render() {
     return (
       <Router>
