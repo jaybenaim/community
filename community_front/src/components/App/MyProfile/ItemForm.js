@@ -8,7 +8,6 @@ const Item = ({ handleItem, userProfile, toggleAddItemForm }) => {
   // create hook state for holding item and price temp
   const [item, setItem] = useState(null);
   const [price, setPrice] = useState(null);
-  const [show, setShow] = useState(true);
 
   // create ref here for input values
   const itemRef = React.createRef();
@@ -23,16 +22,13 @@ const Item = ({ handleItem, userProfile, toggleAddItemForm }) => {
     setItem(itemVal);
     setPrice(priceVal);
 
-    // const profile_id;  //
-
-    // make post request
     setTimeout(() => {
       handleItem(itemVal, priceVal);
     }, 1000);
     Root.post(
       "items/",
       {
-        profile_id: userProfile[0].id, /////// not getting value here to create item so not sshowing on profile
+        profile_id: userProfile[0].id,
         name_of_item: itemVal,
         price: priceVal
       },
@@ -43,23 +39,16 @@ const Item = ({ handleItem, userProfile, toggleAddItemForm }) => {
         }
       }
     )
-
       .then(res => {
         handleItem(item, price);
-
-        console.log("Success");
+        alert("Item Successfully Added! ");
       })
       .catch(err => {
+        alert("Something Went Wrong");
         console.log(err);
       });
   };
 
-  // handleItem = (item, price) => {
-  //   this.setState(prevState => ({ item: { item, price } }));
-  // };
-  /// define a function that will set state in app to itemname with itemval
-  //// one function that takes params to do both
-  // define another function that does the same for price
   const handleClose = event => {
     toggleAddItemForm(event);
   };

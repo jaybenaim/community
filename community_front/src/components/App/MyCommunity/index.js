@@ -81,6 +81,7 @@ class SearchPage extends Component {
   componentDidMount = () => {
     this.props.handleNavClassChange();
   };
+
   render() {
     ///todooo render card with correct profile from search
 
@@ -89,6 +90,7 @@ class SearchPage extends Component {
     // const profileElements = allProfiles.map((p, i) => (
     //   <ProfileCard key={p.id} {...p} allItems={allItems} />
     // ));
+
     return (
       <>
         {this.showSearchedProfile ? (

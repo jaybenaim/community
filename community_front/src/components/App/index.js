@@ -91,8 +91,6 @@ class App extends React.Component {
       .then(res => {
         let profiles = res.data;
         this.setState({ allProfiles: profiles });
-
-        // console.log(this.state.allProfiles);
       })
       .then(res => {
         this.getProfileId();
@@ -103,12 +101,11 @@ class App extends React.Component {
   };
   getProfileId = () => {
     let profiles = this.state.allProfiles;
+
     this.setState({
       userProfile: profiles.filter(profile => {
         if (profile.user === Number(window.localStorage["id"])) {
           return profile;
-        } else {
-          return { id: 0 };
         }
       })
     });
@@ -165,12 +162,9 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getAllProfiles();
-    this.getProfileId();
-    // console.log(this.state.userProfile[0].id);
+    // this.getProfileId();l
   }
-  componentDidUpdate = () => {
-    // this.getProfile(this.state.userProfile[0].id);
-  };
+
   render() {
     return (
       <Router>

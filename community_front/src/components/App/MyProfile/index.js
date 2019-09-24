@@ -34,7 +34,7 @@ class MyProfile extends React.Component {
     console.log(userProfile);
     Root.get("items/").then(res => {
       const items = res.data;
-      if (userProfile !== undefined) {
+      if (userProfile[0] !== undefined) {
         this.setState({
           items: items.filter(item => {
             if (item.profile_id === userProfile[0].id) {
@@ -95,8 +95,9 @@ class MyProfile extends React.Component {
 
     let createProfileForm;
     let profile;
+
     {
-      this.props.userProfile.length < 1
+      this.props.userProfile[0] === undefined
         ? (createProfileForm = (
             <CreateProfileForm
               loadProfile={this.props.getProfileFromToken}
@@ -119,8 +120,7 @@ class MyProfile extends React.Component {
                     <div className="profile-details">
                       <Row>
                         <p className="profile-name">
-                          {/* if searchActive &&  */}
-                          {userProfile[0].profile_name}
+                          {userProfile[0].profile_name || null}
                         </p>
                       </Row>
                       <br />
