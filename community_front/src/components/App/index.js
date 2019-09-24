@@ -114,6 +114,7 @@ class App extends React.Component {
   handle_login = (e, data) => {
     e.preventDefault();
     Axios.post("http://localhost:8000/authenticate/", data).then(res => {
+      console.log(res.data.token);
       window.localStorage["token"] = res.data.token;
       window.localStorage["username"] = data.username;
       window.localStorage["id"] = res.data.id;
@@ -162,7 +163,8 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getAllProfiles();
-    // this.getProfileId();l
+    this.getProfileId();
+    console.log(window.localStorage["token"]);
   }
 
   render() {
