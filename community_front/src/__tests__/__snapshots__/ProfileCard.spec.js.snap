@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProfileCard Component ProfileCard has a button that takes users to the profile page 1`] = `
+<button
+  onClick={
+    Array [
+      [Function],
+    ]
+  }
+  variant="primary"
+>
+  Click to see more
+</button>
+`;

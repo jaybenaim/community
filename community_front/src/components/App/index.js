@@ -55,7 +55,7 @@ class App extends React.Component {
         console.log("Item added");
       })
       .catch(err => {
-        console.log(err);
+        alert("Error", err);
       });
   };
 
@@ -114,7 +114,6 @@ class App extends React.Component {
   handle_login = (e, data) => {
     e.preventDefault();
     Axios.post("http://localhost:8000/authenticate/", data).then(res => {
-      console.log(res.data.token);
       window.localStorage["token"] = res.data.token;
       window.localStorage["username"] = data.username;
       window.localStorage["id"] = res.data.id;
@@ -124,7 +123,6 @@ class App extends React.Component {
 
   handle_signup = (e, data) => {
     e.preventDefault();
-    // Axios.post("http://localhost:8000/api-token-auth/", {
     Root.post("users/", data, {
       headers: {
         "Content-Type": "application/json"
@@ -133,8 +131,8 @@ class App extends React.Component {
       window.localStorage["token"] = res.data.token;
       window.localStorage["username"] = data.username;
       window.localStorage["id"] = res.data.id;
+      this.getProfileId();
     });
-    this.getProfileId();
   };
 
   handle_logout = e => {
@@ -155,16 +153,11 @@ class App extends React.Component {
     let newItems = [];
     newItems.push({ item, price });
     this.setState(prevState => ({ items: newItems }));
-
-    setTimeout(() => {
-      console.log(this.state.items);
-    }, 1000);
   };
 
   componentDidMount() {
     this.getAllProfiles();
     this.getProfileId();
-    console.log(window.localStorage["token"]);
   }
 
   render() {

@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MyProfile Component App has a Map component  1`] = `
+<section
+  style="height: 100vh; width: 100%;"
+/>
+`;
+
+exports[`MyProfile Component App has a MyProfile component  1`] = `
+<div
+  class="cont container"
+/>
+`;
+
+exports[`MyProfile Component App has a SearchPage component  1`] = `
+<div
+  class="container container-fluid"
+/>
+`;
+
+exports[`Nav Component App has a MyProfile component  1`] = `
+<nav
+  class="nav navbaru"
+>
+   
+</nav>
+`;
