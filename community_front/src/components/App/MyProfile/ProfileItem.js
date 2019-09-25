@@ -3,6 +3,7 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
+import Root from "../../../apis/root";
 import "./index.css";
 
 import {
@@ -10,11 +11,11 @@ import {
   // PEXELS_API_KEY,
   // IMAGE_ACCESS_KEY
 } from "../../../apis/keys";
-import Axios from "axios";
+import axios from "axios";
 
 class ProfileItem extends React.Component {
   state = {
-    itemAvailable: true,
+    itemAvailable: this.props.available,
     isActive: false,
     buttonClass: "success",
     image: null,
@@ -26,6 +27,24 @@ class ProfileItem extends React.Component {
   }
 
   handleBorrowButton = () => {
+    const { id, userProfileId, name, price } = this.props;
+    Root.put(
+      `items/${id}/`,
+      {
+        profile_id: userProfileId,
+        name_of_item: name,
+        price: price,
+        available: false
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${window.localStorage["token"]}`
+        }
+      }
+    ).catch(err => {
+      alert("Item Not Available");
+    });
     this.setState({
       itemAvailable: false,
       isActive: true,
@@ -42,9 +61,10 @@ class ProfileItem extends React.Component {
 
   // GIPHY API CALL
   getGify = async query => {
-    await Axios.get(
-      `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${query}&limit=1&offset=0&rating=G&lang=en`
-    )
+    await axios
+      .get(
+        `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${query}&limit=1&offset=0&rating=G&lang=en`
+      )
       .then(res => {
         const image = res.data.data[0].images.fixed_height.url;
         const { url } = res.data.data[0].images.fixed_height_still;

@@ -81,14 +81,17 @@ class MyProfile extends React.Component {
     const { userProfile } = this.props;
 
     let itemElements = items.map((item, i) => {
-      const { name_of_item, price } = item;
+      const { id, name_of_item, price, available } = item;
 
       return (
         <ProfileItem
           key={i}
+          id={id}
           image={itemGif || image}
           name={name_of_item}
           price={price}
+          available={available}
+          userProfileId={userProfile[0].id}
         />
       );
     });

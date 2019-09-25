@@ -48,7 +48,8 @@ class App extends React.Component {
     e.preventDefault();
     Root.post("items/", {
       name_of_item: this.state.itemName.itemName,
-      price: this.state.itemPrice.itemPrice
+      price: this.state.itemPrice.itemPrice,
+      available: true
     })
       .then(res => {
         this.setState({ displayItemForm: false });

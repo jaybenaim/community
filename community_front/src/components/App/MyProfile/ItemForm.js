@@ -30,7 +30,8 @@ const Item = ({ handleItem, userProfile, toggleAddItemForm }) => {
       {
         profile_id: userProfile[0].id,
         name_of_item: itemVal,
-        price: priceVal
+        price: priceVal,
+        available: true
       },
       {
         headers: {

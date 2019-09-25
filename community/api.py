@@ -6,6 +6,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 
 
+
 class CustomObtainAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         response = super(CustomObtainAuthToken, self).post(request, *args, **kwargs)
@@ -28,7 +29,6 @@ class ProfileViewSet(viewsets.ModelViewSet):
         if self.request.method == 'POST':
             self.permission_classes = (permissions.AllowAny,)
         return super(ProfileViewSet, self).get_permissions()
-
 
 
 class ItemViewSet(viewsets.ModelViewSet): 
