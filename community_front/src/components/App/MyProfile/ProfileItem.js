@@ -16,7 +16,7 @@ import axios from "axios";
 class ProfileItem extends React.Component {
   state = {
     itemAvailable: this.props.available,
-    isActive: !this.props.available ? true : false,
+    isActive: this.props.available ? false : true,
     buttonClass: this.props.available ? "success" : "danger",
     buttonText: this.props.available ? "Item Available" : "Item Unavailable",
     image: null,
@@ -103,10 +103,7 @@ class ProfileItem extends React.Component {
               <label htmlFor="item price">Item Price</label>
               <div> {this.props.price}</div>
             </Col>
-            <Col className="item-content item-available">
-              <label htmlFor="item available">Available </label>
-              <div> {JSON.stringify(this.props.available).toUpperCase()}</div>
-            </Col>
+
             <Button
               className="item-content borrow-button"
               variant={this.state.buttonClass}
