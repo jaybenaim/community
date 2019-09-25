@@ -16,8 +16,9 @@ import axios from "axios";
 class ProfileItem extends React.Component {
   state = {
     itemAvailable: this.props.available,
-    isActive: false,
-    buttonClass: "success",
+    isActive: !this.props.available ? true : false,
+    buttonClass: this.props.available ? "success" : "danger",
+    buttonText: this.props.available ? "Item Available" : "Item Unavailable",
     image: null,
     loading: true
   };
@@ -42,14 +43,17 @@ class ProfileItem extends React.Component {
           Authorization: `Token ${window.localStorage["token"]}`
         }
       }
-    ).catch(err => {
-      alert("Item Not Available");
-    });
-    this.setState({
-      itemAvailable: false,
-      isActive: true,
-      buttonClass: "danger"
-    });
+    )
+      .then(
+        this.setState({
+          itemAvailable: false,
+          isActive: this.state.available ? true : false,
+          buttonClass: this.state.available ? "success" : "danger"
+        })
+      )
+      .catch(err => {
+        alert("Item Not Available");
+      });
   };
 
   // Get a list of names in an array to pass each name as the query string
@@ -109,7 +113,7 @@ class ProfileItem extends React.Component {
               onClick={this.handleBorrowButton}
               disabled={this.state.isActive}
             >
-              Item Available{" "}
+              {this.state.buttonText}
             </Button>
           </Row>
         </div>
