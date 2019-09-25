@@ -78,7 +78,7 @@ class ProfilePage extends React.Component {
     const { userProfile } = this.props;
 
     let itemElements = items.map((item, i) => {
-      const { name_of_item, price } = item;
+      const { name_of_item, price, available, profile_id } = item;
 
       return (
         <ProfileItem
@@ -86,6 +86,8 @@ class ProfilePage extends React.Component {
           image={itemGif || image}
           name={name_of_item}
           price={price}
+          available={available}
+          userProfileId={profile_id}
         />
       );
     });

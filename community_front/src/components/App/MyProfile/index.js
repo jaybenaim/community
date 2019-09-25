@@ -76,22 +76,25 @@ class MyProfile extends React.Component {
   };
 
   render() {
-    const { items, itemGif, image } = this.state;
+    // const { items, itemGif, image } = this.state;
 
     const { userProfile } = this.props;
 
-    let itemElements = items.map((item, i) => {
-      const { name_of_item, price } = item;
+    // let itemElements = items.map((item, i) => {
+    //   const { id, name_of_item, price, available } = item;
 
-      return (
-        <ProfileItem
-          key={i}
-          image={itemGif || image}
-          name={name_of_item}
-          price={price}
-        />
-      );
-    });
+    //   return (
+    //     <ProfileItem
+    //       key={i}
+    //       id={id}
+    //       image={itemGif || image}
+    //       name={name_of_item}
+    //       price={price}
+    //       available={available}
+    //       userProfileId={userProfile[0].id}
+    //     />
+    //   );
+    // });
 
     let createProfileForm;
     let profile;
@@ -163,7 +166,7 @@ class MyProfile extends React.Component {
                   </section>
                 </Col>
                 <Col xs={12} md={12} lg={6} className="profile-items">
-                  {itemElements}
+                  {/* {itemElements} */}
                 </Col>
               </Row>
               <Button

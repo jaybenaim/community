@@ -29,6 +29,8 @@ class Item(models.Model):
     date_lent = models.DateTimeField(auto_now_add=True)
     date_borrowed = models.DateTimeField(auto_now_add=True)
     profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    available = models.BooleanField(default=True)
+
 
     def __str__(self):
         return self.name_of_item
