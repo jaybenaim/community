@@ -9,6 +9,7 @@ import ProfileItem from "./ProfileItem";
 import Item from "./ItemForm";
 import CreateProfileForm from "./CreateProfileForm";
 import EditProfile from "../../EditProfile";
+import ItemGrid from "./ItemGrid";
 
 class MyProfile extends React.Component {
   state = {
@@ -50,12 +51,6 @@ class MyProfile extends React.Component {
     let url = prompt("Enter a url");
     this.setState({ profileImage: url });
   };
-  componentDidMount = () => {
-    this.props.handleNavClassChange();
-    setTimeout(() => {
-      this.getItemsFromUser();
-    }, 1000);
-  };
 
   toggleEditForm = e => {
     e.preventDefault();
@@ -75,26 +70,31 @@ class MyProfile extends React.Component {
     return this.setState({ showAddItemForm: !this.state.showAddItemForm });
   };
 
+  componentDidMount = () => {
+    this.props.handleNavClassChange();
+    setTimeout(() => {
+      this.getItemsFromUser();
+    }, 1000);
+  };
   render() {
-    // const { items, itemGif, image } = this.state;
+    const { items } = this.state;
 
     const { userProfile } = this.props;
 
-    // let itemElements = items.map((item, i) => {
-    //   const { id, name_of_item, price, available } = item;
+    let itemElements = items.map((item, i) => {
+      const { id, name_of_item: name, price, available } = item;
 
-    //   return (
-    //     <ProfileItem
-    //       key={i}
-    //       id={id}
-    //       image={itemGif || image}
-    //       name={name_of_item}
-    //       price={price}
-    //       available={available}
-    //       userProfileId={userProfile[0].id}
-    //     />
-    //   );
-    // });
+      return (
+        <ItemGrid
+          key={i}
+          id={id}
+          name={name}
+          price={price}
+          available={available}
+          userProfile={userProfile}
+        />
+      );
+    });
 
     let createProfileForm;
     let profile;
@@ -166,7 +166,10 @@ class MyProfile extends React.Component {
                   </section>
                 </Col>
                 <Col xs={12} md={12} lg={6} className="profile-items">
-                  {/* {itemElements} */}
+                  <strong>Your Items</strong>
+                  <table>
+                    <tbody>{itemElements}</tbody>
+                  </table>
                 </Col>
               </Row>
               <Button
