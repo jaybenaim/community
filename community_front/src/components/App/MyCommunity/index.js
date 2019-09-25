@@ -121,7 +121,7 @@ class SearchPage extends Component {
   };
 
   showProfilePageForSearchedUser = () => {
-    this.setState({ showSearchedProfile: true });
+    // this.setState({ showSearchedProfile: true });
   };
 
   componentDidMount = () => {
