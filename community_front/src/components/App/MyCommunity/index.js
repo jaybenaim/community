@@ -1,22 +1,21 @@
 import React, { Component } from "react";
-import ProfileCard from "./ProfileCard";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
-import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Root from "../../../apis/root";
 import Container from "react-bootstrap/Container";
-import { Redirect, Route, BrowserRouter } from "react-router-dom";
 import "./index.css";
 import Card from "react-bootstrap/Card";
 import MyProfile from "../MyProfile";
+import ProfilePage from "./ProfilePage";
 
 class SearchPage extends Component {
   state = {
     profileSearched: {
-      idUrl: null,
+      id: null,
+      idUrl: "",
       profileName: "User",
       email: "Email",
       address: "Address"
@@ -53,10 +52,6 @@ class SearchPage extends Component {
   };
 
   getSearchProfile = () => {
-    // const userId = window.localStorage["id"];
-    // const { profileId } = this.state;
-    //searchresults profile id
-
     try {
       const profileId = this.state.searchResults[0].profile_id;
       const userProfile = [];
@@ -64,6 +59,7 @@ class SearchPage extends Component {
         userProfile.push(res.data);
         this.setState({
           profileSearched: {
+            id: userProfile[0].id,
             idUrl: `profiles/${userProfile[0].id}/`,
             profileName: userProfile[0].profile_name,
             email: userProfile[0].email,
@@ -83,19 +79,9 @@ class SearchPage extends Component {
   };
 
   render() {
-    ///todooo render card with correct profile from search
-
-    // const { allProfiles, allItems } = this.props;
-    // const { profileName, email, address } = this.state.profileSearched;
-    // const profileElements = allProfiles.map((p, i) => (
-    //   <ProfileCard key={p.id} {...p} allItems={allItems} />
-    // ));
-
     return (
       <>
-        {this.showSearchedProfile ? (
-          <MyProfile userProfile={this.state.profileSearched} />
-        ) : (
+        {!this.state.showSearchedProfile ? (
           <Container fluid={true} className="grid-container">
             <Form inline>
               <FormControl
@@ -128,16 +114,20 @@ class SearchPage extends Component {
                       variant="primary"
                       onClick={this.showProfilePageForSearchedUser}
                     >
-                      {/* <a href={this.state.profileSearched.idUrl}> */}
                       Click to see {this.state.profileSearched.profileName}'s
                       profile
-                      {/* </a> */}
                     </Button>
                   </Card.Body>
                 </Card>
               </Col>
             </Row>
           </Container>
+        ) : (
+          <ProfilePage
+            userProfile={this.state.profileSearched}
+            handleItem={this.props.handleItem}
+            handleNavClassChange={this.props.handleNavClassChange}
+          />
         )}
       </>
     );

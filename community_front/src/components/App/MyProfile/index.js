@@ -184,6 +184,7 @@ class MyProfile extends React.Component {
       <>
         <div>
           {createProfileForm}
+
           {profile}
         </div>
       </>

@@ -198,6 +198,8 @@ class App extends React.Component {
                 <SearchPage
                   loggedIn={this.state.loggedIn}
                   handleNavClassChange={this.handleNavClassChange}
+                  handleItem={this.handleItem}
+                  handleNavClassChange={this.handleNavClassChange}
                 />
               )}
             />
