@@ -29,12 +29,10 @@ class ProfileItem extends React.Component {
 
   handleBorrowButton = () => {
     const { id, userProfileId, name, price } = this.props;
-    Root.put(
+    Root.patch(
       `items/${id}/`,
       {
         profile_id: userProfileId,
-        name_of_item: name,
-        price: price,
         available: false
       },
       {
@@ -43,17 +41,9 @@ class ProfileItem extends React.Component {
           Authorization: `Token ${window.localStorage["token"]}`
         }
       }
-    )
-      .then(
-        this.setState({
-          itemAvailable: false,
-          isActive: this.state.available ? true : false,
-          buttonClass: this.state.available ? "success" : "danger"
-        })
-      )
-      .catch(err => {
-        alert("Item Not Available");
-      });
+    ).catch(err => {
+      alert("Item Not Available");
+    });
   };
 
   // Get a list of names in an array to pass each name as the query string

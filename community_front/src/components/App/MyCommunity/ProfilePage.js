@@ -77,11 +77,12 @@ class ProfilePage extends React.Component {
     const { userProfile } = this.props;
 
     let itemElements = items.map((item, i) => {
-      const { name_of_item, price, available, profile_id } = item;
+      const { id, name_of_item, price, available, profile_id } = item;
 
       return (
         <ProfileItem
           key={i}
+          id={id}
           image={itemGif || image}
           name={name_of_item}
           price={price}
