@@ -70,9 +70,13 @@ li:hover {
 /* .navbar-nav :first-child {
   color: white !important;
 } */
-/* a.nav-link {
-  margin-left: 10px;
-} */
+a {
+  padding: 0;
+}
+a.nav-link {
+  margin-left: 40px;
+  padding: 10px;
+}
 
 .logo {
   height: 20px;

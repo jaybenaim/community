@@ -72,10 +72,9 @@
   width: 10%;
   margin-left: 200px;
 } */
+
 .mr-auto {
-  margin-left: 200px;
-}
-.mr-auto {
+  margin-left: 100px;
   font-family: "Spinnaker", sans-serif;
   margin-top: 50px;
 }

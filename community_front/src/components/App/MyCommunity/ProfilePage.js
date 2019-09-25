@@ -29,7 +29,6 @@ class ProfilePage extends React.Component {
   getItemsFromUser = () => {
     const { userProfile } = this.props;
 
-    console.log(userProfile);
     Root.get("items/").then(res => {
       const items = res.data;
       if (userProfile !== undefined) {
