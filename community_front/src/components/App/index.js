@@ -8,7 +8,6 @@ import Root from "../../apis/root";
 import Map from "./Map";
 import MyProfile from "./MyProfile";
 import Axios from "axios";
-import PutTest from "../PutTest";
 import SearchPage from "./MyCommunity";
 
 class App extends React.Component {
