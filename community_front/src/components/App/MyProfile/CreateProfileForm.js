@@ -53,7 +53,7 @@ class CreateProfileForm extends React.Component {
       });
   };
   componentDidMount = () => {
-    console.log(window.localStorage["id"]);
+    console.log(window.localStorage["token"]);
   };
 
   render() {

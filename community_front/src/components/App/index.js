@@ -198,6 +198,7 @@ class App extends React.Component {
                 <SearchPage
                   loggedIn={this.state.loggedIn}
                   handleNavClassChange={this.handleNavClassChange}
+                  allProfiles={this.state.allProfiles}
                 />
               )}
             />
