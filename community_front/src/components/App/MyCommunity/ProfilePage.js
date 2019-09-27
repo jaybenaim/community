@@ -4,9 +4,7 @@ import Root from "../../../apis/root";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import ProfileItem from "../MyProfile/ProfileItem";
-import ItemForm from "../MyProfile/ItemForm";
+import ProfileItem from "./ProfileItem";
 
 class ProfilePage extends React.Component {
   state = {
@@ -88,6 +86,7 @@ class ProfilePage extends React.Component {
           price={price}
           available={available}
           userProfileId={profile_id}
+          userProfile={userProfile}
         />
       );
     });

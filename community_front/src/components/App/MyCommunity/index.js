@@ -8,7 +8,6 @@ import Root from "../../../apis/root";
 import Container from "react-bootstrap/Container";
 import "./index.css";
 import Card from "react-bootstrap/Card";
-import MyProfile from "../MyProfile";
 import ProfilePage from "./ProfilePage";
 
 class SearchPage extends Component {
