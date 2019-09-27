@@ -78,6 +78,13 @@
 .item-container:first-child {
   margin-top: 30px;
 }
+.item-owner-container {
+  margin: 50px;
+}
+.item-owner-items {
+  background: #eee;
+  border: 2px gray outset;
+}
 .item-image {
   margin-top: 20px;
   padding: 20px;

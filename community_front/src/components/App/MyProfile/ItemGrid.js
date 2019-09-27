@@ -4,14 +4,17 @@ import Button from "react-bootstrap/Button";
 import Root from "../../../apis/root";
 
 class ItemGrid extends React.Component {
+  state = {
+    userWhoRequestedItem: []
+  };
   resetItemAvailability = e => {
-    e.preventDefault();
-    const { id, userProfile, name, price } = this.props;
+    const { id, userProfile } = this.props;
 
     Root.patch(
       `items/${id}/`,
       {
         profile_id: userProfile[0].id,
+        user_who_borrowed: null,
         available: true
       },
       {
@@ -25,23 +28,75 @@ class ItemGrid extends React.Component {
     });
   };
 
+  getUserWhoRequestedItemsProfile = () => {
+    const { userWhoBorrowed: id, name } = this.props;
+    id &&
+      Root.get(`profiles/${id}/`).then(res => {
+        this.setState({
+          userWhoRequestedItem: { [name]: res.data.profile_name }
+        });
+      });
+  };
+
+  deleteItem = () => {
+    const { id } = this.props;
+    Root.delete(`items/${id}/`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${window.localStorage["token"]}`
+      }
+    })
+      .then(res => {
+        alert("Item Succesfully Deleted");
+      })
+      .catch(err => {
+        alert("Something went wrong");
+      });
+  };
+  componentDidMount = () => {
+    this.getUserWhoRequestedItemsProfile();
+  };
+
   render() {
-    const { id, name, price, available } = this.props;
+    const { name, price, userWhoBorrowed } = this.props;
 
     return (
       <tr>
         <td>{name.toUpperCase()}</td>
-        <td>{price.toUpperCase()}</td>
-        <td>Available: {JSON.stringify(available).toUpperCase()}</td>
         <td>
-          <Button
-            className="btn btn-default reset-item-availablity"
-            onClick={this.resetItemAvailability}
-          >
-            {" "}
-            Reset Item Availablity
-          </Button>
+          &nbsp;&nbsp;
+          {price.toUpperCase()}
+          &nbsp;&nbsp;
         </td>
+        {userWhoBorrowed ? (
+          <td>
+            {this.state.userWhoRequestedItem[name]} Requested to borrow this
+            item
+          </td>
+        ) : (
+          <td>This item is available for borrow</td>
+        )}
+        {userWhoBorrowed ? (
+          <td>
+            <Button
+              className="btn reset-item-availablity"
+              variant="primary"
+              onClick={this.resetItemAvailability}
+            >
+              Reset Item Availablity
+            </Button>
+          </td>
+        ) : (
+          <td>
+            <Button
+              className="btn btn-danger item-delete-btn"
+              variant="danger"
+              onClick={this.deleteItem}
+            >
+              Delete Item
+            </Button>
+          </td>
+        )}
       </tr>
     );
   }

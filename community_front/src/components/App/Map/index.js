@@ -3,7 +3,6 @@ import "../index.css";
 import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
 import { MAP_API_KEY } from "../../../apis/keys";
 import Geocode from "react-geocode";
-import MapMarker from "./MapMarker";
 import Root from "../../../apis/root";
 
 /**
@@ -85,7 +84,6 @@ class SimpleMap extends Component {
   };
 
   render() {
-    const { allProfiles } = this.props;
     const { center, loading } = this.state;
 
     if (!loading) {

@@ -81,7 +81,13 @@ class MyProfile extends React.Component {
     const { userProfile } = this.props;
 
     let itemElements = items.map((item, i) => {
-      const { id, name_of_item: name, price, available } = item;
+      const {
+        id,
+        name_of_item: name,
+        price,
+        available,
+        user_who_borrowed: userWhoBorrowed
+      } = item;
 
       return (
         <ItemGrid
@@ -91,6 +97,7 @@ class MyProfile extends React.Component {
           price={price}
           available={available}
           userProfile={userProfile}
+          userWhoBorrowed={userWhoBorrowed}
         />
       );
     });
@@ -166,8 +173,8 @@ class MyProfile extends React.Component {
                 </Col>
                 <Col xs={12} md={12} lg={6} className="profile-items">
                   <strong>Your Items</strong>
-                  <table>
-                    <tbody>{itemElements}</tbody>
+                  <table className="item-owner-container">
+                    <tbody className="item-owner-items">{itemElements}</tbody>
                   </table>
                 </Col>
               </Row>

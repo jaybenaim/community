@@ -19,9 +19,6 @@ class CreateProfileForm extends React.Component {
   };
 
   handleProfileFormClick = event => {
-    const { handleProfileFormSubmit } = this.props;
-
-    event.preventDefault();
     let profileName = this.nameRef.current.value;
     let email = this.emailRef.current.value;
     let address = this.addressRef.current.value;
@@ -51,9 +48,6 @@ class CreateProfileForm extends React.Component {
         alert("Something went wrong, try signing up or loggin in first.");
         console.log("POST Status: " + err);
       });
-  };
-  componentDidMount = () => {
-    console.log(window.localStorage["id"]);
   };
 
   render() {

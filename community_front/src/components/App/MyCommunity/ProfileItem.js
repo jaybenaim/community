@@ -1,16 +1,11 @@
 import React from "react";
-import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import Root from "../../../apis/root";
 import "./index.css";
 
-import {
-  GIPHY_API_KEY
-  // PEXELS_API_KEY,
-  // IMAGE_ACCESS_KEY
-} from "../../../apis/keys";
+import { GIPHY_API_KEY } from "../../../apis/keys";
 import axios from "axios";
 
 class ProfileItem extends React.Component {
@@ -28,11 +23,12 @@ class ProfileItem extends React.Component {
   }
 
   handleBorrowButton = () => {
-    const { id, userProfileId, name, price } = this.props;
+    const { id, userProfileId, userProfile } = this.props;
     Root.patch(
       `items/${id}/`,
       {
         profile_id: userProfileId,
+        user_who_borrowed: userProfile.id,
         available: false
       },
       {

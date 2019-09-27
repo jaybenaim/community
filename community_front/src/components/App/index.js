@@ -3,7 +3,6 @@ import "./index.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NavBar from "./Navbar";
 import Home from "./Home";
-import CreateProfileForm from "./MyCommunity";
 import Root from "../../apis/root";
 import Map from "./Map";
 import MyProfile from "./MyProfile";
@@ -192,7 +191,6 @@ class App extends React.Component {
                   loggedIn={this.state.loggedIn}
                   handleNavClassChange={this.handleNavClassChange}
                   handleItem={this.handleItem}
-                  handleNavClassChange={this.handleNavClassChange}
                 />
               )}
             />
