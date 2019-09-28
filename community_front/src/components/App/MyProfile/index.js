@@ -116,7 +116,7 @@ class MyProfile extends React.Component {
             />
           ))
         : (profile = (
-            <Container className="cont">
+            <Container fluid={true} className="cont">
                      
               <Row>
                 <Col xs={12} md={12} lg={4} className="con">

@@ -62,7 +62,7 @@ class ItemGrid extends React.Component {
 
     return (
       <tr>
-        <td>{this.props.view}</td>
+        <td colSpan="4">{this.props.view}</td>
         <td>{name.toUpperCase()}</td>
         <td>
           &nbsp;&nbsp;

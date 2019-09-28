@@ -10,10 +10,14 @@ import Axios from "axios";
 import SearchPage from "./MyCommunity";
 import ChatMessage from "./ChatMessage";
 import ChatBox from "./ChatBox";
-
+import ChatSignup from "./ChatSignup";
+import { default as Chatkit } from "@pusher/chatkit-server";
+import { INSTANCE_LOCATOR, CHATKIT_KEY } from "../../apis/keys";
+const chatkit = new Chatkit({
+  instanceLocator: INSTANCE_LOCATOR,
+  key: CHATKIT_KEY
+});
 class App extends React.Component {
-  state = {};
-
   // CHAT MESSAGE
   constructor(props) {
     super(props);
@@ -42,6 +46,31 @@ class App extends React.Component {
     this.setState({
       currentView: view
     });
+  }
+  createUser(username) {
+    chatkit
+      .createUser({
+        id: username,
+        name: username
+      })
+      .then(currentUser => {
+        this.setState({
+          currentUsername: username,
+          currentId: username,
+          currentView: "chatApp"
+        });
+      })
+      .catch(err => {
+        if (err.status === 400) {
+          this.setState({
+            currentUsername: username,
+            currentId: username,
+            currentView: "chatApp"
+          });
+        } else {
+          console.log(err.status);
+        }
+      });
   }
 
   // Handlers
@@ -179,8 +208,16 @@ class App extends React.Component {
     let view = "";
     if (this.state.currentView === "ChatMessage") {
       view = <ChatMessage changeView={this.changeView} />;
+    } else if (this.state.currentView === "ChatSignup") {
+      view = (
+        <ChatSignup
+          userProfile={userProfile}
+          onSubmit={this.createUser}
+          changeView={this.changeView}
+        />
+      );
     } else if (this.state.currentView === "ChatBox") {
-      view = <ChatBox userProfile={userProfile} />;
+      view = <ChatBox userProfile={userProfile} changeView={this.changeView} />;
     }
     return (
       <Router>
