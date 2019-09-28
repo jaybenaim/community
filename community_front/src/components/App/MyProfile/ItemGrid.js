@@ -75,6 +75,7 @@ class ItemGrid extends React.Component {
           <button onClick={handleChatToggle}>Chat</button>
           <ChatWidget
             userProfile={userProfile}
+            userWhoBorrowed={this.state.userWhoRequestedItem[name]}
             chatShow={chatShow}
             handleChatToggle={handleChatToggle}
           />

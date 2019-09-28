@@ -28,13 +28,15 @@ class ChatWidget extends Component {
         show={this.props.chatShow}
       >
         <Modal.Header>
-          <Modal.Title name="someValue">Chat With {}</Modal.Title>
+          <Modal.Title name="someValue">
+            Chat With {this.props.userWhoBorrowed}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Widget
             handleNewUserMessage={this.handleNewUserMessage}
             title="Let's Chat"
-            subtitle={this.props.userProfile[0].profile_name}
+            subtitle={this.props.userWhoBorrowed}
           />
           <Button onClick={this.props.handleChatToggle}>Close</Button>
         </Modal.Body>
