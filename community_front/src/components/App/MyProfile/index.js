@@ -98,6 +98,7 @@ class MyProfile extends React.Component {
           available={available}
           userProfile={userProfile}
           userWhoBorrowed={userWhoBorrowed}
+          view={view}
         />
       );
     });
@@ -179,7 +180,7 @@ class MyProfile extends React.Component {
                 </Col>
               </Row>
               <Row>
-                <Col lg={12}>{view}</Col>
+                <Col lg={12}></Col>
               </Row>
               <Button
                 className="edit-profile-button"

@@ -9,6 +9,7 @@ import MyProfile from "./MyProfile";
 import Axios from "axios";
 import SearchPage from "./MyCommunity";
 import ChatMessage from "./ChatMessage";
+import ChatBox from "./ChatBox";
 
 class App extends React.Component {
   state = {};
@@ -174,9 +175,12 @@ class App extends React.Component {
   }
 
   render() {
+    const { userProfile } = this.state;
     let view = "";
     if (this.state.currentView === "ChatMessage") {
       view = <ChatMessage changeView={this.changeView} />;
+    } else if (this.state.currentView === "ChatBox") {
+      view = <ChatBox userProfile={userProfile} />;
     }
     return (
       <Router>

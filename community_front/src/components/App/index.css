@@ -1,18 +1,55 @@
 .App {
   text-align: center;
 }
+/*  chat  */
+
 .chat-button {
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
+  /* position: absolute; */
+  /* right: 10px; */
+  /* bottom: 10px; */
   background: #5e0565;
   height: 50px;
-  font-size: 16px;
+  font-size: 13px;
   color: white;
   padding: 10px;
   border-radius: 5px;
   border: 0;
-  box-shadow: 1px 1px 4px 1px grey;
+  /* box-shadow: 1px 1px 4px 1px grey; */
+  cursor: pointer;
+  padding: 5px;
+}
+.form-container {
+  height: 400px;
+  border: 1px solid #5e0565;
+}
+.form-container h1 {
+  padding: 10px;
+  background-color: #5e0565;
+  font-size: 20px;
+  color: white;
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.form {
+  padding: 30px;
+}
+
+.input {
+  display: block;
+  width: 100%;
+  margin: 20px auto;
+  height: 50px;
+  font-size: 20px;
+}
+
+.submit {
+  height: 40px;
+  padding: 0 20px;
+  background-color: #5e0565;
+  color: white;
+  border-radius: 5px;
+  font-size: 16px;
   cursor: pointer;
 }
 li {
