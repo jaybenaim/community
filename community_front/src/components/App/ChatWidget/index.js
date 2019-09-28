@@ -15,7 +15,7 @@ class ChatWidget extends Component {
 
   handleNewUserMessage = newMessage => {
     // Now send the message throught the backend API
-    addUserMessage(newMessage);
+    // addUserMessage(newMessage);
   };
 
   render() {
