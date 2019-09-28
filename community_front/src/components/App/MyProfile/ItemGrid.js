@@ -62,6 +62,7 @@ class ItemGrid extends React.Component {
 
     return (
       <tr>
+        <td colSpan="4">{this.props.chatWidget}</td>
         <td>{name.toUpperCase()}</td>
         <td>
           &nbsp;&nbsp;

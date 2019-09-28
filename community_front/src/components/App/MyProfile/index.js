@@ -78,7 +78,7 @@ class MyProfile extends React.Component {
   render() {
     const { items } = this.state;
 
-    const { userProfile } = this.props;
+    const { userProfile, chatWidget } = this.props;
 
     let itemElements = items.map((item, i) => {
       const {
@@ -98,6 +98,7 @@ class MyProfile extends React.Component {
           available={available}
           userProfile={userProfile}
           userWhoBorrowed={userWhoBorrowed}
+          chatWidget={chatWidget}
         />
       );
     });

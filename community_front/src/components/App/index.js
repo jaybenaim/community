@@ -8,6 +8,7 @@ import Map from "./Map";
 import MyProfile from "./MyProfile";
 import Axios from "axios";
 import SearchPage from "./MyCommunity";
+import ChatWidget from "./ChatWidget";
 
 class App extends React.Component {
   state = {
@@ -160,6 +161,7 @@ class App extends React.Component {
   }
 
   render() {
+    const chatWidget = <ChatWidget />;
     return (
       <Router>
         <div className="App">
@@ -217,6 +219,7 @@ class App extends React.Component {
                   loggedIn={this.state.loggedIn}
                   handleNavClassChange={this.handleNavClassChange}
                   getProfileId={this.getProfileId}
+                  chatWidget={chatWidget}
                 />
               )}
             />
