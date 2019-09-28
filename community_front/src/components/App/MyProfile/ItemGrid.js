@@ -2,10 +2,12 @@ import React from "react";
 import "./index.css";
 import Button from "react-bootstrap/Button";
 import Root from "../../../apis/root";
+import ChatWidget from "../ChatWidget";
 
 class ItemGrid extends React.Component {
   state = {
-    userWhoRequestedItem: []
+    userWhoRequestedItem: [],
+    chatShow: false
   };
   resetItemAvailability = e => {
     const { id, userProfile } = this.props;
@@ -58,11 +60,25 @@ class ItemGrid extends React.Component {
   };
 
   render() {
-    const { name, price, userWhoBorrowed } = this.props;
+    const {
+      name,
+      price,
+      userWhoBorrowed,
+      handleChatToggle,
+      userProfile,
+      chatShow
+    } = this.props;
 
     return (
       <tr>
-        <td colSpan="4">{this.props.chatWidget}</td>
+        <td colSpan="4">
+          <button onClick={handleChatToggle}>Chat</button>
+          <ChatWidget
+            userProfile={userProfile}
+            chatShow={chatShow}
+            handleChatToggle={handleChatToggle}
+          />
+        </td>
         <td>{name.toUpperCase()}</td>
         <td>
           &nbsp;&nbsp;

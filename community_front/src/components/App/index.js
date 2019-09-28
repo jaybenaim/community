@@ -27,7 +27,8 @@ class App extends React.Component {
     searchItem: null,
     profileSearched: "",
     navClass: "nav navbar-light",
-    loading: false
+    loading: false,
+    chatShow: false
   };
 
   // Handlers
@@ -155,13 +156,18 @@ class App extends React.Component {
     this.setState(prevState => ({ items: newItems }));
   };
 
+  handleChatToggle = () => this.setState({ chatShow: !this.state.chatShow });
+
   componentDidMount() {
     this.getAllProfiles();
     this.getProfileId();
   }
 
   render() {
-    const chatWidget = <ChatWidget />;
+    const { userProfile, chatShow } = this.state;
+    const chatWidget = (
+      <ChatWidget userProfile={userProfile} chatShow={chatShow} />
+    );
     return (
       <Router>
         <div className="App">
@@ -220,6 +226,8 @@ class App extends React.Component {
                   handleNavClassChange={this.handleNavClassChange}
                   getProfileId={this.getProfileId}
                   chatWidget={chatWidget}
+                  handleChatToggle={this.handleChatToggle}
+                  chatShow={chatShow}
                 />
               )}
             />

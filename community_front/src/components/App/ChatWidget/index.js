@@ -5,9 +5,11 @@ import {
   addLinkSnippet,
   addUserMessage
 } from "react-chat-widget";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 
-import "react-chat-widget/lib/styles.css";
-
+// import "react-chat-widget/lib/styles.css";
+import "./index.css";
 class ChatWidget extends Component {
   componentDidMount() {
     addResponseMessage("Lets Chat!");
@@ -20,11 +22,23 @@ class ChatWidget extends Component {
 
   render() {
     return (
-      <Widget
-        handleNewUserMessage={this.handleNewUserMessage}
-        title="Let's Chat"
-        subtitle="User who borrowed goes here"
-      />
+      <Modal
+        onHide={() => false}
+        className="modal-form"
+        show={this.props.chatShow}
+      >
+        <Modal.Header>
+          <Modal.Title name="someValue">Chat With {}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Widget
+            handleNewUserMessage={this.handleNewUserMessage}
+            title="Let's Chat"
+            subtitle={this.props.userProfile[0].profile_name}
+          />
+          <Button onClick={this.props.handleChatToggle}>Close</Button>
+        </Modal.Body>
+      </Modal>
     );
   }
 }
