@@ -36,6 +36,7 @@ class NavBar extends React.Component {
             <Nav.Link href="/map">Map</Nav.Link>
             <Nav.Link href="/profiles/myprofile">My Profile</Nav.Link>
             <Nav.Link href="/profiles/search">My Community</Nav.Link>
+
             <Container>
               <Row>
                 <Col sm={6} md={6} lg={6}>

@@ -78,7 +78,7 @@ class MyProfile extends React.Component {
   render() {
     const { items } = this.state;
 
-    const { userProfile } = this.props;
+    const { userProfile, view } = this.props;
 
     let itemElements = items.map((item, i) => {
       const {
@@ -177,6 +177,9 @@ class MyProfile extends React.Component {
                     <tbody className="item-owner-items">{itemElements}</tbody>
                   </table>
                 </Col>
+              </Row>
+              <Row>
+                <Col lg={12}>{view}</Col>
               </Row>
               <Button
                 className="edit-profile-button"

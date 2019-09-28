@@ -8,26 +8,40 @@ import Map from "./Map";
 import MyProfile from "./MyProfile";
 import Axios from "axios";
 import SearchPage from "./MyCommunity";
+import ChatMessage from "./ChatMessage";
 
 class App extends React.Component {
-  state = {
-    user: [],
-    userProfile: [],
-    items: [],
-    show: "false",
-    showProfile: false,
-    displayItemForm: false,
-    itemName: "first name",
-    itemPrice: "price",
-    allProfiles: [],
-    displayed_form: "",
-    loggedIn: window.localStorage["token"] ? true : false,
-    username: "",
-    searchItem: null,
-    profileSearched: "",
-    navClass: "nav navbar-light",
-    loading: false
-  };
+  state = {};
+
+  // CHAT MESSAGE
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentView: "ChatMessage",
+      user: [],
+      userProfile: [],
+      items: [],
+      show: "false",
+      showProfile: false,
+      displayItemForm: false,
+      itemName: "first name",
+      itemPrice: "price",
+      allProfiles: [],
+      displayed_form: "",
+      loggedIn: window.localStorage["token"] ? true : false,
+      username: "",
+      searchItem: null,
+      profileSearched: "",
+      navClass: "nav navbar-light",
+      loading: false
+    };
+    this.changeView = this.changeView.bind(this);
+  }
+  changeView(view) {
+    this.setState({
+      currentView: view
+    });
+  }
 
   // Handlers
   handleNavClassChange = () => {
@@ -160,6 +174,10 @@ class App extends React.Component {
   }
 
   render() {
+    let view = "";
+    if (this.state.currentView === "ChatMessage") {
+      view = <ChatMessage changeView={this.changeView} />;
+    }
     return (
       <Router>
         <div className="App">
@@ -217,6 +235,7 @@ class App extends React.Component {
                   loggedIn={this.state.loggedIn}
                   handleNavClassChange={this.handleNavClassChange}
                   getProfileId={this.getProfileId}
+                  view={view}
                 />
               )}
             />
