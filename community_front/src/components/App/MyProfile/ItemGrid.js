@@ -71,15 +71,19 @@ class ItemGrid extends React.Component {
 
     return (
       <tr>
-        <td colSpan="4">
-          <button onClick={handleChatToggle}>Chat</button>
-          <ChatWidget
-            userProfile={userProfile}
-            userWhoBorrowed={this.state.userWhoRequestedItem[name]}
-            chatShow={chatShow}
-            handleChatToggle={handleChatToggle}
-          />
-        </td>
+        {this.state.userWhoRequestedItem[name] ? (
+          <td colSpan="4">
+            <button onClick={handleChatToggle}>Chat</button>
+            <ChatWidget
+              userProfile={userProfile}
+              userWhoBorrowed={this.state.userWhoRequestedItem[name]}
+              chatShow={chatShow}
+              handleChatToggle={handleChatToggle}
+            />
+          </td>
+        ) : (
+          <td colSpan="4"></td>
+        )}
         <td>{name.toUpperCase()}</td>
         <td>
           &nbsp;&nbsp;
