@@ -5,6 +5,8 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ProfileItem from "./ProfileItem";
+import ChatWidget from "../ChatWidget";
+import Button from "react-bootstrap/Button";
 
 class ProfilePage extends React.Component {
   state = {
@@ -128,6 +130,18 @@ class ProfilePage extends React.Component {
           </Col>
           <Col xs={12} md={12} lg={6} className="profile-items">
             {itemElements}
+            <Button
+              variant="outline-info"
+              onClick={this.props.handleChatToggle}
+            >
+              Chat
+            </Button>
+            <ChatWidget
+              userProfile={userProfile}
+              chatShow={this.props.chatShow}
+              handleChatToggle={this.props.handleChatToggle}
+              userWhoBorrowed={this.props.userWhoBorrowed}
+            />
           </Col>
         </Row>
       </Container>

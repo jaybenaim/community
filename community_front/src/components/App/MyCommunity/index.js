@@ -126,6 +126,9 @@ class SearchPage extends Component {
             userProfile={this.state.profileSearched}
             handleItem={this.props.handleItem}
             handleNavClassChange={this.props.handleNavClassChange}
+            chatShow={this.props.chatShow}
+            handleChatToggle={this.props.handleChatToggle}
+            userWhoBorrowed={this.state.profileSearched.profileName}
           />
         )}
       </>

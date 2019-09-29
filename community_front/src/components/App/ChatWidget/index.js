@@ -12,7 +12,7 @@ import Button from "react-bootstrap/Button";
 import "./index.css";
 class ChatWidget extends Component {
   componentDidMount() {
-    addResponseMessage("Lets Chat!");
+    addResponseMessage("Hey I would like to borrow...");
   }
 
   handleNewUserMessage = newMessage => {
@@ -35,7 +35,7 @@ class ChatWidget extends Component {
         <Modal.Body>
           <Widget
             handleNewUserMessage={this.handleNewUserMessage}
-            title="Let's Chat"
+            title="Chatting With"
             subtitle={this.props.userWhoBorrowed}
           />
           <Button onClick={this.props.handleChatToggle}>Close</Button>

@@ -199,6 +199,9 @@ class App extends React.Component {
                   loggedIn={this.state.loggedIn}
                   handleNavClassChange={this.handleNavClassChange}
                   handleItem={this.handleItem}
+                  chatWidget={chatWidget}
+                  handleChatToggle={this.handleChatToggle}
+                  chatShow={chatShow}
                 />
               )}
             />

@@ -71,9 +71,13 @@ class ItemGrid extends React.Component {
 
     return (
       <tr>
+        <td colSpan="4"></td>
+
         {this.state.userWhoRequestedItem[name] ? (
           <td colSpan="4">
-            <button onClick={handleChatToggle}>Chat</button>
+            <Button variant="outline-info" onClick={handleChatToggle}>
+              Chat
+            </Button>
             <ChatWidget
               userProfile={userProfile}
               userWhoBorrowed={this.state.userWhoRequestedItem[name]}
@@ -102,7 +106,7 @@ class ItemGrid extends React.Component {
           <td>
             <Button
               className="btn reset-item-availablity"
-              variant="primary"
+              variant="outline-primary"
               onClick={this.resetItemAvailability}
             >
               Reset Item Availablity
@@ -111,14 +115,15 @@ class ItemGrid extends React.Component {
         ) : (
           <td>
             <Button
-              className="btn btn-danger item-delete-btn"
-              variant="danger"
+              className="item-delete-btn"
+              variant="outline-danger"
               onClick={this.deleteItem}
             >
               Delete Item
             </Button>
           </td>
         )}
+        <td colSpan="4"></td>
       </tr>
     );
   }
