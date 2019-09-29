@@ -27,8 +27,8 @@ class SimpleMap extends Component {
     const { allProfiles } = this.props;
     !this.state.loading &&
       allProfiles.forEach(({ address }, index) => {
-        this.getGeocodeFromAddress(address);
         this.checkGeocodeLoading(index);
+        this.getGeocodeFromAddress(address);
       });
   }
 
