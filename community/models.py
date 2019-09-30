@@ -26,9 +26,9 @@ class Profile(models.Model):
 class Item(models.Model):
     name_of_item = models.CharField(max_length=255)
     price = models.CharField(max_length=255)
-    date_lent = models.DateTimeField(auto_now_add=True)
-    date_borrowed = models.DateTimeField(auto_now_add=True)
     profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    available = models.BooleanField(default=True)
+    user_who_borrowed = models.ForeignKey(User, on_delete=models.CASCADE, null=True) 
 
     def __str__(self):
         return self.name_of_item

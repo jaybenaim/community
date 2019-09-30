@@ -5,167 +5,50 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-// import ImageApi from "../../apis/images";
-import {
-  GIPHY_API_KEY
-  // PEXELS_API_KEY,
-  // IMAGE_ACCESS_KEY
-} from "../../../apis/keys";
-import ProfileItem from "./ProfileItem";
-
-import Axios from "axios";
 import Item from "./ItemForm";
 import CreateProfileForm from "./CreateProfileForm";
 import EditProfile from "../../EditProfile";
+import ItemGrid from "./ItemGrid";
 
 class MyProfile extends React.Component {
   state = {
-    user: null,
-    items: [
-      {
-        image: null,
-        itemGif: null,
-        name: null,
-        price: null,
-        profile_id: null,
-        id: null
-      }
-    ],
+    user: [],
+    items: [],
     urls: [],
     profileImage:
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
     itemGif: "",
-    query: [],
-    query2: "",
     image:
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
     itemName: "",
-    itemPrice: "",
-    profile_id: this.props.profileId,
+
     showEditForm: false,
-    showAddItemForm: false
+    showAddItemForm: false,
+    loading: true
   };
 
-  getProfile = () => {
-<<<<<<< HEAD
-    // const user = window.localStorage["id"];
-    // console.log(this.props.userProfile[0].profile_name);
-    // Root.get(`profiles/${user}/`).then(res => {
-    //   console.log(res.data);
-    //   this.setState({ user: res.data });
-    // });
-<<<<<<< HEAD
-    // this.setState({ user: this.props.userProfile[0] });
-=======
-    // console.log(this.state.user);
-    if (this.props.userProfile[0] !== undefined)
-      this.setState({ user: this.props.userProfile[0] });
-    // else
-    //   this.setState({
-    //     user: {
-    //       user: "null",
-    //       id: "null",
-    //       username: "null",
-    //       profile_name: "null",
-    //       email: "null",
-    //       address: "null"
-    //     }
-    //   });
-=======
-    const { user } = window.localStorage["id"];
-    Root.get(`profiles/${user}/`).then(res => {
-      console.log(res.data);
-      this.setState({ user: res.data });
-    });
->>>>>>> afe97b7db35c43d28951d48b21b6b42d77408430
->>>>>>> 2b43ab7b1f92c645a6d775238da02b77c46dc22a
-  };
-  getItems = () => {
-    // console.log(this.state.user);
-    const {
-      user,
-      id: profileId,
-      username,
-      profile_name: profileName,
-      email,
-      address
-    } = this.props.userProfile[0];
+  // Fetches all the items that users have created
+  getItemsFromUser = () => {
+    const { userProfile } = this.props;
 
+    console.log(userProfile);
     Root.get("items/").then(res => {
-      let items = res.data;
-      let newItems = [];
-      let queries = [];
-      // displays empty box if no item is in profile
-      (items || []).map((item, i) => {
-        // const { name, price, profile_id } = item;
-        console.log(item.profile_id + " = " + profileId);
-        if (item.profile_id === profileId) {
-          newItems.push(item);
-          queries.push(item.name);
-          this.setState(prevState => ({
-            query: queries,
-            items: newItems
-          }));
-          return item;
-        }
-      });
+      const items = res.data;
+      if (userProfile[0] !== undefined) {
+        this.setState({
+          items: items.filter(item => {
+            if (item.profile_id === userProfile[0].id) {
+              return item;
+            }
+          })
+        });
+      }
     });
-    setTimeout(() => {
-      const items = this.state.items;
-      items.forEach(item => {
-        this.setImages(item.name);
-      });
-    }, 1000);
-  };
-  setImages = async query => {
-    await Axios.get(
-      `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=ladder&limit=1&offset=0&rating=G&lang=en`
-    )
-      // await Axios.get(`https://api.pexels.com/v1/curated?per_page=1&page=1`, {
-      //   headers: { Authorization: PEXELS_API_KEY }
-      // })
-      // await Axios.get(`https://api.pexels.com/v1/curated?per_page=1&page=1`, {
-      //   headers: { Authorization: PEXELS_API_KEY }
-      // })
-
-      .then(res => {
-        let img = res.data.data[0].images.fixed_height.url;
-        const { url } = res.data.data[0].images.fixed_height_still;
-
-        let urls = [];
-        urls.push(img);
-        this.setState(prevState => ({
-          image: url,
-          itemGif: img,
-          urls: urls
-        }));
-      })
-      .catch(err => {
-        console.log(err);
-      });
   };
 
   changeImage = () => {
     let url = prompt("Enter a url");
     this.setState({ profileImage: url });
-  };
-  componentDidMount = () => {
-    this.props.getProfileFromToken();
-    console.log();
-
-    setTimeout(() => {
-      this.getProfile();
-<<<<<<< HEAD
-      // this.getItems();
-    }, 1500);
-=======
-<<<<<<< HEAD
-      this.getItems();
-    }, 1000);
-=======
-
-      // this.getItems();
-    }, 1000);
   };
 
   toggleEditForm = e => {
@@ -174,44 +57,56 @@ class MyProfile extends React.Component {
     if (this.state.showEditForm === false) {
       return this.setState({ showEditForm: true });
     }
-
     return this.setState({ showEditForm: false });
   };
 
   toggleAddItemForm = event => {
     event.preventDefault();
-    // this.setState({ showAddItemForm: !this.state.showAddItemForm });
     console.log("Add Item Form Clicked!");
     if (this.state.showEditForm === false) {
       return this.setState({ showAddItemForm: !this.state.showAddItemForm });
     }
     return this.setState({ showAddItemForm: !this.state.showAddItemForm });
->>>>>>> afe97b7db35c43d28951d48b21b6b42d77408430
->>>>>>> 2b43ab7b1f92c645a6d775238da02b77c46dc22a
   };
 
-  render() {
+  componentDidMount = () => {
+    this.props.handleNavClassChange();
     setTimeout(() => {
-      console.log(this.state.user);
-    }, 2000);
-    const { items, itemGif, image } = this.state;
+      this.getItemsFromUser();
+    }, 1000);
+  };
+  render() {
+    const { items } = this.state;
+
+    const { userProfile } = this.props;
 
     let itemElements = items.map((item, i) => {
-      const { name_of_item, price } = item;
+      const {
+        id,
+        name_of_item: name,
+        price,
+        available,
+        user_who_borrowed: userWhoBorrowed
+      } = item;
 
       return (
-        <ProfileItem
+        <ItemGrid
           key={i}
-          image={itemGif || image}
-          name={name_of_item}
+          id={id}
+          name={name}
           price={price}
+          available={available}
+          userProfile={userProfile}
+          userWhoBorrowed={userWhoBorrowed}
         />
       );
     });
+
     let createProfileForm;
     let profile;
+
     {
-      this.state.user === null
+      this.props.userProfile[0] === undefined
         ? (createProfileForm = (
             <CreateProfileForm
               loadProfile={this.props.getProfileFromToken}
@@ -220,26 +115,8 @@ class MyProfile extends React.Component {
             />
           ))
         : (profile = (
-            <Container>
-              <Button
-                className="edit-profile-button"
-                variant="primary"
-                onClick={this.toggleEditForm}
-              >
-                          Edit Profile         
-              </Button>
-                      
-              {/*
-          
-                          When Show Edit Form is false, this will not show on the page
-                          When the toggleShowEditForm is clicked it will update the value of
-                          showEditForm. if the value is false, it will hide the component
-                          if the value is true it will show the form
-                        */}
-                      
-              {this.state.showEditForm && (
-                <EditProfile toggleEditForm={this.toggleEditForm} />
-              )}
+            <Container className="cont">
+                     
               <Row>
                 <Col xs={12} md={12} lg={4} className="con">
                   <section>
@@ -249,20 +126,17 @@ class MyProfile extends React.Component {
                       alt="profile"
                       onClick={this.changeImage}
                     />
-
                     <div className="profile-details">
                       <Row>
                         <p className="profile-name">
-                          {/* if searchActive &&  */}
-                          {/* Name: {this.props.profileSearched.profile_name} */}
-                          {this.state.user.profile_name}
+                          {userProfile[0].profile_name || null}
                         </p>
                       </Row>
                       <br />
                       <Row>
                         <p className="profile-email">
                           <span className="bold"> Email:</span>{" "}
-                          {this.state.user.email}
+                          {userProfile[0].email}
                         </p>
                         <br />
                       </Row>
@@ -270,7 +144,7 @@ class MyProfile extends React.Component {
                         <p className="profile-address">
                           <br />
                           <span className="bold"> Address: </span>
-                          {this.state.user.address}
+                          <a href="/map"> {userProfile[0].address}</a>
                         </p>
                       </Row>
 
@@ -286,7 +160,6 @@ class MyProfile extends React.Component {
                       <Item
                         toggleAddItemForm={this.toggleAddItemForm}
                         itemName={this.state.itemName}
-                        itemPrice={this.state.itemPrice}
                         handleItemClose={this.handleItemClose}
                         onChangeItemPrice={this.onChangeItemPrice}
                         onChangeItemName={this.onChangeItemName}
@@ -299,83 +172,34 @@ class MyProfile extends React.Component {
                   </section>
                 </Col>
                 <Col xs={12} md={12} lg={6} className="profile-items">
-                  {itemElements}
+                  <strong>Your Items</strong>
+                  <table className="item-owner-container">
+                    <tbody className="item-owner-items">{itemElements}</tbody>
+                  </table>
                 </Col>
               </Row>
+              <Button
+                className="edit-profile-button"
+                variant="primary"
+                onClick={this.toggleEditForm}
+              >
+                          Edit Profile         
+              </Button>
+              {this.state.showEditForm && (
+                <EditProfile toggleEditForm={this.toggleEditForm} />
+              )}
             </Container>
           ));
     }
 
     return (
-<<<<<<< HEAD
-      <Container>
-        <Row>
-          <Col xs={12} md={12} className="con">
-            <section>
-              <img
-                className="profile-image"
-                src={this.state.profileImage}
-                alt="profile"
-              />
-
-              <p className="profile-details">
-                <Row>
-                  <p className="profile-name">
-                    {/* Name: {this.props.profileSearched.profile_name} */}
-                    <span className="bold"> Name:</span>{" "}
-                    {/* {this.state.user.profile_name}*/}
-                  </p>
-                </Row>
-                <br />
-                <Row>
-                  <p className="profile-email">
-                    <span className="bold"> Email:</span>{" "}
-                    {this.state.user.email}
-                  </p>
-                  <br />
-                </Row>
-                <Row>
-                  <p className="profile-address">
-                    <br />
-                    <span className="bold"> Address: </span>
-                    {this.state.user.address}
-                  </p>
-                </Row>
-
-                <Button
-                  className="add-item-button"
-                  variant="primary"
-                  onClick={event => this.props.handleItem(event)}
-                >
-                  Add Item
-                </Button>
-              </p>
-              <ItemForm
-                itemName={this.state.itemName}
-                itemPrice={this.state.itemPrice}
-                handleItemClose={this.handleItemClose}
-                onChangeItemPrice={this.onChangeItemPrice}
-                onChangeItemName={this.onChangeItemName}
-                handleFormSubmit={this.handleFormSubmit}
-                displayItemForm={this.displayItemForm}
-                handleItem={this.props.handleItem}
-                userProfile={this.props.userProfile}
-              />
-            </section>
-          </Col>
-          <Col xs={12} md={12} lg={6} className="profile-items">
-            {itemElements}
-          </Col>
-        </Row>
-      </Container>
-=======
       <>
         <div>
           {createProfileForm}
+
           {profile}
         </div>
       </>
->>>>>>> 2b43ab7b1f92c645a6d775238da02b77c46dc22a
     );
   }
 }

@@ -1,103 +1,126 @@
-import React, { Component } from "react";
-import ProfileCard from "./ProfileCard";
-import Form from "react-bootstrap/Form";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
+import React from "react";
+import "./index.css";
 import Root from "../../../apis/root";
 import Container from "react-bootstrap/Container";
-import "./index.css";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 
-class CreateProfileForm extends Component {
-  // nameRef = React.createRef();
-  // emailRef = React.createRef();
-  // addressRef = React.createRef();
-  // state = {
-  //   show: false
-  // };
+import EditProfile from "../../EditProfile";
 
-  // handleShow = () => {
-  //   this.setState({ show: !this.state.show });
-  // };
+class MyProfile extends React.Component {
+  state = {
+    users: [],
+    user: [],
+    items: [],
+    urls: [],
+    profileImage:
+      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+    itemGif: "",
+    image:
+      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+    itemName: "",
 
-  // handleProfileFormClick = event => {
-  //   const { handleProfileFormSubmit } = this.props;
+    showEditForm: false,
+    showAddItemForm: false,
+    loading: true
+  };
 
-  //   let profileName = this.nameRef.current.value;
-  //   let email = this.emailRef.current.value;
-  //   let address = this.addressRef.current.value;
-  //   console.log(window.localStorage["token"]);
-  //   // console.log(this.props.profileId[0].user);
-  //   Root.post(
-  //     "profiles/",
-  //     {
-  //       user: this.props.profileId[0].user,
-  //       username: this.props.username,
-  //       profile_name: profileName,
-  //       email,
-  //       address
-  //     },
-  //     {
-  //       headers: {
-  //         // "Content-Type": "application/json",
-  //         Authorization: `Token ${window.localStorage["token"]}`
-  //       }
-  //     }
-  //   )
-  // .then(res => {
-  //   this.handleShow();
-  //   event.preventDefault();
-  //   let email = this.emailRef.current.value;
-  //   let address = this.addressRef.current.value;
-  //   console.log(window.localStorage["token"]);
-  //   console.log(this.props.profileId[0].user);
-  //   Root.post(
-  //     "profiles/",
-  //     {
-  //       user: this.props.profileId[0].user,
-  //       username: this.props.username,
-  //       profile_name: profileName,
-  //       email,
-  //       address
-  //     },
-  //     {
-  //       headers: {
-  //         // "Content-Type": "application/json",
-  //         Authorization: `Token ${window.localStorage["token"]}`
-  //       }
-  //     }
-  //   )
-  //     .then(res => {
-  //       this.handleShow();
+  componentWillMount = () => {
+    console.log("logx: mounted");
+    this.getAllProfiles();
+  };
 
-  //       handleProfileFormSubmit({
-  //         profile_name: profileName,
-  //         email,
-  //         address
-  //       });
-  //       console.log("POST Status: " + res.statusText);
-  //     })
-  //     .catch(err => {
-  //       console.log("POST Status: " + err);
-  //     });
-  // };
-  // componentDidMount = () => {
-  //   this.props.getProfileFromToken();
-  // };
+  getAllProfiles = () => {
+    Root.get("profiles/", {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => {
+        let profiles = res.data;
+        console.log("logx:", profiles);
+        this.setState({ allProfiles: profiles });
+      })
+      .catch(e => {
+        console.log("logx:", e);
+      });
+  };
+
+  // Fetches all the items that users have created
+  getItemsFromUser = () => {
+    const { userProfile } = this.props;
+
+    console.log(userProfile);
+    Root.get("items/").then(res => {
+      const items = res.data;
+      if (userProfile[0] !== undefined) {
+        this.setState({
+          items: items.filter(item => {
+            if (item.profile_id === userProfile[0].id) {
+              return item;
+            }
+          })
+        });
+      }
+    });
+  };
+
+  changeImage = () => {
+    let url = prompt("Enter a url");
+    this.setState({ profileImage: url });
+  };
+
+  toggleEditForm = e => {
+    e.preventDefault();
+    console.log("clicked");
+    if (this.state.showEditForm === false) {
+      return this.setState({ showEditForm: true });
+    }
+    return this.setState({ showEditForm: false });
+  };
+
+  toggleAddItemForm = event => {
+    event.preventDefault();
+    console.log("Add Item Form Clicked!");
+    if (this.state.showEditForm === false) {
+      return this.setState({ showAddItemForm: !this.state.showAddItemForm });
+    }
+    return this.setState({ showAddItemForm: !this.state.showAddItemForm });
+  };
+
+  componentDidMount = () => {
+    this.props.handleNavClassChange();
+    setTimeout(() => {
+      this.getItemsFromUser();
+    }, 1000);
+  };
   render() {
-    const { allProfiles, allItems } = this.props;
+    //let profiles = this.getAllProfiles();
 
-    const profileElements = allProfiles.map((p, i) => (
-      <ProfileCard key={p.id} {...p} allItems={allItems} />
-    ));
     return (
-      <>
-        <Container className="grid-container">
-          {/* Move search query here  */}
-          <div>{profileElements}</div>
-        </Container>
-      </>
+      <div>
+        {this.state.allProfiles
+          ? "Profiles(" + this.state.allProfiles.length + ")"
+          : "no profiles"}
+        <br />
+        <br />
+        {this.state.allProfiles
+          ? this.state.allProfiles.map((v, i, items) => {
+              //return <div>{JSON.stringify(v, null, 2)}</div>;
+
+              return (
+                <div>
+                  <div>id: {v.id}</div>
+                  <div>username: {v.username}</div>
+                  <div>profile_name: {v.profile_name}</div>
+                </div>
+              );
+            })
+          : "no profiles"}
+      </div>
     );
   }
 }
 
-export default CreateProfileForm;
+export default MyProfile;

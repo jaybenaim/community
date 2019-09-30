@@ -27,27 +27,65 @@ li:hover {
   position: absolute;
   z-index: 1;
 }
-.navbar {
+.navbar-light {
   position: fixed;
   height: 80px;
   width: 100%;
   z-index: 2;
-  background: lightgray;
+  /* background-color: white; */
+}
+.navbar-light :nth-child(n + 1) {
+  /* border: 2px solid black; */
+  color: white !important;
+  font-size: 18px;
+  font-weight: 700;
+}
+.navbar-dark {
+  position: static;
+  height: 80px;
+  width: 100%;
+  z-index: 2;
+  /* background-color: white; */
+}
+.navbar-dark :nth-child(n + 1) {
+  /* border: 2px solid black; */
+  color: black !important;
+  padding-bottom: 5px;
+  /* font-size: 18px;
+  font-weight: 700; */
+}
+.navbar-dark .navbar-toggler {
+  border: 2px solid black;
+  color: black;
+}
+.navbar-toggler-icon {
+  color: black;
+  border: 2px solid black;
+  background: #007bff;
 }
 /* .navbar-nav :nth-child(n + 2) {
   color: white !important;
-  background: rgba(33, 33, 33, 0.5);
+  /* background: rgba(33, 33, 33, 0.5); 
 }
-.navbar-nav :first-child {
-  color: black !important;
+/* .navbar-nav :first-child {
+  color: white !important;
 } */
+a {
+  padding: 0;
+}
+a.nav-link {
+  margin-left: 40px;
+  padding: 10px;
+}
 
 .logo {
   height: 20px;
-  zoom: 3;
+  zoom: 3.5;
   margin-left: 5px;
-  margin-top: -8px;
+  margin-top: -2px;
   margin-bottom: -10px;
+  position: fixed;
+  z-index: 2;
 }
 
 /*  Home Page Slideshow */
@@ -101,18 +139,20 @@ li:hover {
   background-image: url(https://i.imgur.com/o7blsDX.jpg);
   animation-delay: 10s;
 }
-.slideshow li:nth-child(3) {
+/* .slideshow li:nth-child(2) {
   background-image: url(https://i.imgur.com/tv4V9U2.jpg);
+  animation-delay: 20s;
+} */
+.slideshow li:nth-child(3) {
+  background-image: url(https://images.unsplash.com/photo-1546641082-cc6e696dacdb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1628&q=80);
   animation-delay: 20s;
 }
 .slideshow li:nth-child(4) {
-  background-image: url(https://i.imgur.com/t0z1VW9.jpg);
+  background-image: url(https://images.unsplash.com/photo-1462536943532-57a629f6cc60?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2252&q=80);
   animation-delay: 30s;
 }
 .slideshow li:nth-child(5) {
-  background-image: url(https://i.imgur.com/GiRuiFB.jpg);
-  background-size: contain;
-  background-repeat: repeat;
+  background-image: url(https://images.unsplash.com/photo-1474649107449-ea4f014b7e9f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80);
   animation-delay: 40s;
 }
 

@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
-import Axios from "axios";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import root from "../../apis/root";
 import "./index.css";
 
 class EditProfile extends Component {

@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.models import User, Group 
+from django.contrib.auth.models import User, Group
 from django.http import HttpResponse, JsonResponse
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes
@@ -22,12 +22,12 @@ from django.conf import settings
 from .serializers import *
 from .models import *
 import logging
-import random 
-import json 
-import os 
-from .api import * 
+import random
+import json
+import os
+from .api import *
 
-    
+
 class FrontendAppView(View):
     """
     Serves the compiled frontend entry point (only works if you have run `yarn
@@ -48,4 +48,3 @@ class FrontendAppView(View):
                 """,
                 status=501,
             )
-

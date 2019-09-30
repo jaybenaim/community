@@ -40,7 +40,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
-        fields = ["id", "profile_id", "name_of_item", "price"]
+        fields = ["id", "profile_id", "name_of_item", "price", "available", "user_who_borrowed"]
 
     def create(self, validated_data):
         return Item.objects.create(**validated_data)
@@ -49,6 +49,8 @@ class ItemSerializer(serializers.ModelSerializer):
         instance.name_of_item = validated_data.get("name_of_item", instance.name_of_item)
         instance.price = validated_data.get("price", instance.price)
         instance.profile_id = validated_data.get("profile_id", 12)
+        instance.available = validated_data.get("available", instance.available) 
+        instance.user_who_borrowed = validated_data.get("user_who_borrowed", instance.user_who_borrowed) 
 
         instance.save()
         return instance 

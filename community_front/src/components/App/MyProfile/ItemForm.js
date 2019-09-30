@@ -4,21 +4,10 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Root from "../../../apis/root";
 
-const Item = ({
-  handleFormSubmit,
-  handleItemClose,
-  itemName,
-  itemPrice,
-  onChangeItemPrice,
-  onChangeItemName,
-  handleItem,
-  userProfile,
-  toggleAddItemForm
-}) => {
+const Item = ({ handleItem, userProfile, toggleAddItemForm }) => {
   // create hook state for holding item and price temp
   const [item, setItem] = useState(null);
   const [price, setPrice] = useState(null);
-  const [show, setShow] = useState(true);
 
   // create ref here for input values
   const itemRef = React.createRef();
@@ -33,9 +22,6 @@ const Item = ({
     setItem(itemVal);
     setPrice(priceVal);
 
-    // const profile_id;  //
-
-    // make post request
     setTimeout(() => {
       handleItem(itemVal, priceVal);
     }, 1000);
@@ -44,7 +30,8 @@ const Item = ({
       {
         profile_id: userProfile[0].id,
         name_of_item: itemVal,
-        price: priceVal
+        price: priceVal,
+        available: true
       },
       {
         headers: {
@@ -53,23 +40,16 @@ const Item = ({
         }
       }
     )
-
       .then(res => {
         handleItem(item, price);
-
-        console.log("Success");
+        alert("Item Successfully Added! ");
       })
       .catch(err => {
+        alert("Something Went Wrong");
         console.log(err);
       });
   };
 
-  // handleItem = (item, price) => {
-  //   this.setState(prevState => ({ item: { item, price } }));
-  // };
-  /// define a function that will set state in app to itemname with itemval
-  //// one function that takes params to do both
-  // define another function that does the same for price
   const handleClose = event => {
     toggleAddItemForm(event);
   };
@@ -89,7 +69,6 @@ const Item = ({
                   name="item"
                   type="text"
                   ref={itemRef}
-                  // onChange={event => onChangeItemName(event.target.value)}
                   placeholder="Enter An Item Name"
                 />
               </Form.Group>
@@ -99,7 +78,6 @@ const Item = ({
                   name="price"
                   type="text"
                   ref={priceRef}
-                  // onChange={event => onChangeItemPrice(event.target.value)}
                   placeholder="Enter An Item Price"
                 />
               </Form.Group>

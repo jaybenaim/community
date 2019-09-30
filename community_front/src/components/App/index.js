@@ -3,22 +3,19 @@ import "./index.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NavBar from "./Navbar";
 import Home from "./Home";
-import CreateProfileForm from "./MyCommunity";
 import Root from "../../apis/root";
 import Map from "./Map";
 import MyProfile from "./MyProfile";
+import MyCommunity from "./MyCommunity";
+
 import Axios from "axios";
-import PutTest from "../PutTest";
+import SearchPage from "./MyCommunity";
 
 class App extends React.Component {
   state = {
     user: [],
     userProfile: [],
     items: [],
-    profileName: "",
-    profileId: null,
-    email: "",
-    address: "",
     show: "false",
     showProfile: false,
     displayItemForm: false,
@@ -26,14 +23,18 @@ class App extends React.Component {
     itemPrice: "price",
     allProfiles: [],
     displayed_form: "",
-    logged_in: window.localStorage["token"] ? true : false,
+    loggedIn: window.localStorage["token"] ? true : false,
     username: "",
     searchItem: null,
     profileSearched: "",
+    navClass: "nav navbar-light",
     loading: false
   };
 
   // Handlers
+  handleNavClassChange = () => {
+    this.setState({ navClass: "nav navbar-dark" });
+  };
   handleAddItemName = event => {
     let itemName = event.target.value;
     this.setState({ itemName: itemName });
@@ -43,17 +44,19 @@ class App extends React.Component {
     this.setState({ itemPrice: itemPrice });
   };
 
-  handleItemFormSubmit = () => {
+  handleItemFormSubmit = e => {
+    e.preventDefault();
     Root.post("items/", {
       name_of_item: this.state.itemName.itemName,
-      price: this.state.itemPrice.itemPrice
+      price: this.state.itemPrice.itemPrice,
+      available: true
     })
       .then(res => {
         this.setState({ displayItemForm: false });
         console.log("Item added");
       })
       .catch(err => {
-        console.log(err);
+        alert("Error", err);
       });
   };
 
@@ -83,94 +86,62 @@ class App extends React.Component {
   getAllProfiles = () => {
     Root.get("profiles/", {
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Token ${window.localStorage["token"]}`
-      }
-    }).then(res => {
-      let profiles = res.data;
-      this.setState({ allProfiles: profiles });
-      // console.log(this.state.allProfiles);
-    });
-  };
-  getAllItems = () => {
-    return null;
-  };
-
-  componentDidMount() {
-    this.getAllProfiles();
-    this.getProfileFromToken();
-  }
-
-  handle_login = (e, data) => {
-    e.preventDefault();
-    Axios.post("http://localhost:8000/authenticate/", data)
-      .then(res => {
-        console.log(res.data);
-        window.localStorage["token"] = res.data.token;
-        window.localStorage["username"] = data.username;
-        window.localStorage["id"] = res.data.id;
-      })
-      .then(res => {
-        setTimeout(() => {
-          this.getProfileFromToken();
-        }, 2000);
-      });
-  };
-
-  getProfileFromToken = () => {
-    Root.get("profiles/").then(res => {
-      /// //// // /
-
-      //// if profile.user = window.localStorage["id"]
-      let profiles = res.data;
-      let matchedProfile = [];
-      let profileUser = [];
-
-      profiles.map(profile => {
-        if (
-          //////   this is where the error for profile not displaying
-          profile.username.toLowerCase() ===
-          window.localStorage["username"].toLowerCase()
-        ) {
-          matchedProfile.push(profile);
-        }
-      });
-
-      this.setState({
-        // user: window.localStorage["id"],
-        userProfile: matchedProfile,
-        username: window.localStorage["username"],
-        profileId: this.state.userProfile.user,
-        logged_in: true,
-        displayed_form: ""
-      });
-    });
-  };
-  handle_signup = (e, data) => {
-    e.preventDefault();
-    // Axios.post("http://localhost:8000/api-token-auth/", {
-    Root.post("users/", data, {
-      headers: {
         "Content-Type": "application/json"
       }
     })
       .then(res => {
-        window.localStorage["token"] = res.data.token;
-        window.localStorage["username"] = data.username;
-        window.localStorage["id"] = res.data.id;
+        let profiles = res.data;
+        this.setState({ allProfiles: profiles });
       })
       .then(res => {
-        setTimeout(() => {
-          this.getProfileFromToken();
-        }, 1000);
+        this.getProfileId();
       });
   };
+  getAllItems = () => {
+    return null;
+  };
+  getProfileId = () => {
+    let profiles = this.state.allProfiles;
 
-  handle_logout = () => {
+    this.setState({
+      userProfile: profiles.filter(profile => {
+        if (profile.user === Number(window.localStorage["id"])) {
+          return profile;
+        }
+      })
+    });
+  };
+
+  handle_login = (e, data) => {
+    e.preventDefault();
+    Axios.post("http://localhost:8000/authenticate/", data).then(res => {
+      window.localStorage["token"] = res.data.token;
+      window.localStorage["username"] = data.username;
+      window.localStorage["id"] = res.data.id;
+    });
+    this.getProfileId();
+  };
+
+  handle_signup = (e, data) => {
+    e.preventDefault();
+    Root.post("users/", data, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(res => {
+      window.localStorage["token"] = res.data.token;
+      window.localStorage["username"] = data.username;
+      window.localStorage["id"] = res.data.id;
+      this.getProfileId();
+    });
+  };
+
+  handle_logout = e => {
+    e.preventDefault();
     window.localStorage["token"] = "";
     window.localStorage["username"] = "";
     window.localStorage["id"] = "";
-    this.setState({ logged_in: false, username: "" });
+    this.setState({ loggedIn: false });
   };
 
   display_form = form => {
@@ -179,43 +150,18 @@ class App extends React.Component {
     });
   };
 
-  getSearchQuery = query => {
-    Root.get("items/").then(res => {
-      let items = res.data;
-      (items || []).map((item, i) => {
-        // const { name_of_item, price, profile_id } = item;
-        if (item.name_of_item.toLowerCase() === query.toLowerCase()) {
-          this.setState({
-            searchItem: { ...item },
-            profileId: item.profile_id
-          });
-        }
-        return item;
-      });
-    });
-    this.setState({ loading: true });
-    this.state.loading && this.getSearchProfile();
-  };
-
-  getSearchProfile = () => {
-    const { profileId } = this.state;
-    Root.get(`profiles/${profileId}/`).then(res => {
-      this.setState({ profileSearched: res.data });
-      console.log(res.data);
-    });
-  };
   handleItem = (item, price) => {
     let newItems = [];
     newItems.push({ item, price });
     this.setState(prevState => ({ items: newItems }));
-
-    setTimeout(() => {
-      console.log(this.state.items);
-    }, 1000);
   };
 
+  componentDidMount() {
+    this.getAllProfiles();
+    this.getProfileId();
+  }
+
   render() {
-    // this.getProfileFromToken();
     return (
       <Router>
         <div className="App">
@@ -224,7 +170,7 @@ class App extends React.Component {
           </Switch>
           <Switch>
             <NavBar
-              logged_in={this.state.logged_in}
+              loggedIn={this.state.loggedIn}
               display_form={this.display_form}
               handle_logout={this.handle_logout}
               username={this.state.username}
@@ -234,28 +180,19 @@ class App extends React.Component {
               getItems={this.getSearchQuery}
               getProfile={this.getSearchProfile}
               userProfile={this.state.userProfile}
+              handleNavClassChange={this.handleNavClassChange}
+              navClass={this.state.navClass}
             />
           </Switch>
-          <Switch>
-            <Route exact path="/puttest" component={PutTest} />
-          </Switch>
+
           <Switch>
             <Route
-              path="/users/profiles/"
+              path="/profiles/search"
               render={props => (
-                <CreateProfileForm
-                  allProfiles={this.state.allProfiles}
-                  allItems={this.allItems}
-                  handleProfileFormSubmit={this.handleProfileFormSubmit}
-                  handleFormSubmit={this.handleFormSubmit}
-                  handleShow={this.handleShow}
-                  handleClose={this.handleClose}
-                  show={this.show}
-                  handleProfileFormClick={this.handleProfileFormClick}
-                  username={this.state.username}
-                  userProfile={this.state.userProfile}
-                  profileId={this.state.profileId}
-                  getProfileFromToken={this.getProfileFromToken}
+                <SearchPage
+                  loggedIn={this.state.loggedIn}
+                  handleNavClassChange={this.handleNavClassChange}
+                  handleItem={this.handleItem}
                 />
               )}
             />
@@ -263,25 +200,40 @@ class App extends React.Component {
           <Switch>
             <Route
               path="/map"
-              render={props => <Map allProfiles={this.state.allProfiles} />}
+              render={props => (
+                <Map
+                  allProfiles={this.state.allProfiles}
+                  handleNavClassChange={this.handleNavClassChange}
+                />
+              )}
             />
           </Switch>
           <Switch>
             <Route
               exact
-              path="/profiles/"
+              path="/profiles/myprofile"
               render={props => (
                 <MyProfile
-                  allProfiles={this.state.allProfiles}
-                  profileId={this.state.profileId}
-                  profileSearched={this.state.profileSearched}
-                  itemName={this.state.itemName}
-                  itemPrice={this.state.itemPrice}
-                  handleItemCLose={this.handleItemClose}
                   handleItem={this.handleItem}
                   userProfile={this.state.userProfile}
-                  getProfileFromToken={this.getProfileFromToken}
                   loggedIn={this.state.loggedIn}
+                  handleNavClassChange={this.handleNavClassChange}
+                  getProfileId={this.getProfileId}
+                />
+              )}
+            />
+          </Switch>
+          <Switch>
+            <Route
+              exact
+              path="/community/my"
+              render={props => (
+                <MyCommunity
+                  handleItem={this.handleItem}
+                  userProfile={this.state.userProfile}
+                  loggedIn={this.state.loggedIn}
+                  handleNavClassChange={this.handleNavClassChange}
+                  getProfileId={this.getProfileId}
                 />
               )}
             />

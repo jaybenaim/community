@@ -7,7 +7,6 @@ import Container from "react-bootstrap/Container";
 import "./index.css";
 
 class CreateProfileForm extends React.Component {
-  state = {};
   nameRef = React.createRef();
   emailRef = React.createRef();
   addressRef = React.createRef();
@@ -20,19 +19,15 @@ class CreateProfileForm extends React.Component {
   };
 
   handleProfileFormClick = event => {
-    const { handleProfileFormSubmit } = this.props;
-
-    event.preventDefault();
     let profileName = this.nameRef.current.value;
     let email = this.emailRef.current.value;
     let address = this.addressRef.current.value;
-    // console.log(this.props.userProfile[0].user[0]);
-    // console.log(this.props.userProfile[0].username);
+
     console.log(window.localStorage["token"]);
     Root.post(
       "profiles/",
       {
-        user: Number(window.localStorage["token"]),
+        user: Number(window.localStorage["id"]),
         username: window.localStorage["username"],
         profile_name: profileName,
         email,
@@ -54,18 +49,11 @@ class CreateProfileForm extends React.Component {
         console.log("POST Status: " + err);
       });
   };
-  componentDidMount = () => {
-    this.props.getProfile();
-  };
 
   render() {
     return (
       <Container className="grid-container">
-        <Button
-          className="butoon"
-          variant="outline-primary"
-          onClick={this.handleShow}
-        >
+        <Button className="butoon" variant="primary" onClick={this.handleShow}>
           Create a Profile
         </Button>
         <Modal className="modal-form" show={this.state.show}>

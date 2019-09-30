@@ -20,7 +20,8 @@
   border-radius: 50%;
   width: 240px;
   height: 240px;
-  margin-top: 180px;
+  margin-top: 120px;
+  cursor: pointer;
 }
 .profile-name,
 .profile-email,
@@ -36,16 +37,17 @@
 }
 .profile-items {
   margin-top: 80px;
-  /* overflow: auto; */
+  overflow: auto;
   margin-left: 160px;
 }
 @media (max-width: 948px) {
   .profile-items {
     margin: 0;
     padding: 40px;
+    overflow: auto;
   }
   .borrow-button {
-    margin: 10px;
+    margin: 30px;
   }
 }
 .add-item-button {
@@ -58,6 +60,9 @@
 .item-image {
   width: 200px;
   height: 200px;
+  border: 1px solid gray;
+  border-radius: 4px;
+  margin-right: 40px;
 }
 
 .item-container {
@@ -73,23 +78,35 @@
 .item-container:first-child {
   margin-top: 30px;
 }
+.item-owner-container {
+  margin: 50px;
+}
+.item-owner-items {
+  background: #eee;
+  border: 2px gray outset;
+}
 .item-image {
   margin-top: 20px;
   padding: 20px;
 }
 .item-content {
   margin-top: 50px;
-  font-family: "Comfortaa", cursive;
+  font-family: "Spinnaker", sans-serif;
+}
+.item-name label,
+.item-price label {
+  text-decoration: underline;
 }
 .item-square {
   padding-bottom: 40px;
+  padding-left: 20px;
   max-height: 400px;
   width: 100%;
 }
 .borrow-button {
   height: 50px;
   margin-right: 10px;
-  margin-left: 10px;
+  margin-left: 35px;
 }
 
 /* ProfileCard */
@@ -101,4 +118,11 @@
 .show-grid {
   margin-top: 100px;
   grid-column: 2;
+}
+
+.add-item-button {
+  font-family: "Spinnaker", sans-serif;
+}
+.cont {
+  font-family: "Spinnaker", sans-serif;
 }
