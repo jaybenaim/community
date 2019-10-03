@@ -12,11 +12,12 @@ import Button from "react-bootstrap/Button";
 import "./index.css";
 class ChatWidget extends Component {
   componentDidMount() {
+    // TODO:: get message from api 
     addResponseMessage("Hey I would like to borrow...");
   }
 
   handleNewUserMessage = newMessage => {
-    // Now send the message throught the backend API
+    // TODO:: send message to api 
     // addUserMessage(newMessage);
   };
 

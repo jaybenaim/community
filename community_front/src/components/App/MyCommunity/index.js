@@ -109,38 +109,43 @@ class SearchPage extends Component {
       )}
     )
     return (
-       <>
-        { this.state.clickedProfile[0] ? ( 
-            <ProfilePage
-          userProfile={this.state.clickedProfile[0]}
-          handleItem={this.props.handleItem}
-          handleNavClassChange={this.props.handleNavClassChange}
-          chatShow={this.props.chatShow}
-          handleChatToggle={this.props.handleChatToggle}
-          userWhoBorrowed={profileSearched.profileName}
-        />
-
-        ): ( 
-      <Container fluid={true} className="grid-container">
-
-          <Form inline>
-          <FormControl
-            type="text"
-            placeholder="Search for an item"
-            className="mr-sm-2"
-            ref={this.searchRef}
+      <>
+        {this.state.clickedProfile[0] ? (
+          <ProfilePage
+            userProfile={this.state.clickedProfile[0]}
+            handleItem={this.props.handleItem}
+            handleNavClassChange={this.props.handleNavClassChange}
+            chatShow={this.props.chatShow}
+            handleChatToggle={this.props.handleChatToggle}
+            userWhoBorrowed={profileSearched.profileName}
           />
-          <Button variant="primary" onClick={this.handleSearchQuery}>
-            Search
-          </Button>
-        </Form>
-        <Row className="show-grid">{searchedProfileCards}</Row>
-
-      </Container>
-
-)}
-</>
-      
+        ) : (
+          <Container
+            sm={12}
+            md={12}
+            lg={12}
+            fluid={true}
+            className="grid-container"
+          >
+            <Row>
+              <Col sm={12} md={12} lg={12}>
+                <Form inline className="search-bar-container">
+                  <FormControl
+                    type="text"
+                    placeholder="Search for an item"
+                    className="mr-sm-2"
+                    ref={this.searchRef}
+                  />
+                  <Button variant="primary" onClick={this.handleSearchQuery}>
+                    Search
+                  </Button>
+                </Form>
+            <Row className="show-grid">{searchedProfileCards}</Row>
+              </Col>
+            </Row>
+          </Container>
+        )}
+      </>
     );
   }
 } 
