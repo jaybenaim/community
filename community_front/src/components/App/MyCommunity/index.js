@@ -107,9 +107,9 @@ class SearchPage extends Component {
       )}
     )
     return (
-      <>
-        {!showSearchedProfile ? (
-          <Container fluid={true} className="grid-container">
+
+      <Container fluid={true} className="grid-container">
+     
             <Form inline>
               <FormControl
                 type="text"
@@ -122,29 +122,12 @@ class SearchPage extends Component {
               </Button>
             </Form>
             <Row className="show-grid">
-              ) :  (
-              
-              
-              
                 {searchedProfileCards}
-          
-                )
-              }
-            </Row>
-          </Container>
-        ) : (
-          <ProfilePage
-            userProfile={profileSearched}
-            handleItem={this.props.handleItem}
-            handleNavClassChange={this.props.handleNavClassChange}
-            chatShow={this.props.chatShow}
-            handleChatToggle={this.props.handleChatToggle}
-            userWhoBorrowed={profileSearched.profileName}
-          />
-        )}
-      </>
-    );
+            </Row>        
+</Container>
+
+    )
   }
-}
+} 
 
 export default SearchPage;
