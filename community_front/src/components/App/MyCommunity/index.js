@@ -12,13 +12,14 @@ import ProfilePage from "./ProfilePage";
 
 class SearchPage extends Component {
   state = {
-    profileSearched: {
-      id: null,
-      idUrl: "",
-      profileName: "User",
-      email: "Email",
-      address: "Address"
-    },
+    // profileSearched: {
+    //   id: null,
+    //   idUrl: "",
+    //   profileName: "User",
+    //   email: "Email",
+    //   address: "Address"
+    // },
+    profileSearched: [], 
     searchItem: null,
     searchResults: [],
     loading: false,
@@ -38,32 +39,33 @@ class SearchPage extends Component {
         this.setState({
           searchResults: items.filter((item, i) => {
             if (item.name_of_item.toLowerCase() === query.toLowerCase()) {
-              return item.profile_id;
+              this.getSearchProfile(item.profile_id);
+              return this.state.profileSearched
             }
           })
         });
       })
       .then(res => {
         setTimeout(() => {
-          this.getSearchProfile();
+          
         }, 1000);
       });
   };
 
-  getSearchProfile = () => {
+  getSearchProfile = (profileId) => {
     try {
-      const profileId = this.state.searchResults[0].profile_id;
+      // const profileId = this.state.searchResults[0].profile_id;
       const userProfile = [];
       Root.get(`profiles/${profileId}/`).then(res => {
         userProfile.push(res.data);
         this.setState({
-          profileSearched: {
+          profileSearched: [...this.state.profileSearched, {
             id: userProfile[0].id,
             idUrl: `profiles/${userProfile[0].id}/`,
             profileName: userProfile[0].profile_name,
             email: userProfile[0].email,
             address: userProfile[0].address
-          }
+          }]
         });
       });
     } catch (error) {
@@ -76,11 +78,36 @@ class SearchPage extends Component {
   componentDidMount = () => {
     this.props.handleNavClassChange();
   };
-
+  
   render() {
+    const { showSearchedProfile, profileSearched, searchResults } = this.state; 
+
+    let searchedProfileCards = profileSearched.map((profile, i) =>  { 
+     
+      return (
+            <Row md={10} lg={10} className="searched-cards-container">
+          <Card key={i} className="searched-cards" style={{ width: "12rem" }}>
+            <Card.Img
+              variant="top"
+              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+            />
+            <Card.Body>
+              <Card.Title>{profile.profileName}</Card.Title>
+              <Button
+                variant="primary"
+                onClick={this.showProfilePageForSearchedUser}
+              >
+                Click to see {profile.profileName}'s profile
+              </Button>
+            </Card.Body>
+          </Card>
+          </Row>
+      
+      )}
+    )
     return (
       <>
-        {!this.state.showSearchedProfile ? (
+        {!showSearchedProfile ? (
           <Container fluid={true} className="grid-container">
             <Form inline>
               <FormControl
@@ -94,41 +121,24 @@ class SearchPage extends Component {
               </Button>
             </Form>
             <Row className="show-grid">
-              <Col xs={12} md={4} lg={3}>
-                <Card style={{ width: "18rem" }}>
-                  <Card.Img
-                    variant="top"
-                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-                  />
-                  <Card.Body>
-                    <Card.Title>
-                      {this.state.profileSearched.profileName}
-                    </Card.Title>
-                    <Card.Text>
-                      {this.state.profileSearched.email}
-                      <br />
-                      {this.state.profileSearched.address}
-                    </Card.Text>
-                    <Button
-                      variant="primary"
-                      onClick={this.showProfilePageForSearchedUser}
-                    >
-                      Click to see {this.state.profileSearched.profileName}'s
-                      profile
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
+              ) :  (
+              
+              
+              
+                {searchedProfileCards}
+          
+                )
+              }
             </Row>
           </Container>
         ) : (
           <ProfilePage
-            userProfile={this.state.profileSearched}
+            userProfile={profileSearched}
             handleItem={this.props.handleItem}
             handleNavClassChange={this.props.handleNavClassChange}
             chatShow={this.props.chatShow}
             handleChatToggle={this.props.handleChatToggle}
-            userWhoBorrowed={this.state.profileSearched.profileName}
+            userWhoBorrowed={profileSearched.profileName}
           />
         )}
       </>
