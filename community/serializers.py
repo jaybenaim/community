@@ -22,7 +22,7 @@ class ProfileSerializer(serializers.ModelSerializer):
  
     class Meta:
         model = Profile
-        fields = ["id", "user", "username", "profile_name", "email", "address"]
+        fields = ["id", "user", "username", "profile_name", "email", "address", "message"]
 
     def create(self, validated_data):
         return Profile.objects.create(**validated_data)
@@ -32,6 +32,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         instance.username = validated_data.get("username", instance.username)
         instance.email = validated_data.get("email", instance.email)
         instance.address = validated_data.get("address", instance.address)
+        instance.message = validated_data.get("address", instance.message)
         instance.save(username=request.user)
 
         return instance
@@ -54,3 +55,20 @@ class ItemSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance 
+
+class MessagesSerializer(serializers.ModelSerializer): 
+    class Meta: 
+        model = Messages 
+        fields = ["id", "text", "sending_user", "recieving_user"]
+
+    def create(self, validated_data): 
+        return Messages.objects.create(**validated_data)
+
+    def update(self, message, validated_data): 
+        message.text = validated_data.get("text", message.text)
+        message.sending_user = validated_data.get("sending_user", message.sending_user)
+        message.recieving_user = validated_data.get("recieving_user", message.recieving_user)
+
+        message.save() 
+        return message 
+        

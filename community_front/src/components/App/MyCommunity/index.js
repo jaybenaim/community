@@ -83,6 +83,7 @@ class SearchPage extends Component {
   };
   
   render() {
+    console.log(localStorage['token'])
     const { showSearchedProfile, profileSearched, searchResults } = this.state; 
 
     let searchedProfileCards = profileSearched.map((profile, i) =>  { 

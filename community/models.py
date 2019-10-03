@@ -18,7 +18,7 @@ class Profile(models.Model):
     profile_name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255)
     address = models.CharField(max_length=255)
-    message = models.ManyToManyField('Message', verbose_name="list of messages")
+    message = models.ManyToManyField('Messages', verbose_name="list of messages")
 
     def __str__(self):
         return self.username
@@ -35,7 +35,7 @@ class Item(models.Model):
         return self.name_of_item
 
 
-class Message(models.Model): 
+class Messages(models.Model): 
     text = models.TextField() 
     sending_user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, related_name="sending_user") 
     recieving_user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, related_name="recieving_user") 
