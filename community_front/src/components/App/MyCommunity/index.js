@@ -95,6 +95,7 @@ class SearchPage extends Component {
               <Card.Title>{profile.profileName}</Card.Title>
               <Button
                 variant="primary"
+                href={`/${profile.idUrl}`}
                 onClick={this.showProfilePageForSearchedUser}
               >
                 Click to see {profile.profileName}'s profile
