@@ -25,7 +25,8 @@ class SearchPage extends Component {
     loading: false,
     redirect: false,
     loaded: false,
-    showSearchedProfile: false
+    showSearchedProfile: false, 
+    clickedProfile: [], 
   };
   searchRef = React.createRef();
 
@@ -72,8 +73,10 @@ class SearchPage extends Component {
       alert("No Item Found");
     }
   };
-  showProfilePageForSearchedUser = () => {
-    this.setState({ showSearchedProfile: true });
+  showProfilePageForSearchedUser = (profile) => {
+    let user = profile 
+    console.log(user)  
+    this.setState({ showSearchedProfile: true, clickedProfile: [...this.state.clickedProfile, profile] });
   };
   componentDidMount = () => {
     this.props.handleNavClassChange();
@@ -95,8 +98,7 @@ class SearchPage extends Component {
               <Card.Title>{profile.profileName}</Card.Title>
               <Button
                 variant="primary"
-                href={`/${profile.idUrl}`}
-                onClick={this.showProfilePageForSearchedUser}
+                onClick={() => this.showProfilePageForSearchedUser(profile)}
               >
                 Click to see {profile.profileName}'s profile
               </Button>
@@ -107,26 +109,39 @@ class SearchPage extends Component {
       )}
     )
     return (
+       <>
+        { this.state.clickedProfile[0] ? ( 
+            <ProfilePage
+          userProfile={this.state.clickedProfile[0]}
+          handleItem={this.props.handleItem}
+          handleNavClassChange={this.props.handleNavClassChange}
+          chatShow={this.props.chatShow}
+          handleChatToggle={this.props.handleChatToggle}
+          userWhoBorrowed={profileSearched.profileName}
+        />
 
+        ): ( 
       <Container fluid={true} className="grid-container">
-     
-            <Form inline>
-              <FormControl
-                type="text"
-                placeholder="Search for an item"
-                className="mr-sm-2"
-                ref={this.searchRef}
-              />
-              <Button variant="primary" onClick={this.handleSearchQuery}>
-                Search
-              </Button>
-            </Form>
-            <Row className="show-grid">
-                {searchedProfileCards}
-            </Row>        
-</Container>
 
-    )
+          <Form inline>
+          <FormControl
+            type="text"
+            placeholder="Search for an item"
+            className="mr-sm-2"
+            ref={this.searchRef}
+          />
+          <Button variant="primary" onClick={this.handleSearchQuery}>
+            Search
+          </Button>
+        </Form>
+        <Row className="show-grid">{searchedProfileCards}</Row>
+
+      </Container>
+
+)}
+</>
+      
+    );
   }
 } 
 
