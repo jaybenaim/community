@@ -13,21 +13,26 @@ import "./index.css";
 import Root from '../../../apis/root'; 
 
 class ChatWidget extends Component {
+  state = { 
+    messageId: null 
+  }
 
   componentDidMount() {
     // TODO:: get message from api 
-    // addResponseMessage("Hey I would like to borrow...");
+    addResponseMessage("Hey I would like to borrow...");
+  
   }
 
   handleNewUserMessage = newMessage => {
     // TODO:: send message to api 
-    // addUserMessage(newMessage);
+    const {userProfile, userWhoBorrowedId} = this.props
+    const {id: userProfileId, user} = userProfile[0]
     Root.post(
       "messages/",
       {
         text: newMessage,
-        sending_user: this.props.userProfile[0].user, 
-        recieving_user: this.props.userWhoBorrowedId
+        sending_user: user, 
+        recieving_user: userWhoBorrowedId
       },
       {
         headers: {
@@ -37,12 +42,34 @@ class ChatWidget extends Component {
       }
     ).then(res => { 
       console.log("message sent")
+      this.setState({ messageId: res.data.id  });
+    }).then(res => { 
+      this.addMessageToRecievingUserProfile(newMessage);
     }).catch(err => { 
       console.log(err) 
     });
+   
 
   };
+  addMessageToRecievingUserProfile = (newMessage) => { 
+      const { userProfile, userWhoBorrowedId } = this.props;
+      const { id: userProfileId, user } = userProfile[0];
+    Root.patch(
+      `profiles/${userWhoBorrowedId}/`,
+      {
+        message: [newMessage.id]
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${window.localStorage["token"]}`
+        }
+      }
+    ).then(res => {
+      console.log(res.data);
+    });
 
+  }
   checkIfUserHasMessagesPending = () => { 
     // if yes display bubble or change color of chat button 
 
@@ -57,7 +84,7 @@ class ChatWidget extends Component {
       >
         <Modal.Header>
           <Modal.Title name="someValue">
-            Chat With {this.props.userWhoBorrowedName}
+            Chat with {this.props.userWhoBorrowedName} 
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

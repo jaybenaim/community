@@ -22,7 +22,7 @@ class ProfileSerializer(serializers.ModelSerializer):
  
     class Meta:
         model = Profile
-        fields = ["id", "user", "username", "profile_name", "email", "address", "message"]
+        fields = ["id", "user", "username", "profile_name", "email", "address", "messages"]
 
     def create(self, validated_data):
         return Profile.objects.create(**validated_data)
@@ -32,7 +32,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         instance.username = validated_data.get("username", instance.username)
         instance.email = validated_data.get("email", instance.email)
         instance.address = validated_data.get("address", instance.address)
-        instance.message = validated_data.get("address", instance.message)
+        instance.messages = validated_data.get("messages", instance.messages)
         instance.save(username=request.user)
 
         return instance
@@ -52,6 +52,7 @@ class ItemSerializer(serializers.ModelSerializer):
         instance.profile_id = validated_data.get("profile_id", 12)
         instance.available = validated_data.get("available", instance.available) 
         instance.user_who_borrowed = validated_data.get("user_who_borrowed", instance.user_who_borrowed) 
+        
 
         instance.save()
         return instance 

@@ -18,7 +18,7 @@ class Profile(models.Model):
     profile_name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255)
     address = models.CharField(max_length=255)
-    message = models.ManyToManyField('Messages', verbose_name="list of messages")
+    messages = models.ManyToManyField('Messages', verbose_name="list of messages")
 
     def __str__(self):
         return self.username
