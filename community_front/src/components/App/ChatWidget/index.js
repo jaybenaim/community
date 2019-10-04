@@ -18,7 +18,8 @@ class ChatWidget extends Component {
   state = {
     messageId: null,
     messages: [],
-    title: `Chatting with ${this.props.title}` || `Chatting with ${this.props.userWhoBorrowedName}`
+    title: `Chatting with ${this.props.title}` || `Chatting with ${this.props.userWhoBorrowedName}`, 
+    subtitle: "Welcome",
   };
 
   componentDidMount() {
@@ -31,12 +32,12 @@ class ChatWidget extends Component {
     // TODO:: send message to api
 
     const { userProfile, userWhoBorrowedId, currentUserProfile } = this.props;
-    const { id: userProfileId, user } = userProfile[0];
+    const { id: userProfileId, user } = currentUserProfile[0];
     Root.post(
       "messages/",
       {
         text: newMessage,
-        sending_user: currentUserProfile[0].user,
+        sending_user: user,
         recieving_user: userWhoBorrowedId
       },
       {
@@ -57,13 +58,15 @@ class ChatWidget extends Component {
 
   checkIfUserHasMessagesPending = () => {
     // if yes display bubble or change color of chat button
-    const { userProfile, userWhoBorrowedId } = this.props;
-    const {  user: userId } = userProfile;
+    const { userProfile, userWhoBorrowedId, currentUserProfile } = this.props;
+    const {  user: userId } = currentUserProfile[0];
 
     Root.get("messages/").then(res => {
+
       let messages = res.data;
 
       messages.filter(message => {
+
         if (
           message.recieving_user === userId &&
           message.sending_user === userWhoBorrowedId
@@ -101,7 +104,7 @@ class ChatWidget extends Component {
           <Widget
             handleNewUserMessage={this.handleNewUserMessage}
             title={this.state.title}
-            subtitle={this.props.userWhoBorrowedName}
+            subtitle={this.state.subtitle}
           />
           <Button onClick={this.props.handleChatToggle}>Close</Button>
         </Modal.Body>

@@ -174,7 +174,7 @@ class ProfilePage extends React.Component {
               chatShow={this.props.chatShow}
               handleChatToggle={this.props.handleChatToggle}
               userWhoBorrowedId={userProfile.user}
-              title={userProfile.profileName}
+              title={userProfile.profile_name}
             />
           </Col>
         </Row>

@@ -8,7 +8,8 @@ class ItemGrid extends React.Component {
   state = {
     userWhoRequestedItem: [],
     userWhoBorrowedId: null,
-    chatShow: false
+    chatShow: false, 
+
   };
   resetItemAvailability = e => {
     const { id, userProfile } = this.props;
@@ -82,11 +83,12 @@ class ItemGrid extends React.Component {
               Chat
             </Button>
             <ChatWidget
-              userProfile={userProfile}
+              currentUserProfile={userProfile}
               userWhoBorrowedName={this.state.userWhoRequestedItem[name]}
               userWhoBorrowedId={this.state.userWhoBorrowedId}
               chatShow={chatShow}
               handleChatToggle={handleChatToggle}
+              title={this.state.userWhoRequestedItem[name]}
             />
           </td>
         ) : (
