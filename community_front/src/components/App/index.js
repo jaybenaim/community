@@ -232,6 +232,7 @@ class App extends React.Component {
                   chatWidget={chatWidget}
                   handleChatToggle={this.handleChatToggle}
                   chatShow={chatShow}
+                  allProfiles={this.state.allProfiles}
                 />
               )}
             />

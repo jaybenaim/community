@@ -65,6 +65,35 @@ class ProfilePage extends React.Component {
     }
     return this.setState({ showAddItemForm: !this.state.showAddItemForm });
   };
+
+  handleNewUserMessage = newMessage => {
+    // TODO:: send message to api
+
+    const { userProfile, userWhoBorrowedId } = this.props;
+    const { id: userProfileId, user } = userProfile;
+    Root.post(
+      "messages/",
+      {
+        text: newMessage,
+        sending_user: user,
+        recieving_user: userWhoBorrowedId
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${window.localStorage["token"]}`
+        }
+      }
+    )
+      .then(res => {
+        console.log("message sent");
+        this.setState({ messageId: res.data.id });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   componentDidMount = () => {
     this.props.handleNavClassChange();
 

@@ -20,12 +20,13 @@ class ChatWidget extends Component {
 
   componentDidMount() {
     // TODO:: get message from api 
-    addResponseMessage("Hey I would like to borrow...");
-  
+    //  addResponseMessage(); 
+    this.checkIfUserHasMessagesPending(); 
   }
 
   handleNewUserMessage = newMessage => {
     // TODO:: send message to api 
+
     const {userProfile, userWhoBorrowedId} = this.props
     const {id: userProfileId, user} = userProfile[0]
     Root.post(
@@ -44,51 +45,37 @@ class ChatWidget extends Component {
     ).then(res => { 
       console.log("message sent")
       this.setState({ messageId: res.data.id  });
-    }).then(res => { 
-              this.checkIfUserHasMessagesPending(); 
-
-      // this.addMessageToRecievingUserProfile(newMessage);
     }).catch(err => { 
       console.log(err) 
     });
-   
-
   };
-  addMessageToRecievingUserProfile = (newMessage) => { 
-      const { userProfile, userWhoBorrowedId } = this.props;
-      const { id: userProfileId, user } = userProfile[0];
-    Root.patch(
-      `profiles/${userWhoBorrowedId}/`,
-      {
-        message: [newMessage.id]
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Token ${window.localStorage["token"]}`
-        }
-      }
-    ).then(res => {
-      console.log(res.data);
-
-    });
-
-  }
-  // TODO run function  
+ 
   checkIfUserHasMessagesPending = () => { 
     // if yes display bubble or change color of chat button 
+      const { userProfile, userWhoBorrowedId } = this.props;
+      const { id: userProfileId, user: userId } = userProfile[0];
       Root.get('messages/').then(res => { 
         let messages = res.data 
-        let userId = this.props.userProfile[0].user
-        let usersMessages = messages.map(message => { 
-         if (message.recieving_user === userId ) { 
-           return message.text
+      
+        messages.filter(message => { 
+         if (
+           message.recieving_user === userId &&
+           message.sending_user === userWhoBorrowedId
+         ) {
+           addResponseMessage(message.text);
          }
+         else if (
+           message.recieving_user === userWhoBorrowedId &&
+           message.sending_user === userId ){ 
+             addUserMessage(message.text)
+           }
         })
-     this.setState({ messages: [...this.state.messages, usersMessages  ]});
+
+    //  this.setState({ messages: [...this.state.messages, usersMessages  ]});
       })
   }
 
+  
   render() {
   
 
