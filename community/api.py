@@ -64,3 +64,18 @@ class GroupViewSet(viewsets.ModelViewSet):
     """ API endpoint that allows groups to be viewed or edited """ 
     queryset = Group.objects.all() 
     serializer_class = GroupSerializer 
+
+
+class MessagesViewSet(viewsets.ModelViewSet): 
+    queryset = Messages.objects.all().order_by('time')[10:] 
+    serializer_class = MessagesSerializer
+    permission_classes = [permissions.AllowAny, permissions.IsAuthenticated]
+
+    def get_permissions(self): 
+        if self.request.method == 'GET': 
+            self.permission_classes = (permissions.AllowAny,)
+            return super(MessagesViewSet, self).get_permissions() 
+        if self.request.method == 'POST':
+            self.permission_classes = (permissions.AllowAny,)
+            return super(MessagesViewSet, self).get_permissions()
+

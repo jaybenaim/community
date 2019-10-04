@@ -3,3 +3,4 @@ from .models import *
 
 admin.site.register(Profile)
 admin.site.register(Item)
+admin.site.register(Messages)

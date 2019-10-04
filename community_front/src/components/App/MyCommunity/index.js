@@ -42,14 +42,12 @@ class SearchPage extends Component {
             if (item.name_of_item.toLowerCase() === query.toLowerCase()) {
               this.getSearchProfile(item.profile_id);
               return this.state.profileSearched
-            }
+            } 
           })
         });
       })
-      .then(res => {
-        setTimeout(() => {
-          
-        }, 1000);
+      .catch(err => {
+        alert("No Item Found")
       });
   };
 
@@ -60,13 +58,7 @@ class SearchPage extends Component {
       Root.get(`profiles/${profileId}/`).then(res => {
         userProfile.push(res.data);
         this.setState({
-          profileSearched: [...this.state.profileSearched, {
-            id: userProfile[0].id,
-            idUrl: `profiles/${userProfile[0].id}/`,
-            profileName: userProfile[0].profile_name,
-            email: userProfile[0].email,
-            address: userProfile[0].address
-          }]
+          profileSearched: [...this.state.profileSearched, res.data]
         });
       });
     } catch (error) {
@@ -74,15 +66,15 @@ class SearchPage extends Component {
     }
   };
   showProfilePageForSearchedUser = (profile) => {
-    let user = profile 
-    console.log(user)  
-    this.setState({ showSearchedProfile: true, clickedProfile: [...this.state.clickedProfile, profile] });
+   
+    this.setState({ showSearchedProfile: true, clickedProfile: profile, loaded: true });
   };
   componentDidMount = () => {
     this.props.handleNavClassChange();
   };
   
   render() {
+    console.log(localStorage['token'])
     const { showSearchedProfile, profileSearched, searchResults } = this.state; 
 
     let searchedProfileCards = profileSearched.map((profile, i) =>  { 
@@ -95,12 +87,12 @@ class SearchPage extends Component {
               src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
             />
             <Card.Body>
-              <Card.Title>{profile.profileName}</Card.Title>
+              <Card.Title>{profile.profile_name}</Card.Title>
               <Button
                 variant="primary"
                 onClick={() => this.showProfilePageForSearchedUser(profile)}
               >
-                Click to see {profile.profileName}'s profile
+                Click to see {profile.profile_name}'s profile
               </Button>
             </Card.Body>
           </Card>
@@ -110,14 +102,15 @@ class SearchPage extends Component {
     )
     return (
       <>
-        {this.state.clickedProfile[0] ? (
+        {this.state.loaded ? (
           <ProfilePage
-            userProfile={this.state.clickedProfile[0]}
+            userProfile={this.state.clickedProfile}
             handleItem={this.props.handleItem}
             handleNavClassChange={this.props.handleNavClassChange}
             chatShow={this.props.chatShow}
             handleChatToggle={this.props.handleChatToggle}
             userWhoBorrowed={profileSearched.profileName}
+            currentUserProfile={this.props.userProfile}
           />
         ) : (
           <Container
@@ -140,7 +133,7 @@ class SearchPage extends Component {
                     Search
                   </Button>
                 </Form>
-            <Row className="show-grid">{searchedProfileCards}</Row>
+                <Row className="show-grid">{searchedProfileCards}</Row>
               </Col>
             </Row>
           </Container>

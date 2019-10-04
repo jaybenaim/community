@@ -65,6 +65,35 @@ class ProfilePage extends React.Component {
     }
     return this.setState({ showAddItemForm: !this.state.showAddItemForm });
   };
+
+  handleNewUserMessage = newMessage => {
+    // TODO:: send message to api
+
+    const { userProfile, userWhoBorrowedId } = this.props;
+    const { id: userProfileId, user } = userProfile;
+    Root.post(
+      "messages/",
+      {
+        text: newMessage,
+        sending_user: user,
+        recieving_user: userWhoBorrowedId
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${window.localStorage["token"]}`
+        }
+      }
+    )
+      .then(res => {
+        console.log("message sent");
+        this.setState({ messageId: res.data.id, user: userProfile });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   componentDidMount = () => {
     this.props.handleNavClassChange();
 
@@ -74,7 +103,8 @@ class ProfilePage extends React.Component {
   render() {
     const { items, itemGif, image } = this.state;
 
-    const { userProfile } = this.props;
+    const { userProfile, currentUserProfile } = this.props;
+    
 
     let itemElements = items.map((item, i) => {
       const { id, name_of_item, price, available, profile_id } = item;
@@ -88,7 +118,8 @@ class ProfilePage extends React.Component {
           price={price}
           available={available}
           userProfileId={profile_id}
-          userProfile={userProfile}
+          userProfile={userProfile[0]}
+          currentUserProfile={currentUserProfile}
         />
       );
     });
@@ -108,7 +139,7 @@ class ProfilePage extends React.Component {
               <div className="profile-details">
                 <Row>
                   <p className="profile-name">
-                    {userProfile.profileName || null}
+                    {userProfile.profile_name || null}
                   </p>
                 </Row>
                 <br />
@@ -136,11 +167,14 @@ class ProfilePage extends React.Component {
             >
               Chat
             </Button>
+
             <ChatWidget
-              userProfile={userProfile}
+              currentUserProfile={this.props.currentUserProfile}
+              userProfile={this.props.userProfile}
               chatShow={this.props.chatShow}
               handleChatToggle={this.props.handleChatToggle}
-              userWhoBorrowed={this.props.userWhoBorrowed}
+              userWhoBorrowedId={userProfile.user}
+              title={userProfile.profile_name}
             />
           </Col>
         </Row>

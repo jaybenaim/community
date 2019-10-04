@@ -7,7 +7,9 @@ import ChatWidget from "../ChatWidget";
 class ItemGrid extends React.Component {
   state = {
     userWhoRequestedItem: [],
-    chatShow: false
+    userWhoBorrowedId: null,
+    chatShow: false, 
+
   };
   resetItemAvailability = e => {
     const { id, userProfile } = this.props;
@@ -34,8 +36,10 @@ class ItemGrid extends React.Component {
     const { userWhoBorrowed: id, name } = this.props;
     id &&
       Root.get(`profiles/${id}/`).then(res => {
+        let profile = res.data
         this.setState({
-          userWhoRequestedItem: { [name]: res.data.profile_name }
+          userWhoRequestedItem: { [name]: profile.profile_name }, 
+          userWhoBorrowedId: profile.user
         });
       });
   };
@@ -79,10 +83,12 @@ class ItemGrid extends React.Component {
               Chat
             </Button>
             <ChatWidget
-              userProfile={userProfile}
-              userWhoBorrowed={this.state.userWhoRequestedItem[name]}
+              currentUserProfile={userProfile}
+              userWhoBorrowedName={this.state.userWhoRequestedItem[name]}
+              userWhoBorrowedId={this.state.userWhoBorrowedId}
               chatShow={chatShow}
               handleChatToggle={handleChatToggle}
+              title={this.state.userWhoRequestedItem[name]}
             />
           </td>
         ) : (

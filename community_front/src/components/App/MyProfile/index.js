@@ -10,6 +10,7 @@ import CreateProfileForm from "./CreateProfileForm";
 import EditProfile from "../../EditProfile";
 import ItemGrid from "./ItemGrid";
 
+
 class MyProfile extends React.Component {
   state = {
     user: [],
@@ -21,7 +22,7 @@ class MyProfile extends React.Component {
     image:
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
     itemName: "",
-
+    matchedChatProfile: [], 
     showEditForm: false,
     showAddItemForm: false,
     loading: true
@@ -69,6 +70,7 @@ class MyProfile extends React.Component {
     return this.setState({ showAddItemForm: !this.state.showAddItemForm });
   };
 
+ 
   componentDidMount = () => {
     this.props.handleNavClassChange();
     setTimeout(() => {
@@ -77,8 +79,14 @@ class MyProfile extends React.Component {
   };
   render() {
     const { items } = this.state;
-
-    const { userProfile, chatWidget, handleChatToggle, chatShow } = this.props;
+    const {
+      chatShow,
+      handleChatToggle,
+      getProfileFromToken,
+      userProfile,
+      chatWidget
+    } = this.props;
+   
 
     let itemElements = items.map((item, i) => {
       const {
@@ -107,19 +115,18 @@ class MyProfile extends React.Component {
 
     let createProfileForm;
     let profile;
-
+  
     {
       this.props.userProfile[0] === undefined
         ? (createProfileForm = (
             <CreateProfileForm
-              loadProfile={this.props.getProfileFromToken}
-              userProfile={this.props.userProfile}
+              loadProfile={getProfileFromToken}
+              userProfile={userProfile}
               getProfile={this.getProfile}
             />
           ))
         : (profile = (
             <Container className="cont">
-                     
               <Row>
                 <Col xs={12} md={12} lg={4} className="con">
                   <section>

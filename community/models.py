@@ -28,11 +28,19 @@ class Item(models.Model):
     price = models.CharField(max_length=255)
     profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
     available = models.BooleanField(default=True)
-    user_who_borrowed = models.ForeignKey(User, on_delete=models.CASCADE, null=True) 
+    user_who_borrowed = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True, related_name="user_who_borrowed") 
 
     def __str__(self):
         return self.name_of_item
 
+
+class Messages(models.Model): 
+    text = models.TextField() 
+    sending_user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, related_name="sending_user") 
+    recieving_user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, related_name="recieving_user") 
+    time = models.TimeField(auto_now_add=True) 
+    def __str__(self): 
+        return "Sender: {}".format(self.sending_user )
 
 # @receiver(post_save, sender=User)
 # def create_user_profile(sender, instance, created, **kwargs):
