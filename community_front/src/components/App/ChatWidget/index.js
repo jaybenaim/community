@@ -14,7 +14,8 @@ import Root from '../../../apis/root';
 
 class ChatWidget extends Component {
   state = { 
-    messageId: null 
+    messageId: null, 
+    messages: [], 
   }
 
   componentDidMount() {
@@ -44,7 +45,9 @@ class ChatWidget extends Component {
       console.log("message sent")
       this.setState({ messageId: res.data.id  });
     }).then(res => { 
-      this.addMessageToRecievingUserProfile(newMessage);
+              this.checkIfUserHasMessagesPending(); 
+
+      // this.addMessageToRecievingUserProfile(newMessage);
     }).catch(err => { 
       console.log(err) 
     });
@@ -67,15 +70,28 @@ class ChatWidget extends Component {
       }
     ).then(res => {
       console.log(res.data);
+
     });
 
   }
+  // TODO run function  
   checkIfUserHasMessagesPending = () => { 
     // if yes display bubble or change color of chat button 
-
+      Root.get('messages/').then(res => { 
+        let messages = res.data 
+        let userId = this.props.userProfile[0].user
+        let usersMessages = messages.map(message => { 
+         if (message.recieving_user === userId ) { 
+           return message.text
+         }
+        })
+     this.setState({ messages: [...this.state.messages, usersMessages  ]});
+      })
   }
 
   render() {
+  
+
     return (
       <Modal
         onHide={() => false}

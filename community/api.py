@@ -69,6 +69,7 @@ class GroupViewSet(viewsets.ModelViewSet):
 class MessagesViewSet(viewsets.ModelViewSet): 
     queryset = Messages.objects.all() 
     serializer_class = MessagesSerializer
+    permission_classes = [permissions.AllowAny, permissions.IsAuthenticated]
 
     def get_permissions(self): 
         if self.request.method == 'GET': 

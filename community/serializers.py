@@ -33,6 +33,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         instance.email = validated_data.get("email", instance.email)
         instance.address = validated_data.get("address", instance.address)
         instance.messages = validated_data.get("messages", instance.messages)
+        
         instance.save(username=request.user)
 
         return instance
