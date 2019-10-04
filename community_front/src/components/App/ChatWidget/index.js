@@ -15,27 +15,28 @@ import Root from '../../../apis/root';
 import Time from "./time";
 
 class ChatWidget extends Component {
-  state = { 
-    messageId: null, 
-    messages: [], 
-  }
+  state = {
+    messageId: null,
+    messages: [],
+    title: `Chatting with ${this.props.title}` || `Chatting with ${this.props.userWhoBorrowedName}`
+  };
 
   componentDidMount() {
-    // TODO:: get message from api 
-    //  addResponseMessage(); 
-    this.checkIfUserHasMessagesPending(); 
+    // TODO:: get message from api
+    //  addResponseMessage();
+    this.checkIfUserHasMessagesPending();
   }
 
   handleNewUserMessage = newMessage => {
-    // TODO:: send message to api 
+    // TODO:: send message to api
 
-    const {userProfile, userWhoBorrowedId} = this.props
-    const {id: userProfileId, user} = userProfile[0]
+    const { userProfile, userWhoBorrowedId, currentUserProfile } = this.props;
+    const { id: userProfileId, user } = userProfile[0];
     Root.post(
       "messages/",
       {
         text: newMessage,
-        sending_user: user, 
+        sending_user: currentUserProfile[0].user,
         recieving_user: userWhoBorrowedId
       },
       {
@@ -44,47 +45,47 @@ class ChatWidget extends Component {
           Authorization: `Token ${window.localStorage["token"]}`
         }
       }
-    ).then(res => { 
-      console.log("message sent")
-      this.setState({ messageId: res.data.id  });
-    }).catch(err => { 
-      console.log(err) 
+    )
+      .then(res => {
+        console.log("message sent");
+        this.setState({ messageId: res.data.id });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  checkIfUserHasMessagesPending = () => {
+    // if yes display bubble or change color of chat button
+    const { userProfile, userWhoBorrowedId } = this.props;
+    const {  user: userId } = userProfile;
+
+    Root.get("messages/").then(res => {
+      let messages = res.data;
+
+      messages.filter(message => {
+        if (
+          message.recieving_user === userId &&
+          message.sending_user === userWhoBorrowedId
+        ) {
+          const messageProps = { messageTime: message.time, sender: "server" };
+          addResponseMessage(message.text);
+          renderCustomComponent(Time, messageProps);
+        } else if (
+          message.recieving_user === userWhoBorrowedId &&
+          message.sending_user === userId
+        ) {
+          const messageProps = { messageTime: message.time, sender: "client" };
+          addUserMessage(message.text);
+          renderCustomComponent(Time, messageProps);
+        }
+      });
+
+      //  this.setState({ messages: [...this.state.messages, usersMessages  ]});
     });
   };
- 
-  checkIfUserHasMessagesPending = () => { 
-    // if yes display bubble or change color of chat button 
-      const { userProfile, userWhoBorrowedId } = this.props;
-      const { id: userProfileId, user: userId } = userProfile[0];
-      Root.get('messages/').then(res => { 
-        let messages = res.data 
-      
-        messages.filter(message => { 
-         if (
-           message.recieving_user === userId &&
-           message.sending_user === userWhoBorrowedId
-         ) {
-           const messageProps = { messageTime: message.time, sender: "server"}
-            addResponseMessage(message.text);
-            renderCustomComponent(Time, messageProps);
-         }
-         else if (
-           message.recieving_user === userWhoBorrowedId &&
-           message.sending_user === userId ){ 
-           const messageProps = { messageTime: message.time, sender: "client" };
-            addUserMessage(message.text)
-            renderCustomComponent(Time, messageProps);
-           }
-        })
 
-    //  this.setState({ messages: [...this.state.messages, usersMessages  ]});
-      })
-  }
-
-  
   render() {
-  
-
     return (
       <Modal
         onHide={() => false}
@@ -93,13 +94,13 @@ class ChatWidget extends Component {
       >
         <Modal.Header>
           <Modal.Title name="someValue">
-            Chat with {this.props.userWhoBorrowedName} 
+          {this.state.title}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Widget
             handleNewUserMessage={this.handleNewUserMessage}
-            title="Chatting With"
+            title={this.state.title}
             subtitle={this.props.userWhoBorrowedName}
           />
           <Button onClick={this.props.handleChatToggle}>Close</Button>
