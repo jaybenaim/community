@@ -3,7 +3,8 @@ import {
   Widget,
   addResponseMessage,
   addLinkSnippet,
-  addUserMessage
+  addUserMessage, 
+  renderCustomComponent
 } from "react-chat-widget";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
@@ -11,6 +12,7 @@ import Button from "react-bootstrap/Button";
 // import "react-chat-widget/lib/styles.css";
 import "./index.css";
 import Root from '../../../apis/root'; 
+import Time from "./time";
 
 class ChatWidget extends Component {
   state = { 
@@ -67,7 +69,9 @@ class ChatWidget extends Component {
          else if (
            message.recieving_user === userWhoBorrowedId &&
            message.sending_user === userId ){ 
-             addUserMessage(message.text)
+          
+            addUserMessage(message.text)
+            renderCustomComponent(Time, message.time)
            }
         })
 

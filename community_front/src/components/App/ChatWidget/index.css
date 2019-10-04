@@ -87,11 +87,28 @@
   max-width: 215px;
   text-align: left;
 }
+.rcw-client-time { 
+  background-color: #f4f7f9;
+  margin-left: auto;
+  border-radius: 10px;
+  height: 40px; 
+  padding: 9px;
+  max-width: 215px;
+  text-align: left;
+  font-size: 0.8em; 
+  margin-top: 0; 
+  margin-bottom: 30px; 
+  padding-bottom: 4px; 
+}
 .rcw-response {
   background-color: #f4f7f9;
 }
 .rcw-message-text p {
   margin: 0;
+}
+.rcw-message {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 .rcw-avatar {
   width: 40px;
