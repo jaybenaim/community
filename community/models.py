@@ -28,7 +28,7 @@ class Item(models.Model):
     price = models.CharField(max_length=255)
     profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
     available = models.BooleanField(default=True)
-    user_who_borrowed = models.ForeignKey(User, on_delete=models.CASCADE, null=True) 
+    user_who_borrowed = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True, related_name="user_who_borrowed") 
 
     def __str__(self):
         return self.name_of_item

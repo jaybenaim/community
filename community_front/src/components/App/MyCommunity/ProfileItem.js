@@ -29,7 +29,7 @@ class ProfileItem extends React.Component {
       `items/${id}/`,
       {
         profile_id: userProfileId,
-        user_who_borrowed: localStorage['id'],
+        user_who_borrowed: currentUserProfile[0].id,
         available: false
       },
       {
