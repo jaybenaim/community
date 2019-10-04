@@ -42,14 +42,12 @@ class SearchPage extends Component {
             if (item.name_of_item.toLowerCase() === query.toLowerCase()) {
               this.getSearchProfile(item.profile_id);
               return this.state.profileSearched
-            }
+            } 
           })
         });
       })
-      .then(res => {
-        setTimeout(() => {
-          
-        }, 1000);
+      .catch(err => {
+        alert("No Item Found")
       });
   };
 
@@ -119,6 +117,7 @@ class SearchPage extends Component {
             chatShow={this.props.chatShow}
             handleChatToggle={this.props.handleChatToggle}
             userWhoBorrowed={profileSearched.profileName}
+            currentUserProfile={this.props.userProfile}
           />
         ) : (
           <Container
@@ -141,7 +140,7 @@ class SearchPage extends Component {
                     Search
                   </Button>
                 </Form>
-            <Row className="show-grid">{searchedProfileCards}</Row>
+                <Row className="show-grid">{searchedProfileCards}</Row>
               </Col>
             </Row>
           </Container>

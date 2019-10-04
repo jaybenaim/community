@@ -202,6 +202,7 @@ class App extends React.Component {
                   chatWidget={chatWidget}
                   handleChatToggle={this.handleChatToggle}
                   chatShow={chatShow}
+                  userProfile={this.state.userProfile}
                 />
               )}
             />

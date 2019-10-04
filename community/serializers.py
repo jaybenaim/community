@@ -22,7 +22,7 @@ class ProfileSerializer(serializers.ModelSerializer):
  
     class Meta:
         model = Profile
-        fields = ["id", "user", "username", "profile_name", "email", "address", "messages"]
+        fields = ["id", "user", "username", "profile_name", "email", "address"]
 
     def create(self, validated_data):
         return Profile.objects.create(**validated_data)
@@ -32,8 +32,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         instance.username = validated_data.get("username", instance.username)
         instance.email = validated_data.get("email", instance.email)
         instance.address = validated_data.get("address", instance.address)
-        instance.messages = validated_data.get("messages", instance.messages)
-        
+
         instance.save(username=request.user)
 
         return instance
@@ -50,7 +49,7 @@ class ItemSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data): 
         instance.name_of_item = validated_data.get("name_of_item", instance.name_of_item)
         instance.price = validated_data.get("price", instance.price)
-        instance.profile_id = validated_data.get("profile_id", 12)
+        instance.profile_id = validated_data.get("profile_id", instance.profile_id)
         instance.available = validated_data.get("available", instance.available) 
         instance.user_who_borrowed = validated_data.get("user_who_borrowed", instance.user_who_borrowed) 
         
@@ -61,7 +60,7 @@ class ItemSerializer(serializers.ModelSerializer):
 class MessagesSerializer(serializers.ModelSerializer): 
     class Meta: 
         model = Messages 
-        fields = ["id", "text", "sending_user", "recieving_user"]
+        fields = ["id", "text", "sending_user", "recieving_user" , "time"]
 
     def create(self, validated_data): 
         return Messages.objects.create(**validated_data)

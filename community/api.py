@@ -67,7 +67,7 @@ class GroupViewSet(viewsets.ModelViewSet):
 
 
 class MessagesViewSet(viewsets.ModelViewSet): 
-    queryset = Messages.objects.all() 
+    queryset = Messages.objects.all().order_by('id')[:10] 
     serializer_class = MessagesSerializer
     permission_classes = [permissions.AllowAny, permissions.IsAuthenticated]
 

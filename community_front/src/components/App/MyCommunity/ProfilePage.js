@@ -74,7 +74,7 @@ class ProfilePage extends React.Component {
   render() {
     const { items, itemGif, image } = this.state;
 
-    const { userProfile } = this.props;
+    const { userProfile, currentUserProfile } = this.props;
 
     let itemElements = items.map((item, i) => {
       const { id, name_of_item, price, available, profile_id } = item;
@@ -89,6 +89,7 @@ class ProfilePage extends React.Component {
           available={available}
           userProfileId={profile_id}
           userProfile={userProfile}
+          currentUserProfile={currentUserProfile}
         />
       );
     });

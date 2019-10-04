@@ -31,7 +31,7 @@ class CreateProfileForm extends React.Component {
         username: window.localStorage["username"],
         profile_name: profileName,
         email,
-        address
+        address, 
       },
       {
         headers: {

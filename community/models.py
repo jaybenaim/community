@@ -18,7 +18,6 @@ class Profile(models.Model):
     profile_name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255)
     address = models.CharField(max_length=255)
-    messages = models.ManyToManyField('Messages', verbose_name="list of messages")
 
     def __str__(self):
         return self.username
@@ -39,9 +38,9 @@ class Messages(models.Model):
     text = models.TextField() 
     sending_user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, related_name="sending_user") 
     recieving_user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, related_name="recieving_user") 
-
+    time = models.TimeField(auto_now_add=True) 
     def __str__(self): 
-        return self.sending_user + self.reciever_user
+        return "Sender: {}".format(self.sending_user )
 
 # @receiver(post_save, sender=User)
 # def create_user_profile(sender, instance, created, **kwargs):

@@ -20,15 +20,16 @@ class ProfileItem extends React.Component {
 
   componentDidMount() {
     this.setHeroImage();
+    console.log(localStorage['token'])
   }
 
   handleBorrowButton = () => {
-    const { id, userProfileId, userProfile } = this.props;
+    const { id, userProfileId, userProfile, currentUserProfile } = this.props;
     Root.patch(
       `items/${id}/`,
       {
         profile_id: userProfileId,
-        user_who_borrowed: userProfile.id,
+        user_who_borrowed: localStorage['id'],
         available: false
       },
       {
