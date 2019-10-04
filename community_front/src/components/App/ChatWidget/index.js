@@ -64,14 +64,16 @@ class ChatWidget extends Component {
            message.recieving_user === userId &&
            message.sending_user === userWhoBorrowedId
          ) {
-           addResponseMessage(message.text);
+           const messageProps = { messageTime: message.time, sender: "server"}
+            addResponseMessage(message.text);
+            renderCustomComponent(Time, messageProps);
          }
          else if (
            message.recieving_user === userWhoBorrowedId &&
            message.sending_user === userId ){ 
-          
+           const messageProps = { messageTime: message.time, sender: "client" };
             addUserMessage(message.text)
-            renderCustomComponent(Time, message.time)
+            renderCustomComponent(Time, messageProps);
            }
         })
 
