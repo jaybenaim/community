@@ -22,7 +22,7 @@ class ProfileSerializer(serializers.ModelSerializer):
  
     class Meta:
         model = Profile
-        fields = ["id", "user", "username", "profile_name", "email", "address"]
+        fields = '__all__'
 
     def create(self, validated_data):
         return Profile.objects.create(**validated_data)
@@ -32,6 +32,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         instance.username = validated_data.get("username", instance.username)
         instance.email = validated_data.get("email", instance.email)
         instance.address = validated_data.get("address", instance.address)
+        instance.image = validated_data.get("image", instance.image)
 
         instance.save(username=request.user)
 

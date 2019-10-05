@@ -4,7 +4,7 @@ from .serializers import *
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
-
+from rest_framework.parsers import MultiPartParser, FormParser
 
 
 class CustomObtainAuthToken(ObtainAuthToken):
@@ -17,9 +17,11 @@ class CustomObtainAuthToken(ObtainAuthToken):
         
 class ProfileViewSet(viewsets.ModelViewSet): 
     """ Api endpoint for profiles to be viewed or edited """ 
-    queryset = Profile.objects.all().order_by('id')
-    serializer_class = ProfileSerializer 
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
     permission_classes = [permissions.AllowAny, permissions.IsAuthenticated]
+    parser_classes = (MultiPartParser, FormParser)
+
 
 #  get permissions  if request method is get allow any 
     def get_permissions(self): 

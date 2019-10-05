@@ -188,3 +188,5 @@ LOGGING = {
 # JWT_AUTH = {
 #     'JWT_RESPONSE_PAYLOAD_HANDLER': 'community.utils.my_jwt_response_handler'
 # }
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
