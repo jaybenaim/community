@@ -9,7 +9,6 @@ class Time extends React.Component {
   getTime = () => {
     let splitTime = this.props.messageTime.split(":");
     splitTime.pop() 
-    console.log(splitTime)
     let timeOfDay = ""; 
     let formattedTime = "";  
     if (splitTime[0] < 12) {
