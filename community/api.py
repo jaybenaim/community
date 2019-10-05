@@ -20,7 +20,6 @@ class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
     permission_classes = [permissions.AllowAny, permissions.IsAuthenticated]
-    parser_classes = (MultiPartParser, FormParser)
 
 
 #  get permissions  if request method is get allow any 

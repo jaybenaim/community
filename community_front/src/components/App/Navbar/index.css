@@ -31,6 +31,9 @@
   float: right;
   margin-right: 20px;
   color: black;
+  position: relative; 
+  z-index: 2; 
+
 }
 .center {
   float: right;

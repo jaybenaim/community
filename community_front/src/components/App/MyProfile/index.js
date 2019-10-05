@@ -25,7 +25,7 @@ class MyProfile extends React.Component {
     matchedChatProfile: [], 
     showEditForm: false,
     showAddItemForm: false,
-    loading: true
+    loading: true, 
   };
 
   // Fetches all the items that users have created
@@ -48,8 +48,7 @@ class MyProfile extends React.Component {
   };
 
   changeImage = () => {
-    let url = prompt("Enter a url");
-    this.setState({ profileImage: url });
+    this.setState({ profileImage: this.props.userProfile[0].image });
   };
 
   toggleEditForm = e => {

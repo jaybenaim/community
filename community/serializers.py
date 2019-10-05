@@ -32,7 +32,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         instance.username = validated_data.get("username", instance.username)
         instance.email = validated_data.get("email", instance.email)
         instance.address = validated_data.get("address", instance.address)
-        instance.image = validated_data.get("image", instance.image)
+ 
 
         instance.save(username=request.user)
 
