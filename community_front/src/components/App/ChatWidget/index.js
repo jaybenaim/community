@@ -3,7 +3,7 @@ import {
   Widget,
   addResponseMessage,
   addLinkSnippet,
-  addUserMessage, 
+  addUserMessage,
   renderCustomComponent
 } from "react-chat-widget";
 import Modal from "react-bootstrap/Modal";
@@ -11,15 +11,17 @@ import Button from "react-bootstrap/Button";
 
 // import "react-chat-widget/lib/styles.css";
 import "./index.css";
-import Root from '../../../apis/root'; 
+import Root from "../../../apis/root";
 import Time from "./time";
 
 class ChatWidget extends Component {
   state = {
     messageId: null,
     messages: [],
-    title: `Chatting with ${this.props.title}` || `Chatting with ${this.props.userWhoBorrowedName}`, 
-    subtitle: "Welcome",
+    title:
+      `Chatting with ${this.props.title}` ||
+      `Chatting with ${this.props.userWhoBorrowedName}`,
+    subtitle: "Welcome"
   };
 
   componentDidMount() {
@@ -59,14 +61,12 @@ class ChatWidget extends Component {
   checkIfUserHasMessagesPending = () => {
     // if yes display bubble or change color of chat button
     const { userProfile, userWhoBorrowedId, currentUserProfile } = this.props;
-    const {  user: userId } = currentUserProfile[0];
+    const { user: userId } = currentUserProfile[0];
 
     Root.get("messages/").then(res => {
-
       let messages = res.data;
-
+      console.log(messages + localStorage.token);
       messages.filter(message => {
-
         if (
           message.recieving_user === userId &&
           message.sending_user === userWhoBorrowedId
@@ -84,7 +84,7 @@ class ChatWidget extends Component {
         }
       });
 
-      //  this.setState({ messages: [...this.state.messages, usersMessages  ]});
+      // this.setState({ messages: [...this.state.messages, usersMessages] });
     });
   };
 
@@ -96,9 +96,7 @@ class ChatWidget extends Component {
         show={this.props.chatShow}
       >
         <Modal.Header>
-          <Modal.Title name="someValue">
-          {this.state.title}
-          </Modal.Title>
+          <Modal.Title name="someValue">{this.state.title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Widget

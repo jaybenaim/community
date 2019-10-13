@@ -13,7 +13,15 @@ class SimpleMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      geocodes: [],
+      mockAddresses: [
+        { address: "225 sackville st" },
+        { address: "50 gerrard st" },
+        { address: "70 sumach" },
+        { address: "3 glebe" },
+        { address: "66 broadway ave" },
+        { address: "50 stephanie st" }
+      ],
+      geocodes: [{ lat: 43.671593898745726, lng: -79.37341993487492 }],
       center: { lat: 43.671593898745726, lng: -79.37341993487492 },
       zoom: 10,
       loading: false,
@@ -26,7 +34,8 @@ class SimpleMap extends Component {
     this.props.handleNavClassChange();
     const { allProfiles } = this.props;
     !this.state.loading &&
-      allProfiles.forEach(({ address }, index) => {
+      // switch with allProfiles
+      this.state.mockAddresses.forEach(({ address }, index) => {
         this.checkGeocodeLoading(index);
         this.getGeocodeFromAddress(address);
       });
@@ -41,6 +50,7 @@ class SimpleMap extends Component {
 
   checkGeocodeLoading = index => {
     const { allProfiles } = this.props;
+
     console.log(index + allProfiles.length);
     if (index === allProfiles.length - 1) {
       this.setState({ loading: false });
