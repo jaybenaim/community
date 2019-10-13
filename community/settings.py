@@ -83,8 +83,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'community',
-        'HOST': '127.0.0.1',
+        'HOST': 'ec2-174-129-27-158.compute-1.amazonaws.com',
         'PORT': '5432',
+        'DATABASE': 'd1a9unes2l4o94', 
+        'USER': 'kqaioqshaxtjte', 
+        'PASSWORD': '036cb73739a10a81c1bd4213c34b59859c637e35cb73a5c745476c317301cc86'
+        'URI': 'postgres://kqaioqshaxtjte:036cb73739a10a81c1bd4213c34b59859c637e35cb73a5c745476c317301cc86@ec2-174-129-27-158.compute-1.amazonaws.com:5432/d1a9unes2l4o94'
     }
 }
 
