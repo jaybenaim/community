@@ -43,7 +43,7 @@
     ]
   },
   "proxy": "https://jaybenaim.github.io/community/",
-  "homepage": "https://jaybenaim.github.io/community/",
+  "homepage": ".",
   "devDependencies": {
     "@types/jest": "^24.0.18",
     "gh-pages": "^2.1.1",
