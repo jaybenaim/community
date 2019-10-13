@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import "../index.css";
 import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
-import { MAP_API_KEY } from "../../../apis/keys";
+// import { MAP_API_KEY } from "../../../apis/keys";
 import Geocode from "react-geocode";
 import Root from "../../../apis/root";
-
+const MAP_API_KEY = "test";
 /**
  *@prop [allProfiles] array required
  */

@@ -24,6 +24,7 @@
     "build": "cd community_front && react-scripts build",
     "test": "cd community_front && react-scripts test",
     "eject": "cd community_front && react-scripts eject",
+    "predeploy": "cd community_front && npm run build",
     "deploy": "cd community_front && gh-pages -d build"
   },
   "eslintConfig": {

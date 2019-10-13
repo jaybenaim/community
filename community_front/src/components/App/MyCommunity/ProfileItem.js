@@ -5,8 +5,9 @@ import Button from "react-bootstrap/Button";
 import Root from "../../../apis/root";
 import "./index.css";
 
-import { GIPHY_API_KEY } from "../../../apis/keys";
+// import { GIPHY_API_KEY } from "../../../apis/keys";
 import axios from "axios";
+const GIPHY_API_KEY = "test";
 
 class ProfileItem extends React.Component {
   state = {
@@ -20,7 +21,7 @@ class ProfileItem extends React.Component {
 
   componentDidMount() {
     this.setHeroImage();
-    console.log(localStorage['token'])
+    console.log(localStorage["token"]);
   }
 
   handleBorrowButton = () => {
