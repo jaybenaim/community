@@ -20,7 +20,7 @@
     "react-scripts": "3.1.1"
   },
   "scripts": {
-    "start": "cd community_front && react-scripts start",
+    "start": "cd community_front && node index.js",
     "build": "cd community_front && react-scripts build",
     "test": "cd community_front && react-scripts test",
     "eject": "cd community_front && react-scripts eject",
@@ -42,7 +42,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:8000",
+  "proxy": "https://jaybenaim.github.io/community/",
   "devDependencies": {
     "@types/jest": "^24.0.18",
     "react-test-renderer": "^16.9.0"
