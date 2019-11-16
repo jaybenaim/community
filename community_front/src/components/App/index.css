@@ -133,7 +133,7 @@ a.nav-link {
 }
 
 .slideshow li:nth-child(1) {
-  background-image: url("img/globe.JPG");
+  background-image: url(../../img/globe.JPG);
 }
 .slideshow li:nth-child(2) {
   background-image: url(https://i.imgur.com/o7blsDX.jpg);

@@ -4,5 +4,5 @@ import axios from "axios";
 // axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
 export default axios.create({
-  baseURL: "https://git.heroku.com/friendly-community.git"
+  baseURL: "https://friendly-community.herokuapp.com/"
 });
