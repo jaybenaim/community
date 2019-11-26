@@ -114,7 +114,10 @@ class App extends React.Component {
 
   handle_login = (e, data) => {
     e.preventDefault();
-    Axios.post("http://localhost:8000/authenticate/", data).then(res => {
+    Axios.post(
+      "https://friendly-community.herokuapp.com/authenticate/",
+      data
+    ).then(res => {
       window.localStorage["token"] = res.data.token;
       window.localStorage["username"] = data.username;
       window.localStorage["id"] = res.data.id;

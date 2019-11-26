@@ -144,13 +144,13 @@ STATICFILES_DIRS = [
 # # https://github.com/ottoyiu/django-cors-headers
 # # Whitelist the create-react-app development server
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000"
+    "https://jaybenaim.github.io/community/"
 ]
 
 # https://github.com/ottoyiu/django-cors-headers#csrf-integration
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:3000"
+    "https://jaybenaim.github.io/community/"
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
