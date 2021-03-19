@@ -11,7 +11,7 @@ django-dotenv==1.4.2
 django-heroku==0.3.1
 django-request-logging==0.7.0
 django-rest-framework==0.1.0
-djangorestframework==3.10.2
+djangorestframework==3.11.2
 djangorestframework-jwt==1.11.0
 djangorestframework-simplejwt==4.3.0
 EditorConfig==0.12.2
